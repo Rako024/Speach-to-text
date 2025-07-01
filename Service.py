@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Service_dynamic_batch_fallback.py
+Service_dynamic_batch_v2.py
 
 Optimized real-time transcription for Ryzen5 6-core + RTX3050:
 - faster-whisper ONNX float16 backend
 - dynamic queue of 10s segments with 1s overlap
+- multiple transcription worker threads (configurable)
 - per-segment beam search + VAD filter for quality
 - optional punctuation restoration
-- fallback: no batch_size if unsupported
+- monitor thread for queue/backlog alerts
+- human-readable timestamps (seconds precision) and segment indices
 """
 
 import subprocess
@@ -28,18 +30,21 @@ except ImportError:
     USE_PUNCT = False
 
 # --- Configuration ---
-HLS_URL         = "https://live.itv.az/itv.m3u8"
-SEGMENT_TIME    = 10            # seconds per segment
-OVERLAP_TIME    = 1             # seconds overlap
-WAV_DIR         = "wav_segments"
-OUTPUT_DIR      = "transcripts"
-MODEL_SIZE      = "large"       # tiny, base, small, medium, large
-TRANSCRIPT_FILE = os.path.join(OUTPUT_DIR, "transcript.txt")
-BEAM_SIZE       = 4             # beam search width
-BEST_OF         = 4             # best_of candidates
-VAD_FILTER      = True          # faster-whisper vad_filter
+HLS_URL           = "https://live.itv.az/itv.m3u8"
+SEGMENT_TIME      = 10            # seconds per segment
+OVERLAP_TIME      = 1             # seconds overlap
+WAV_DIR           = "wav_segments"
+OUTPUT_DIR        = "transcripts"
+MODEL_SIZE        = "large"       # tiny, base, small, medium, large
+TRANSCRIPT_FILE   = os.path.join(OUTPUT_DIR, "transcript.txt")
+BEAM_SIZE         = 4             # beam search width
+BEST_OF           = 4             # best_of candidates
+VAD_FILTER        = True          # faster-whisper vad_filter
+WORKER_COUNT      = 2             # number of transcription threads
+MONITOR_INTERVAL  = 5             # seconds between monitor checks
+BACKLOG_WARNING   = WORKER_COUNT * 2  # queue size threshold for warnings
 
-# internal queue for segments
+# Internal queue for segments
 segment_queue = queue.Queue()
 
 
@@ -51,7 +56,7 @@ def ensure_dirs():
 
 
 def start_ffmpeg():
-    # produce 10s segments sliding by (10 - overlap) seconds
+    # produce SEGMENT_TIME-second files sliding by (SEGMENT_TIME - OVERLAP_TIME)
     return subprocess.Popen([
         "ffmpeg", "-y",
         "-i", HLS_URL,
@@ -65,38 +70,36 @@ def start_ffmpeg():
 
 
 def watch_segments():
-    """Producer: waits for new wav files and enqueues them."""
+    """Producer: waits for new wav files and enqueues them along with index and timestamps."""
     idx = 0
     while True:
         path = os.path.join(WAV_DIR, f"segment_{idx:03d}.wav")
-        # wait until file stable
         while not os.path.exists(path):
             time.sleep(0.1)
-        prev = -1
+        prev_size = -1
         while True:
-            curr = os.path.getsize(path)
-            if curr == prev and curr > 0:
+            curr_size = os.path.getsize(path)
+            if curr_size == prev_size and curr_size > 0:
                 break
-            prev = curr
+            prev_size = curr_size
             time.sleep(0.1)
         end_ts = datetime.datetime.now(datetime.timezone.utc)
         start_ts = end_ts - datetime.timedelta(seconds=SEGMENT_TIME)
-        segment_queue.put((path, start_ts, end_ts))
+        segment_queue.put((idx, path, start_ts, end_ts))
         idx += 1
 
 
-def transcribe_worker():
+def transcribe_worker(worker_id):
     """Consumer: dequeues segments, runs inference, writes outputs."""
-    print(f"[INFO] Loading model '{MODEL_SIZE}'... (float16 GPU)")
+    print(f"[Worker {worker_id}] Loading model '{MODEL_SIZE}' (float16 GPU)...")
     model = WhisperModel(MODEL_SIZE, device="cuda", compute_type="float16")
-    print("[INFO] Model ready.")
+    print(f"[Worker {worker_id}] Model ready.")
     if USE_PUNCT:
-        punct = PunctuationModel("oliverguhr/fullstop-punctuation-multilang-large")
+        punct_model = PunctuationModel("oliverguhr/fullstop-punctuation-multilang-large")
 
     while True:
-        path, st, en = segment_queue.get()
-        print(f"[INFO] Transcribing segment @ {st.time()}–{en.time()}")
-        # try batch-style (some versions support batch_size)
+        idx, path, st, en = segment_queue.get()
+        print(f"[Worker {worker_id}] Transcribing segment #{idx:03d} @ {st.strftime('%H:%M:%S')}–{en.strftime('%H:%M:%S')}")
         try:
             segments_list, _ = model.transcribe(
                 [path],
@@ -108,7 +111,6 @@ def transcribe_worker():
             )
             segments = segments_list[0]
         except TypeError:
-            # fallback single-file call
             segments, _ = model.transcribe(
                 path,
                 language="az",
@@ -117,41 +119,59 @@ def transcribe_worker():
                 vad_filter=VAD_FILTER
             )
 
-        # write transcript
+        # Write transcript block
         with open(TRANSCRIPT_FILE, "a", encoding="utf-8") as f:
-            f.write(f"[Segment @ {st.isoformat()} --> {en.isoformat()}]\n")
+            header = f"[Segment {idx:03d} @ {st.strftime('%Y-%m-%dT%H:%M:%S')} --> {en.strftime('%Y-%m-%dT%H:%M:%S')}]\n"
+            f.write(header)
             for seg in segments:
                 s = st + datetime.timedelta(seconds=seg.start)
                 e = st + datetime.timedelta(seconds=seg.end)
                 text = seg.text.strip()
                 if USE_PUNCT and text:
                     try:
-                        text = punct([text])[0]
+                        text = punct_model([text])[0]
                     except Exception:
                         pass
-                f.write(f"[{s.isoformat()} --> {e.isoformat()}] {text}\n")
+                f.write(f"[{s.strftime('%Y-%m-%dT%H:%M:%S')} --> {e.strftime('%Y-%m-%dT%H:%M:%S')}] {text}\n")
             f.write("\n")
-        # cleanup
         try:
             os.remove(path)
         except OSError:
             pass
-        print(f"[INFO] Done & removed {path}")
+        print(f"[Worker {worker_id}] Done segment #{idx:03d}, removed file.")
+
+
+def monitor():
+    """Monitor: periodically logs queue size and warns if backlog grows."""
+    while True:
+        qsize = segment_queue.qsize()
+        print(f"[Monitor] Queue size: {qsize}")
+        if qsize > BACKLOG_WARNING:
+            print(f"[Monitor] WARNING: backlog of {qsize} segments")
+        time.sleep(MONITOR_INTERVAL)
 
 
 def main():
     ensure_dirs()
     ff = start_ffmpeg()
-    print(f"[INFO] FFmpeg started (pid={ff.pid})")
-    # start threads
-    t1 = threading.Thread(target=watch_segments, daemon=True)
-    t2 = threading.Thread(target=transcribe_worker, daemon=True)
-    t1.start(); t2.start()
+    print(f"[Main] FFmpeg started (pid={ff.pid})")
+
+    # Start producer thread
+    t_watch = threading.Thread(target=watch_segments, daemon=True)
+    t_watch.start()
+    # Start monitor thread
+    t_mon = threading.Thread(target=monitor, daemon=True)
+    t_mon.start()
+    # Start transcription worker threads
+    for i in range(WORKER_COUNT):
+        t = threading.Thread(target=transcribe_worker, args=(i,), daemon=True)
+        t.start()
+
     try:
         while True:
             time.sleep(1)
     except KeyboardInterrupt:
-        print("Shutting down...")
+        print("[Main] Shutting down...")
         ff.terminate()
 
 if __name__ == "__main__":

@@ -1,243 +1,921 @@
-[Segment @ 2025-07-01T11:27:22.706619+00:00 --> 2025-07-01T11:27:32.706619+00:00]
-[2025-07-01T11:27:22.706619+00:00 --> 2025-07-01T11:27:26.286619+00:00] Elsev Rəng Eksperti, L'Oreal Parisdən. Sən buna layiqsən.
+[Segment 000 @ 2025-07-01T11:53:07 --> 2025-07-01T11:53:17]
+[2025-07-01T11:53:07 --> 2025-07-01T11:53:11] Bəlkə, cüzünə qaytara bilmirsiniz. İqtisadiyyat oldu, çox mürəkkəb orqanizmdir.
+[2025-07-01T11:53:11 --> 2025-07-01T11:53:16] Aha, Rəşad bəy, çox sağ olun. Sizin vurguladığınız kimi iqtisadiyyat nə qədər çətin və qəlizmək.
 
-[Segment @ 2025-07-01T11:27:29.762080+00:00 --> 2025-07-01T11:27:39.762080+00:00]
-[2025-07-01T11:27:29.762080+00:00 --> 2025-07-01T11:27:59.742080+00:00] İzlədiyiniz üçün təşəkkürlər.
+[Segment 001 @ 2025-07-01T11:53:15 --> 2025-07-01T11:53:25]
+[2025-07-01T11:53:15 --> 2025-07-01T11:53:19] Xanizm olsa da, bugün bizim iqtisadi və maliyyə savadlılığımızı artıra bildiyiz. Təşəkkür edirik.
+[2025-07-01T11:53:20 --> 2025-07-01T11:53:21] Buyurun, sağ olun. Pazardım sizi, sağ olun.
 
-[Segment @ 2025-07-01T11:27:37.905098+00:00 --> 2025-07-01T11:27:47.905098+00:00]
-[2025-07-01T11:27:37.905098+00:00 --> 2025-07-01T11:27:39.045098+00:00] Və parlaq gözlər.
-[2025-07-01T11:27:39.305098+00:00 --> 2025-07-01T11:27:41.905098+00:00] Purina One. 21 günlük sınağı yoxla.
-[2025-07-01T11:27:42.525098+00:00 --> 2025-07-01T11:27:45.285098+00:00] Sevimli ev əşyaları brendinizin yeni adı var.
-[2025-07-01T11:27:45.505098+00:00 --> 2025-07-01T11:27:45.845098+00:00] Fino.
-[2025-07-01T11:27:46.125098+00:00 --> 2025-07-01T11:27:47.605098+00:00] Yaxşı köpüklənərsən gəllər.
+[Segment 002 @ 2025-07-01T11:53:22 --> 2025-07-01T11:53:32]
+[2025-07-01T11:53:23 --> 2025-07-01T11:53:31] İndi isə maraqlı məlumatların vaxtıdır. 2008-ci ildə iqtisadi çöküşə cavabı olaraq Zimbabwe dövləti həddindən artıq pul əskinası çap etdi.
 
-[Segment @ 2025-07-01T11:27:50.021034+00:00 --> 2025-07-01T11:28:00.021034+00:00]
-[2025-07-01T11:27:50.131034+00:00 --> 2025-07-01T11:27:57.331034+00:00] YAPIŞMAYAN PİRGAMİNTLƏR MÜKƏMMƏL VƏ HİÇBİR ŞEY SIZMAYAN PAKETLƏR BU İSƏ SUPİRDI FİNO
+[Segment 003 @ 2025-07-01T11:53:34 --> 2025-07-01T11:53:44]
+[2025-07-01T11:53:34 --> 2025-07-01T11:53:39] həmin ərəfədə bir çörəyin 10 milyard zimbab və puluna bərabər olmasına nəticələndi.
+[2025-07-01T11:53:40 --> 2025-07-01T11:53:44] Venezuela dünyanın ən böyük neft ehtiyatlarına səhib olan ölkə olsa da,
 
-[Segment @ 2025-07-01T11:27:58.444341+00:00 --> 2025-07-01T11:28:08.444341+00:00]
-[2025-07-01T11:27:58.444341+00:00 --> 2025-07-01T11:28:02.664341+00:00] Və cüzəli qapı ardında gözləyir məni dadlı qida.
-[2025-07-01T11:28:03.164341+00:00 --> 2025-07-01T11:28:03.964341+00:00] Felix!
-[2025-07-01T11:28:04.284341+00:00 --> 2025-07-01T11:28:07.004341+00:00] Kişi olma, çox gözəldir.
+[Segment 004 @ 2025-07-01T11:53:42 --> 2025-07-01T11:53:52]
+[2025-07-01T11:53:42 --> 2025-07-01T11:53:48] 2010-cu ildə infliyasiya nəticəsində bir nəfər bir aylıq maaşla bir dənə toyuq belə ala bilmirdi.
+[2025-07-01T11:53:48 --> 2025-07-01T11:53:52] Psixoloji tədqiqatlara görən insanlar bu ödədikləri şeylərə daha çox dəyər.
 
-[Segment @ 2025-07-01T11:28:10.418636+00:00 --> 2025-07-01T11:28:20.418636+00:00]
-[2025-07-01T11:28:10.418636+00:00 --> 2025-07-01T11:28:13.238636+00:00] Saçlarımın rəngini qorumaq mənim üçün önəmlidir.
-[2025-07-01T11:28:13.478636+00:00 --> 2025-07-01T11:28:17.698636+00:00] Elsev Rəng Eksperti C vitamini və UV filtrlə zənginləşdirilib.
-[2025-07-01T11:28:18.158636+00:00 --> 2025-07-01T11:28:20.258636+00:00] Boyamış saçları bərpa edir və qoruyur.
+[Segment 005 @ 2025-07-01T11:53:54 --> 2025-07-01T11:54:04]
+[2025-07-01T11:53:54 --> 2025-07-01T11:54:01] Məlum olub ki, əgər bir insan iştirak etdiyi kursa pul ödəmi, epsonda 80% ehtimalının həmin kursu da sona qədər oxumur.
 
-[Segment @ 2025-07-01T11:28:18.476641+00:00 --> 2025-07-01T11:28:28.476641+00:00]
-[2025-07-01T11:28:18.716641+00:00 --> 2025-07-01T11:28:19.796641+00:00] 10 həftiyədək.
-[2025-07-01T11:28:19.996641+00:00 --> 2025-07-01T11:28:21.116641+00:00] Günəşdən müdafiə.
-[2025-07-01T11:28:21.496641+00:00 --> 2025-07-01T11:28:22.136641+00:00] Qalıcı rəng.
-[2025-07-01T11:28:22.356641+00:00 --> 2025-07-01T11:28:23.376641+00:00] Sudan müdafiə.
-[2025-07-01T11:28:23.556641+00:00 --> 2025-07-01T11:28:24.276641+00:00] Qalıcı rəng.
-[2025-07-01T11:28:24.536641+00:00 --> 2025-07-01T11:28:25.796641+00:00] Elsev rəng eksperti.
-[2025-07-01T11:28:26.016641+00:00 --> 2025-07-01T11:28:26.976641+00:00] L'Oreal Parisdən.
-[2025-07-01T11:28:27.176641+00:00 --> 2025-07-01T11:28:28.036641+00:00] Sən buna layiqsən.
+[Segment 006 @ 2025-07-01T11:54:02 --> 2025-07-01T11:54:12]
+[2025-07-01T11:54:02 --> 2025-07-01T11:54:32] İzlədiyiniz üçün təşəkkür edirəm.
 
-[Segment @ 2025-07-01T11:28:30.696160+00:00 --> 2025-07-01T11:28:40.696160+00:00]
-[2025-07-01T11:28:30.936160+00:00 --> 2025-07-01T11:28:35.936160+00:00] Bu yayın ləzzətini qarşıla Qaraçay və Sərin Qarpızdadır.
+[Segment 007 @ 2025-07-01T11:54:11 --> 2025-07-01T11:54:21]
+[2025-07-01T11:54:11 --> 2025-07-01T11:54:20] Öz işinlə yanaşı freelance işdə götürə bilərsən. Gəlirlərini idarə etmək, buna qəna etmək istəyirsənsə, ehtiyaclarını bir dəftərə yaz və yalnız onları al.
 
-[Segment @ 2025-07-01T11:28:38.764767+00:00 --> 2025-07-01T11:28:48.764767+00:00]
-[2025-07-01T11:28:38.764767+00:00 --> 2025-07-01T11:28:42.524767+00:00] Məftəşəm harmoniya. Qarpız dadını kəşf edin.
+[Segment 008 @ 2025-07-01T11:54:19 --> 2025-07-01T11:54:29]
+[2025-07-01T11:54:19 --> 2025-07-01T11:54:22] Kulunla isə istiqras, səhv və ya kripto ala bilərsən.
+[2025-07-01T11:54:22 --> 2025-07-01T11:54:24] Bəsən bunlardan hansı nə edirsən?
 
-[Segment @ 2025-07-01T11:28:50.943801+00:00 --> 2025-07-01T11:29:00.943801+00:00]
-[2025-07-01T11:28:50.943801+00:00 --> 2025-07-01T11:28:55.563801+00:00] 48 saat. Nivea Mirvari Gözəlliyi. Güzsursuz qoltuq altı dərəsi üçün.
-[2025-07-01T11:28:55.563801+00:00 --> 2025-07-01T11:29:00.923801+00:00] Bu yayın ləzzətini qarşıla Qaraçay və Sərin Qarpı.
+[Segment 009 @ 2025-07-01T11:54:31 --> 2025-07-01T11:54:41]
+[2025-07-01T11:54:31 --> 2025-07-01T11:54:39] Ki, bugün pulla bağlı bir çox sağınıza cavab tapa bildiyiz və həmçin ona da inanırıq ki, bundan sonra büdcə planlamasında daha diqqətli olacaqsınız.
+[2025-07-01T11:54:39 --> 2025-07-01T11:54:41] Ərbələd isə fikirlərinizi biz...
 
-[Segment @ 2025-07-01T11:28:59.106336+00:00 --> 2025-07-01T11:29:09.106336+00:00]
-[2025-07-01T11:28:59.106336+00:00 --> 2025-07-01T11:29:05.586336+00:00] FÜZTİ MÖFTƏŞƏM HARMONİYA
-[2025-07-01T11:29:05.586336+00:00 --> 2025-07-01T11:29:07.926336+00:00] QARFIZ DADINI KƏŞFEDİN
+[Segment 010 @ 2025-07-01T11:54:39 --> 2025-07-01T11:54:49]
+[2025-07-01T11:54:39 --> 2025-07-01T11:54:43] Bizə sosial media hesablarımızdan yazın. Bizdən isə bu günlük bu qədər. Sağ olun.
 
-[Segment @ 2025-07-01T11:29:07.306312+00:00 --> 2025-07-01T11:29:17.306312+00:00]
-[2025-07-01T11:29:07.306312+00:00 --> 2025-07-01T11:29:08.486312+00:00] Nivea Mirvari Gözəlliyi
-[2025-07-01T11:29:08.486312+00:00 --> 2025-07-01T11:29:11.086312+00:00] Mirvari ekstraktu və avokado yağı ilə
-[2025-07-01T11:29:11.086312+00:00 --> 2025-07-01T11:29:13.206312+00:00] Qayxı və hamarlıq 48 saat
-[2025-07-01T11:29:13.206312+00:00 --> 2025-07-01T11:29:14.866312+00:00] Nivea Mirvari Gözəlliyi
-[2025-07-01T11:29:14.866312+00:00 --> 2025-07-01T11:29:16.946312+00:00] Qüsursuz qoltuq altı dərisi üçün
+[Segment 011 @ 2025-07-01T11:54:51 --> 2025-07-01T11:55:01]
+[2025-07-01T11:54:51 --> 2025-07-01T11:55:21] İzlədiyiniz üçün təşəkkürlər.
 
-[Segment @ 2025-07-01T11:29:15.368839+00:00 --> 2025-07-01T11:29:25.368839+00:00]
-[2025-07-01T11:29:15.368839+00:00 --> 2025-07-01T11:29:17.868839+00:00] Sizin qayxısına qalmaq ömürlü məsuliyyətdir.
-[2025-07-01T11:29:18.388839+00:00 --> 2025-07-01T11:29:23.228839+00:00] Mükəmməlləşdirilmiş Purina One qidası ilə dəyişikliyi 21 günə görə bilərsiniz.
-[2025-07-01T11:29:23.328839+00:00 --> 2025-07-01T11:29:25.268839+00:00] Əli iştah və yüksək enerji.
+[Segment 012 @ 2025-07-01T11:54:59 --> 2025-07-01T11:55:09]
 
-[Segment @ 2025-07-01T11:29:27.498450+00:00 --> 2025-07-01T11:29:37.498450+00:00]
-[2025-07-01T11:29:27.498450+00:00 --> 2025-07-01T11:29:30.958450+00:00] Sağlam həzm üçün bağırsaq mikroflorasını yaxşılaşdırır.
-[2025-07-01T11:29:31.058450+00:00 --> 2025-07-01T11:29:33.658450+00:00] Şıldayan tükördüyü və parlaq gözlər.
-[2025-07-01T11:29:33.898450+00:00 --> 2025-07-01T11:29:36.498450+00:00] Purina One. 21 günlük sınağı yoxla.
+[Segment 013 @ 2025-07-01T11:55:12 --> 2025-07-01T11:55:22]
+[2025-07-01T11:55:16 --> 2025-07-01T11:55:19] Saçlarımın rəngini qorumaq mənim üçün önəmlidir.
 
-[Segment @ 2025-07-01T11:29:37.118842+00:00 --> 2025-07-01T11:29:47.118842+00:00]
+[Segment 014 @ 2025-07-01T11:55:20 --> 2025-07-01T11:55:30]
+[2025-07-01T11:55:20 --> 2025-07-01T11:55:50] İzlədiyiniz üçün təşəkkürlər.
 
-[Segment @ 2025-07-01T11:29:49.318545+00:00 --> 2025-07-01T11:29:59.318545+00:00]
+[Segment 015 @ 2025-07-01T11:55:32 --> 2025-07-01T11:55:42]
+[2025-07-01T11:55:32 --> 2025-07-01T11:55:36] İlsev Rəng Eksperti L'Oreal Parisdən. Sən buna layiqsən.
 
-[Segment @ 2025-07-01T11:29:57.381786+00:00 --> 2025-07-01T11:30:07.381786+00:00]
+[Segment 016 @ 2025-07-01T11:55:40 --> 2025-07-01T11:55:50]
 
-[Segment @ 2025-07-01T11:30:10.995396+00:00 --> 2025-07-01T11:30:20.995396+00:00]
-[2025-07-01T11:30:10.995396+00:00 --> 2025-07-01T11:30:40.975396+00:00] İzlədiyiniz üçün təşəkkürlər.
+[Segment 017 @ 2025-07-01T11:55:52 --> 2025-07-01T11:56:02]
+[2025-07-01T11:55:59 --> 2025-07-01T11:56:00] Alergiya sizinə rahat edir.
+[2025-07-01T11:56:00 --> 2025-07-01T11:56:02] Otrevin 2 dəqiqə burnu açır.
 
-[Segment @ 2025-07-01T11:30:17.879226+00:00 --> 2025-07-01T11:30:27.879226+00:00]
-[2025-07-01T11:30:17.879226+00:00 --> 2025-07-01T11:30:22.919226+00:00] İstədiyin vaxt, istədiyin qədər hesabını artır, faizin gün bə gün hesablansın.
-[2025-07-01T11:30:23.459226+00:00 --> 2025-07-01T11:30:25.759226+00:00] Ən əsası, ehtiyac olanda gözləmə.
+[Segment 018 @ 2025-07-01T11:56:00 --> 2025-07-01T11:56:10]
+[2025-07-01T11:56:00 --> 2025-07-01T11:56:04] 12 saata qədər təsir edir. O trivinlə rahat nəfəs alın.
 
-[Segment @ 2025-07-01T11:30:30.047496+00:00 --> 2025-07-01T11:30:40.047496+00:00]
-[2025-07-01T11:30:32.467496+00:00 --> 2025-07-01T11:30:34.527496+00:00] Faiz qazancın da özünə qalsın.
+[Segment 019 @ 2025-07-01T11:56:12 --> 2025-07-01T11:56:22]
+[2025-07-01T11:56:12 --> 2025-07-01T11:56:15] Şiiliyi 21 günə görə bilərsiz.
+[2025-07-01T11:56:15 --> 2025-07-01T11:56:20] Əla iştah və yüksək enerji sağlam həzm üçün bağırsaq mikroflorasını yaxşılaşdırır.
+[2025-07-01T11:56:20 --> 2025-07-01T11:56:22] Işıldayan tükördüyü və parlaq gözləyəcək.
 
-[Segment @ 2025-07-01T11:30:38.155957+00:00 --> 2025-07-01T11:30:48.155957+00:00]
-[2025-07-01T11:30:39.485957+00:00 --> 2025-07-01T11:30:40.285957+00:00] İzlədiyiniz üçün təşəkkürlər.
+[Segment 020 @ 2025-07-01T11:56:21 --> 2025-07-01T11:56:31]
+[2025-07-01T11:56:21 --> 2025-07-01T11:56:51] İzlədiyiniz üçün təşəkkürlər.
 
-[Segment @ 2025-07-01T11:30:46.862501+00:00 --> 2025-07-01T11:30:56.862501+00:00]
+[Segment 021 @ 2025-07-01T11:56:33 --> 2025-07-01T11:56:43]
 
-[Segment @ 2025-07-01T11:30:54.721339+00:00 --> 2025-07-01T11:31:04.721339+00:00]
-[2025-07-01T11:30:55.891339+00:00 --> 2025-07-01T11:31:02.671339+00:00] Mayqalar səlam, bu dəfə gənclərən iqtisadi azadlığından, puldan, pulun niyə dəyərdən düşməsindən danışırıq.
+[Segment 022 @ 2025-07-01T11:56:41 --> 2025-07-01T11:56:51]
 
-[Segment @ 2025-07-01T11:31:06.817781+00:00 --> 2025-07-01T11:31:16.817781+00:00]
-[2025-07-01T11:31:06.817781+00:00 --> 2025-07-01T11:31:16.737781+00:00] Sizə də maraqlı olduğunu bildiyim sujətlə başlayaq, gənclərin iqtisadi azadlığı necə qurulmalıdır, büdcə nədir, yıxım nədir, bütün bunlardan danışdığımız zəhatəli bir sujətimiz var, gəlin birlikdə izləyək.
+[Segment 023 @ 2025-07-01T11:56:53 --> 2025-07-01T11:57:03]
+[2025-07-01T11:56:57 --> 2025-07-01T11:57:03] Mideyə mirvari gözəlliyi, mirvari ekstraktu və avokado yağı ilə qayxı və hamarlıq 48 saat.
 
-[Segment @ 2025-07-01T11:31:14.909281+00:00 --> 2025-07-01T11:31:24.909281+00:00]
-[2025-07-01T11:31:14.909281+00:00 --> 2025-07-01T11:31:23.269281+00:00] Gənc insanın öz ayaqlarının üzərində durması, arzularını reallaşdırması və sərbəst qərarlarını verə bilməsi üçün maddi məsələdir.
+[Segment 024 @ 2025-07-01T11:57:02 --> 2025-07-01T11:57:12]
+[2025-07-01T11:57:02 --> 2025-07-01T11:57:03] MİVEYA MİRVARI GÖZƏRLİYİ
+[2025-07-01T11:57:03 --> 2025-07-01T11:57:06] GÜSURSÜZ QOLTIQALDI DƏRƏSİ ÜÇÜN
+[2025-07-01T11:57:06 --> 2025-07-01T11:57:08] BU YAYIN LƏZZƏTİNİ QARŞILA
+[2025-07-01T11:57:08 --> 2025-07-01T11:57:09] QARAÇAY
 
-[Segment @ 2025-07-01T11:31:27.104737+00:00 --> 2025-07-01T11:31:37.104737+00:00]
-[2025-07-01T11:31:27.104737+00:00 --> 2025-07-01T11:31:31.124737+00:00] Azadlığa gedən yol nə qədər açıqdır? Bugün bu sualın cavabını axtarırıq.
-[2025-07-01T11:31:31.124737+00:00 --> 2025-07-01T11:31:36.124737+00:00] Əmək bazarında tələblər, əmək bazarı daha surətli inkişaf edir.
+[Segment 025 @ 2025-07-01T11:57:14 --> 2025-07-01T11:57:24]
+[2025-07-01T11:57:17 --> 2025-07-01T11:57:20] FÜZTİ MÖFTƏŞƏM PARMONİYA
+[2025-07-01T11:57:20 --> 2025-07-01T11:57:22] QARPIZ DATINI KƏŞFEDİN
 
-[Segment @ 2025-07-01T11:31:35.425327+00:00 --> 2025-07-01T11:31:45.425327+00:00]
-[2025-07-01T11:31:35.425327+00:00 --> 2025-07-01T11:31:43.765327+00:00] Təhsil sistemi və universitetlərin proqramları. Çünki bunu da başa düşmək olar. Universitetlər məllim heyətinin yenilənməsi, gənzələrin yenilənməsi.
+[Segment 026 @ 2025-07-01T11:57:18 --> 2025-07-01T11:57:28]
+[2025-07-01T11:57:18 --> 2025-07-01T11:57:26] İzlədiyiniz üçün təşəkkürlər.
 
-[Segment @ 2025-07-01T11:31:47.540509+00:00 --> 2025-07-01T11:31:57.540509+00:00]
-[2025-07-01T11:31:47.540509+00:00 --> 2025-07-01T11:31:54.380509+00:00] əra uyğun gənclərin üniversitet sisteminə daxil olması daha lənk prosesdir, nəinki əmək bazarındakı çağırışlar.
-[2025-07-01T11:31:54.500509+00:00 --> 2025-07-01T11:31:57.600509+00:00] Cəmiyyətimizdə gənclərin iqtisadi azadlığa, həmçinin bunun payı...
+[Segment 027 @ 2025-07-01T11:57:30 --> 2025-07-01T11:57:40]
+[2025-07-01T11:57:30 --> 2025-07-01T11:57:40] İzlədiyiniz üçün təşəkkürlər.
 
-[Segment @ 2025-07-01T11:31:55.611747+00:00 --> 2025-07-01T11:32:05.611747+00:00]
-[2025-07-01T11:31:55.611747+00:00 --> 2025-07-01T11:31:59.771747+00:00] Ələyində gətirdiyi şəxsi azadlığa can atmağı, valideynlər tərəfindən necə qarşılanır?
-[2025-07-01T11:31:59.771747+00:00 --> 2025-07-01T11:32:03.771747+00:00] İstənilən halda, baxmayanıq şərq ölkəsi...
+[Segment 028 @ 2025-07-01T11:57:38 --> 2025-07-01T11:57:48]
+[2025-07-01T11:57:38 --> 2025-07-01T11:57:41] Künonlarqa qəraf sili ilə əhvalını paylaşın.
 
-[Segment @ 2025-07-01T11:32:07.927110+00:00 --> 2025-07-01T11:32:17.927110+00:00]
-[2025-07-01T11:32:07.927110+00:00 --> 2025-07-01T11:32:14.567110+00:00] quruluşu belədir ki, bu, Sovet dövründən gələn ənənələrlə də bağlıdır, Sovet dövrün keçdiyimizə görə.
-[2025-07-01T11:32:14.567110+00:00 --> 2025-07-01T11:32:17.567110+00:00] Yəni, bu baxımdan həm ailədə qızlar...
+[Segment 029 @ 2025-07-01T11:57:50 --> 2025-07-01T11:58:00]
+[2025-07-01T11:57:50 --> 2025-07-01T11:58:20] İzlədiyiniz üçün təşəkkürlər.
 
-[Segment @ 2025-07-01T11:32:16.099642+00:00 --> 2025-07-01T11:32:26.099642+00:00]
-[2025-07-01T11:32:16.099642+00:00 --> 2025-07-01T11:32:24.279642+00:00] Həm oğlanların işlənməsinə əsasən müsbət baxılır. Üzdə Azərbaycan bəzi regionlarında bir qədər xanımların...
+[Segment 030 @ 2025-07-01T11:57:59 --> 2025-07-01T11:58:09]
+[2025-07-01T11:57:59 --> 2025-07-01T11:58:02] Elsiv rəng eksperti L'Oreal Parisdən. Sən buna layiqsən.
 
-[Segment @ 2025-07-01T11:32:28.265642+00:00 --> 2025-07-01T11:32:38.265642+00:00]
-[2025-07-01T11:32:28.265642+00:00 --> 2025-07-01T11:32:38.265642+00:00] Təhsil alınması o qədər oğlanlardakı kimi istək yoxdur, yəni qaçsa alınma da var, amma ümumi şəkildə cəmiyyətin bu əsaslı problemi...
+[Segment 031 @ 2025-07-01T11:58:11 --> 2025-07-01T11:58:21]
+[2025-07-01T11:58:14 --> 2025-07-01T11:58:17] FÜZTI MÖFTƏŞƏM PARMONİYA
+[2025-07-01T11:58:17 --> 2025-07-01T11:58:19] QARFIZ DATINI KƏŞF EDİN
 
-[Segment @ 2025-07-01T11:32:36.456132+00:00 --> 2025-07-01T11:32:46.456132+00:00]
-[2025-07-01T11:32:36.456132+00:00 --> 2025-07-01T11:32:44.616132+00:00] Cəmiyyətdə ailələrdə həm oğlanın, həm qızın təhsil alması, həm də işləməsinə normal baxır.
+[Segment 032 @ 2025-07-01T11:58:20 --> 2025-07-01T11:58:30]
+[2025-07-01T11:58:20 --> 2025-07-01T11:58:50] İzlədiyiniz üçün təşəkkür edirəm.
 
-[Segment @ 2025-07-01T11:32:48.642226+00:00 --> 2025-07-01T11:32:58.642226+00:00]
-[2025-07-01T11:32:48.662226+00:00 --> 2025-07-01T11:32:54.902226+00:00] Müşahibimiz qeyd edir ki, aydın məsələdir ki, son 10 illiklərlə müqayisədə çox yeniliklər, inkişaf var.
-[2025-07-01T11:32:55.342226+00:00 --> 2025-07-01T11:32:58.682226+00:00] Trendlər çox geniş yayılır. Baş verən hadisələr, infosizm...
+[Segment 033 @ 2025-07-01T11:58:33 --> 2025-07-01T11:58:43]
+[2025-07-01T11:58:33 --> 2025-07-01T11:58:34] SÜPİRDƏ FİNO
 
-[Segment @ 2025-07-01T11:32:56.789981+00:00 --> 2025-07-01T11:33:06.789981+00:00]
-[2025-07-01T11:32:56.789981+00:00 --> 2025-07-01T11:33:00.369981+00:00] İnformasiyalar sürətlə qloballaşır və ölkəmizə gəlib çatır.
-[2025-07-01T11:33:00.749981+00:00 --> 2025-07-01T11:33:05.209981+00:00] Buna görə də Azərbaycan gənci inkişaf etmiş ölkələrin gənclərindən heç bir şeyin qalmaq istəyir.
+[Segment 034 @ 2025-07-01T11:58:41 --> 2025-07-01T11:58:51]
 
-[Segment @ 2025-07-01T11:33:09.041549+00:00 --> 2025-07-01T11:33:19.041549+00:00]
-[2025-07-01T11:33:09.501549+00:00 --> 2025-07-01T11:33:15.741549+00:00] Bəs sonda gənclərin iqtisadi inkişafı üçün dövlət və cəmiyyət olaraq, ailə olaraq hansı addımlar atılmalıdır?
-[2025-07-01T11:33:16.201549+00:00 --> 2025-07-01T11:33:19.021549+00:00] Hükumətdən aldıq addımlar regionlara inkişaf etdirilməz.
+[Segment 035 @ 2025-07-01T11:58:53 --> 2025-07-01T11:59:03]
+[2025-07-01T11:58:53 --> 2025-07-01T11:58:56] Və ardından gözləyir məni dadlı qida.
+[2025-07-01T11:58:57 --> 2025-07-01T11:58:58] Felix!
+[2025-07-01T11:58:58 --> 2025-07-01T11:59:01] Dişi olmaq çox gözəllik.
 
-[Segment @ 2025-07-01T11:33:17.274471+00:00 --> 2025-07-01T11:33:27.274471+00:00]
-[2025-07-01T11:33:17.274471+00:00 --> 2025-07-01T11:33:25.474471+00:00] Qeyri-nefs sektorunun inkişaf etdirilməsi ilə bağlı addımlar, təbii ki, həm də gənclərin inkişaf istiqamətində addımlarla...
+[Segment 036 @ 2025-07-01T11:59:03 --> 2025-07-01T11:59:13]
+[2025-07-01T11:59:03 --> 2025-07-01T11:59:33] İzlədiyiniz üçün təşəkkür edirəm.
 
-[Segment @ 2025-07-01T11:33:29.476480+00:00 --> 2025-07-01T11:33:39.476480+00:00]
-[2025-07-01T11:33:29.476480+00:00 --> 2025-07-01T11:33:36.376480+00:00] İki yer olmalıdır ki, gənc özünü reallaşdırsın, maliyyə azadlıqına nail olsun, iqtisadi azadlıqlara nail olsun.
-[2025-07-01T11:33:36.436480+00:00 --> 2025-07-01T11:33:39.476480+00:00] Azərbaycan ailəsinin xüsusiyyəti ondan ibarətdir ki...
+[Segment 037 @ 2025-07-01T11:59:13 --> 2025-07-01T11:59:23]
+[2025-07-01T11:59:13 --> 2025-07-01T11:59:17] PlayStation 5 oyun konsolunu qazanma şans əldi.
 
-[Segment @ 2025-07-01T11:33:37.635657+00:00 --> 2025-07-01T11:33:47.635657+00:00]
-[2025-07-01T11:33:37.635657+00:00 --> 2025-07-01T11:33:45.835657+00:00] Ailə uşağı axıra qədər dəstəkləyir, iməşləyəndən əli-sörəyət tutana qədər.
+[Segment 038 @ 2025-07-01T11:59:27 --> 2025-07-01T11:59:37]
+[2025-07-01T11:59:27 --> 2025-07-01T11:59:29] Və sərin qarpızdadır.
+[2025-07-01T11:59:33 --> 2025-07-01T11:59:35] FUSETE MÖFTƏŞƏM PARMONİYA
 
-[Segment @ 2025-07-01T11:33:49.896866+00:00 --> 2025-07-01T11:33:59.896866+00:00]
-[2025-07-01T11:33:49.896866+00:00 --> 2025-07-01T11:33:55.996866+00:00] Ailə bağları Azərbaycanda güclüdür, yəni ailə həmişə övladına dəstək verir.
-[2025-07-01T11:33:56.216866+00:00 --> 2025-07-01T11:33:59.896866+00:00] Dövlət isə öz imkanları çərçivəsində sosial proyektləri ilə...
+[Segment 039 @ 2025-07-01T11:59:33 --> 2025-07-01T11:59:43]
 
-[Segment @ 2025-07-01T11:33:58.118463+00:00 --> 2025-07-01T11:34:08.118463+00:00]
-[2025-07-01T11:33:58.118463+00:00 --> 2025-07-01T11:34:06.278463+00:00] Bu dəstəyi artırır, tədricən artırır, təkmilləşdirir, ünvalı şəkilə salmağa çalışır, amma yenə də ölkəmizdə hal-hazırda gənclər.
+[Segment 040 @ 2025-07-01T11:59:43 --> 2025-07-01T11:59:53]
 
-[Segment @ 2025-07-01T11:34:10.180951+00:00 --> 2025-07-01T11:34:20.180951+00:00]
-[2025-07-01T11:34:10.180951+00:00 --> 2025-07-01T11:34:20.240951+00:00] Asas problemi iş tapması ilə əlaqədərdir. Çünki əmək bazarının iş axtaranların xeyrinə olmaması ona gətirib çıxar çıxır.
+[Segment 041 @ 2025-07-01T11:59:51 --> 2025-07-01T12:00:01]
 
-[Segment @ 2025-07-01T11:34:18.403884+00:00 --> 2025-07-01T11:34:28.403884+00:00]
-[2025-07-01T11:34:18.403884+00:00 --> 2025-07-01T11:34:25.403884+00:00] Xüsusən də təcrübəsiz olan gənclər ilk iş tapmaqda və əmək bazarında inkişaf etdirməkdə həddən artıq çətin işlər rastlaşırlar.
+[Segment 042 @ 2025-07-01T11:59:59 --> 2025-07-01T12:00:09]
 
-[Segment @ 2025-07-01T11:34:30.535155+00:00 --> 2025-07-01T11:34:40.535155+00:00]
-[2025-07-01T11:34:30.535155+00:00 --> 2025-07-01T11:34:34.235155+00:00] İşsizlik, gənclərin yenişə daxil olması daha çətindir.
-[2025-07-01T11:34:34.235155+00:00 --> 2025-07-01T11:34:40.235155+00:00] Bu azadlıq gənclərə öz potensiallarını reallaşdırmaq, cəmiyyətə tövbə vermək və gələcəyin...
+[Segment 043 @ 2025-07-01T12:00:11 --> 2025-07-01T12:00:21]
+[2025-07-01T12:00:18 --> 2025-07-01T12:00:21] Səfərov qardaşları ilə vida mərasimi keçirilmişdir.
 
-[Segment @ 2025-07-01T11:34:39.296274+00:00 --> 2025-07-01T11:34:49.296274+00:00]
-[2025-07-01T11:34:39.296274+00:00 --> 2025-07-01T11:34:41.116274+00:00] qurucuları olmaq imkanı yaradır.
-[2025-07-01T11:34:41.476274+00:00 --> 2025-07-01T11:34:47.476274+00:00] Bu yolda qarşılarına çıxan maniyələr üçün isə həm fərdi təşəbbüslər, həm də dövlətin və cəmiyyətin dəstəyi.
+[Segment 044 @ 2025-07-01T12:00:19 --> 2025-07-01T12:00:29]
+[2025-07-01T12:00:19 --> 2025-07-01T12:00:27] Qardaşlarını o vəziyyətdə görmək məni dərindən sarsıdı.
 
-[Segment @ 2025-07-01T11:34:46.785113+00:00 --> 2025-07-01T11:34:56.785113+00:00]
-[2025-07-01T11:34:49.325113+00:00 --> 2025-07-01T11:34:52.265113+00:00] Qonağımız iqtisadçı Rəşad Həsənovda xoş gəlməsiniz.
-[2025-07-01T11:34:52.365113+00:00 --> 2025-07-01T11:34:52.885113+00:00] Xoş gördük.
-[2025-07-01T11:34:53.285113+00:00 --> 2025-07-01T11:34:56.785113+00:00] Biz bugün haradasa bir növ utopik bir cəmiyyətdən danışmaq istəyirəm.
+[Segment 045 @ 2025-07-01T12:00:31 --> 2025-07-01T12:00:41]
+[2025-07-01T12:00:35 --> 2025-07-01T12:00:38] Avropa yeni müharibəyə hazırlaşır.
 
-[Segment @ 2025-07-01T11:34:55.095894+00:00 --> 2025-07-01T11:35:05.095894+00:00]
-[2025-07-01T11:34:55.095894+00:00 --> 2025-07-01T11:34:57.975894+00:00] Hər şey pulsuz olsaydı, nə baş verərdi?
+[Segment 046 @ 2025-07-01T12:00:39 --> 2025-07-01T12:00:49]
+[2025-07-01T12:00:39 --> 2025-07-01T12:00:47] Danimarkada hərbi xidmət müddəti artırılır. Könüllülərlə yanaşı qadınlar da məcburi xidmətə cəlb edilir.
 
-[Segment @ 2025-07-01T11:35:07.188920+00:00 --> 2025-07-01T11:35:17.188920+00:00]
-[2025-07-01T11:35:07.328920+00:00 --> 2025-07-01T11:35:15.828920+00:00] Baxın, yəni ilk növbədə insanlar nə üçün istehsal eləyir? Çünki əvvəzində nə isə əldə etmək üçün, qazanmaq üçün insanlar istehsal etməyəcəkdir.
+[Segment 047 @ 2025-07-01T12:00:52 --> 2025-07-01T12:01:02]
+[2025-07-01T12:00:52 --> 2025-07-01T12:00:58] Fəziyyə yaşı daha 6 ay uzadıldı. Təqayüdə çıxma yaşı 64 il 6 ay oldu.
 
-[Segment @ 2025-07-01T11:35:15.230636+00:00 --> 2025-07-01T11:35:25.230636+00:00]
-[2025-07-01T11:35:15.230636+00:00 --> 2025-07-01T11:35:23.410636+00:00] Xududda ki, inkişaf yetməyəcək, təşəbbüsçarlıq aşağı düşəcək, insanlar nə üçün ixtira eləsinlər, nə üçün yeniliyə can atsınlar, nə üçün öz məsullarını xidmətlər.
+[Segment 048 @ 2025-07-01T12:01:00 --> 2025-07-01T12:01:10]
+[2025-07-01T12:01:01 --> 2025-07-01T12:01:06] Hər vaxtınız xeyr, İTV xəbəri efirdədir, studiyada Ayşən Hüseynovadır.
 
-[Segment @ 2025-07-01T11:35:27.611771+00:00 --> 2025-07-01T11:35:37.611771+00:00]
-[2025-07-01T11:35:27.611771+00:00 --> 2025-07-01T11:35:30.751771+00:00] Adam Simitin bununla bağlı əslində çox maraqlı bir tezi vardır.
-[2025-07-01T11:35:30.931771+00:00 --> 2025-07-01T11:35:37.611771+00:00] Deyir ki, çölək pişirən düşünmür ki, mən bu çöləyi pişirim, xalqım bundan həzz alsın.
+[Segment 049 @ 2025-07-01T12:01:12 --> 2025-07-01T12:01:22]
+[2025-07-01T12:01:12 --> 2025-07-01T12:01:18] Qüvvələrin evlərinə basqın edərək qətlə yetirdiyi Səfərov qardaşları ilə vida mərasimi keçirilib.
+[2025-07-01T12:01:18 --> 2025-07-01T12:01:22] Cənazələr ötən gün Azərbaycana gətirilib və bugün Ağcəbətdə...
 
-[Segment @ 2025-07-01T11:35:35.768077+00:00 --> 2025-07-01T11:35:45.768077+00:00]
-[2025-07-01T11:35:35.768077+00:00 --> 2025-07-01T11:35:43.968077+00:00] o öz maraqlarını düşünür, amma onun öz maraqlarını düşünməsi bu vədicə şəkildə ictimai maraqlara xidmət edir.
+[Segment 050 @ 2025-07-01T12:01:20 --> 2025-07-01T12:01:30]
+[2025-07-01T12:01:20 --> 2025-07-01T12:01:26] dolmalarının, ictimaiyyət nümayəndələrinin və yerli rəhbərliyin iştirakı ilə dəfn olunub.
 
-[Segment @ 2025-07-01T11:35:47.882268+00:00 --> 2025-07-01T11:35:57.882268+00:00]
-[2025-07-01T11:35:47.882268+00:00 --> 2025-07-01T11:35:49.862268+00:00] da bu olmayacaq idi. Siz dediyiniz
-[2025-07-01T11:35:49.862268+00:00 --> 2025-07-01T11:35:51.322268+00:00] yəni o pulsuz
-[2025-07-01T11:35:51.322268+00:00 --> 2025-07-01T11:35:53.742268+00:00] deyək ki, hər şey pulsuz olduğu halda
-[2025-07-01T11:35:53.742268+00:00 --> 2025-07-01T11:35:55.522268+00:00] bu olmayacaq idi. Əslində
-[2025-07-01T11:35:55.522268+00:00 --> 2025-07-01T11:35:57.482268+00:00] bu dünyada hər şeyin dəyəri var.
+[Segment 051 @ 2025-07-01T12:01:32 --> 2025-07-01T12:01:42]
+[2025-07-01T12:01:32 --> 2025-07-01T12:01:41] Səfərov qardaşlarının nəşi ötən gün ölkəyə gətirilib. Xüsusi polis qüvvələrinin evlərinə basqın edərək öldürüldü.
 
-[Segment @ 2025-07-01T11:35:56.083758+00:00 --> 2025-07-01T11:36:06.083758+00:00]
-[2025-07-01T11:35:56.083758+00:00 --> 2025-07-01T11:36:00.603758+00:00] Və bu dəyər bizim onun qarşılığında ödədiyimizdir.
-[2025-07-01T11:36:01.503758+00:00 --> 2025-07-01T11:36:04.223758+00:00] Biz əgər nəyinsə qarşılığında nəsə ödəmirik.
+[Segment 052 @ 2025-07-01T12:01:41 --> 2025-07-01T12:01:51]
+[2025-07-01T12:01:41 --> 2025-07-01T12:01:43] Gün Ağcəbədidə torpağa tapşırılıblar.
+[2025-07-01T12:01:43 --> 2025-07-01T12:01:49] Səfərovlar ailəsinin Ağcəbədidə məskunlaşan ata evində hal-hazırda mərhub.
 
-[Segment @ 2025-07-01T11:36:08.318471+00:00 --> 2025-07-01T11:36:18.318471+00:00]
-[2025-07-01T11:36:08.318471+00:00 --> 2025-07-01T11:36:17.478471+00:00] Və davranışlarda görünən odur ki, bu kimi məsələlərdə çox təhlükəli məzraya yönəlir.
+[Segment 053 @ 2025-07-01T12:01:53 --> 2025-07-01T12:02:03]
+[2025-07-01T12:01:53 --> 2025-07-01T12:02:00] Cənazə namazı qılınır, daha sonra isə Ağcəbədi qəbirsanlığında dəfin həyata keçiriləcək.
 
-[Segment @ 2025-07-01T11:36:16.371330+00:00 --> 2025-07-01T11:36:26.371330+00:00]
-[2025-07-01T11:36:16.371330+00:00 --> 2025-07-01T11:36:24.431330+00:00] Əvvəlcəndə qeyd etdiyimiz kimi səmərəsiz istifadiyə, istismara və yaxud da ki, ümumiyyətlə,
+[Segment 054 @ 2025-07-01T12:02:01 --> 2025-07-01T12:02:11]
+[2025-07-01T12:02:01 --> 2025-07-01T12:02:07] Doğmaları və yaxınları ilə yanaşı rayon rəhbərliyi və ictimaiyyət nümayəndələri də mərasimdə iştirak edib.
 
-[Segment @ 2025-07-01T11:36:28.519389+00:00 --> 2025-07-01T11:36:38.519389+00:00]
-[2025-07-01T11:36:28.519389+00:00 --> 2025-07-01T11:36:30.079389+00:00] İnşaat meylinin olmamasına.
-[2025-07-01T11:36:30.299389+00:00 --> 2025-07-01T11:36:35.359389+00:00] Yəni, utopik cəmiyyət olsaydı, mən düşünürəm ki, biz hələ də deyək ki, baş dövründə yaşayırdıq.
-[2025-07-01T11:36:35.559389+00:00 --> 2025-07-01T11:36:38.419389+00:00] Onda əksinə, disotopik bir cəmiyyət yaranardı.
+[Segment 055 @ 2025-07-01T12:02:14 --> 2025-07-01T12:02:24]
+[2025-07-01T12:02:14 --> 2025-07-01T12:02:18] Yəni, dağıt, get kafələrin, dağıt, kafələrindəki adamları da döyük.
+[2025-07-01T12:02:19 --> 2025-07-01T12:02:22] Bunlar nə eləyir, bütün cəmiyyətdə gəlib yola salmaq.
 
-[Segment @ 2025-07-01T11:36:36.797017+00:00 --> 2025-07-01T11:36:46.797017+00:00]
-[2025-07-01T11:36:36.797017+00:00 --> 2025-07-01T11:36:42.917017+00:00] Pul nədir? Pulu dəyərli eləyən nədir və pul niyə öz-özündə dəyərli ola bilmir?
+[Segment 056 @ 2025-07-01T12:02:21 --> 2025-07-01T12:02:31]
+[2025-07-01T12:02:21 --> 2025-07-01T12:02:29] Səfərovların faciəsi deyil, bəyaq dediyim kimi bütün Azərbaycanların faciəsi, hamımızın faciəmizi.
 
-[Segment @ 2025-07-01T11:36:49.075297+00:00 --> 2025-07-01T11:36:59.075297+00:00]
-[2025-07-01T11:36:49.075297+00:00 --> 2025-07-01T11:36:50.935297+00:00] pul mübadilə vasitəsidir.
-[2025-07-01T11:36:51.575297+00:00 --> 2025-07-01T11:36:52.995297+00:00] Yəni, pulun
-[2025-07-01T11:36:52.995297+00:00 --> 2025-07-01T11:36:55.395297+00:00] tarixinə biz baxmış olsaq, pul əslində
-[2025-07-01T11:36:55.395297+00:00 --> 2025-07-01T11:36:57.215297+00:00] bizim bugün gördüyümüz
-[2025-07-01T11:36:57.215297+00:00 --> 2025-07-01T11:36:58.415297+00:00] deyək ki,
+[Segment 057 @ 2025-07-01T12:02:34 --> 2025-07-01T12:02:44]
+[2025-07-01T12:02:34 --> 2025-07-01T12:02:39] ötən gün vətənə gətirildikdən sonra təkrar ekspertizə olunaraq Ağcabədiyə yola salınıb.
 
-[Segment @ 2025-07-01T11:36:57.215870+00:00 --> 2025-07-01T11:37:07.215870+00:00]
-[2025-07-01T11:36:57.215870+00:00 --> 2025-07-01T11:37:02.775870+00:00] Xərb şəklində və yaxud da ki, kağız şəklində və yaxud da ki, elektron-digital formada olmuyordur.
+[Segment 058 @ 2025-07-01T12:02:43 --> 2025-07-01T12:02:53]
+[2025-07-01T12:02:43 --> 2025-07-01T12:02:51] Bütün o əlamətlərin əvvəldən mənim qardaşlarımın bədənində olub-olmadığı müəyyənləşdirilməsi ilə bağlı mən orada öz...
 
-[Segment @ 2025-07-01T11:37:09.492793+00:00 --> 2025-07-01T11:37:19.492793+00:00]
-[2025-07-01T11:37:09.492793+00:00 --> 2025-07-01T11:37:11.152793+00:00] pul dediyimiz, mahiyyətini
-[2025-07-01T11:37:11.152793+00:00 --> 2025-07-01T11:37:12.672793+00:00] yüklədiyimiz o nəsinə
-[2025-07-01T11:37:12.672793+00:00 --> 2025-07-01T11:37:15.032793+00:00] əvvəlcə barter vasitəsi olaraq
-[2025-07-01T11:37:15.032793+00:00 --> 2025-07-01T11:37:16.532793+00:00] əşyalardan,
-[2025-07-01T11:37:18.392793+00:00 --> 2025-07-01T11:37:19.492793+00:00] fiziki cisimlərə
+[Segment 059 @ 2025-07-01T12:02:54 --> 2025-07-01T12:03:04]
+[2025-07-01T12:02:54 --> 2025-07-01T12:03:00] Və inanın ki, mənim üçün çox çətindir bunu demək, çox ağırlıdır.
+[2025-07-01T12:03:00 --> 2025-07-01T12:03:03] Çünki əvvəla bir insan o vəziyyətdə...
 
-[Segment @ 2025-07-01T11:37:17.700800+00:00 --> 2025-07-01T11:37:27.700800+00:00]
-[2025-07-01T11:37:17.700800+00:00 --> 2025-07-01T11:37:25.700800+00:00] Məsələn, tutaqçı deyir ki, bu nə idi? Təsəvvür edin ki, inkişaf mərhələsinin bir dövründə artıq...
+[Segment 060 @ 2025-07-01T12:03:02 --> 2025-07-01T12:03:12]
+[2025-07-01T12:03:02 --> 2025-07-01T12:03:08] Doğmaca əziz qardaşlarını o vəziyyətdə görmək məni dərindən sarsıdı.
+[2025-07-01T12:03:08 --> 2025-07-01T12:03:11] Rusiyada aparmış ekspertizaya dair çifayət.
 
-[Segment @ 2025-07-01T11:37:29.732409+00:00 --> 2025-07-01T11:37:39.732409+00:00]
-[2025-07-01T11:37:29.732409+00:00 --> 2025-07-01T11:37:37.132409+00:00] Maldarlığa, əkinsiliyə. Məyyən bir mərhələdə maldarlığla əkinsilik bir-birindən qopur.
+[Segment 061 @ 2025-07-01T12:03:15 --> 2025-07-01T12:03:25]
+[2025-07-01T12:03:15 --> 2025-07-01T12:03:18] şübhələr olduğu üçün onun qərəksizliyini, aparlanan prosesinin qərəksizliyisi olmasına.
+[2025-07-01T12:03:19 --> 2025-07-01T12:03:22] Burada yenidən məhkəmətlə bir ekspertizası həyata keçirildi.
 
-[Segment @ 2025-07-01T11:37:37.853708+00:00 --> 2025-07-01T11:37:47.853708+00:00]
-[2025-07-01T11:37:37.853708+00:00 --> 2025-07-01T11:37:39.833708+00:00] ilk simptomları da deyə bilərik biz.
-[2025-07-01T11:37:40.393708+00:00 --> 2025-07-01T11:37:41.473708+00:00] Və bir
-[2025-07-01T11:37:41.473708+00:00 --> 2025-07-01T11:37:44.133708+00:00] maldar tutaqçı deyək ki, öz südünü
-[2025-07-01T11:37:44.133708+00:00 --> 2025-07-01T11:37:45.793708+00:00] başqasına
+[Segment 062 @ 2025-07-01T12:03:23 --> 2025-07-01T12:03:33]
+[2025-07-01T12:03:23 --> 2025-07-01T12:03:26] 11-də başladı və gecə saat 3-ə qədər çəkdi.
+[2025-07-01T12:03:27 --> 2025-07-01T12:03:31] Ata ocağında mərhumlarla vida mərasimindən sonra onların nəşi torpağa tapışdı.
+
+[Segment 063 @ 2025-07-01T12:03:31 --> 2025-07-01T12:03:41]
+[2025-07-01T12:03:31 --> 2025-07-01T12:03:32] qəbristanlığına gətirilib.
+
+[Segment 064 @ 2025-07-01T12:03:39 --> 2025-07-01T12:03:49]
+[2025-07-01T12:03:39 --> 2025-07-01T12:03:47] Onlara bu hadisəni öz şəxsi nüfuzlarından istifadə edib, qarşısına almağı.
+
+[Segment 065 @ 2025-07-01T12:03:51 --> 2025-07-01T12:04:01]
+[2025-07-01T12:03:51 --> 2025-07-01T12:04:01] Onlar var, onlarla maraqlanmağı xəyəş eləmişdim və bugünkü bu mərasim dövlətimizin qətəndaşının yanındadır.
+
+[Segment 066 @ 2025-07-01T12:04:00 --> 2025-07-01T12:04:10]
+[2025-07-01T12:04:00 --> 2025-07-01T12:04:06] O vətəndaşın hansı ölkədə, harada yaşamasına asılı olmayaraq, onun arxasında olmasının təzahürüdür.
+
+[Segment 067 @ 2025-07-01T12:04:15 --> 2025-07-01T12:04:25]
+[2025-07-01T12:04:15 --> 2025-07-01T12:04:25] Ayn 27-ci günü Seyfədlinin ilk səsini eşidərkən heç vaxt qulaqlanmırdı.
+
+[Segment 068 @ 2025-07-01T12:04:19 --> 2025-07-01T12:04:29]
+[2025-07-01T12:04:19 --> 2025-07-01T12:04:23] Qarımdan getməyəcək o səda bugünəcə məni tərk eləməyibdir.
+[2025-07-01T12:04:24 --> 2025-07-01T12:04:28] Səfərovlar ailəsinə qarşı olan bu vəxşi cəsət...
+
+[Segment 069 @ 2025-07-01T12:04:31 --> 2025-07-01T12:04:41]
+[2025-07-01T12:04:31 --> 2025-07-01T12:04:41] Qeyd edək ki, Rusiyada güc strukturlarının xüsusi amansızlıqla qətlə yetirdikləri Hüseyin Səfərov Azərbaycan, Ziyadin Səfərov Azərbaycanın qətlə etdikləri Hüseyin Səfərov Azərbaycanın qətlə etdikləri Hüseyin Səfərov Azərbaycanın qətlə etdikləri Hüseyin Səfərov Azərbaycanın qətlə etdikləri.
+
+[Segment 070 @ 2025-07-01T12:04:40 --> 2025-07-01T12:04:50]
+[2025-07-01T12:04:40 --> 2025-07-01T12:04:42] Səfərov isə Rusiya vətəndaşıdır.
+[2025-07-01T12:04:42 --> 2025-07-01T12:04:46] Səfərovlar ailəsi Əslən Ağdam rayonunun Mərzli kəndindəndirlər.
+[2025-07-01T12:04:46 --> 2025-07-01T12:04:48] Onlar Ağcəbəddə məskunlaşıblar.
+[2025-07-01T12:04:48 --> 2025-07-01T12:04:50] Qətlə yetirilən Səfərov qardaşları
+
+[Segment 071 @ 2025-07-01T12:04:52 --> 2025-07-01T12:05:02]
+[2025-07-01T12:04:52 --> 2025-07-01T12:04:54] uzun illərdir ki, Rusiyada yaşayıb işləyiblər.
+[2025-07-01T12:04:55 --> 2025-07-01T12:04:58] Qeyd edək ki, Səfərovlar ailəsindən saxlanılanlar da var.
+
+[Segment 072 @ 2025-07-01T12:05:00 --> 2025-07-01T12:05:10]
+[2025-07-01T12:05:00 --> 2025-07-01T12:05:08] Yəqətən burqda qətlə yetirilən qardaşların heç biri iti alət və oğlunu silahla vurdu.
+
+[Segment 073 @ 2025-07-01T12:05:12 --> 2025-07-01T12:05:22]
+[2025-07-01T12:05:12 --> 2025-07-01T12:05:21] Bunu Səhiyyə Nazirliyinin Məhkəmə Tibbi Ekspertizə və Patoloji Anatomiya Birliyinin baş direktoru Ədalət Həsənov meydan edir.
+
+[Segment 074 @ 2025-07-01T12:05:21 --> 2025-07-01T12:05:31]
+[2025-07-01T12:05:21 --> 2025-07-01T12:05:51] İzlədiyiniz üçün təşəkkürlər.
+
+[Segment 075 @ 2025-07-01T12:05:33 --> 2025-07-01T12:05:43]
+[2025-07-01T12:05:33 --> 2025-07-01T12:05:35] müayənəsi gecə yarısı başa çatıb.
+[2025-07-01T12:05:35 --> 2025-07-01T12:05:37] Onun sözlərinə görə ekspertizan
+[2025-07-01T12:05:37 --> 2025-07-01T12:05:39] rəyinə əsasən meydlərin
+[2025-07-01T12:05:39 --> 2025-07-01T12:05:41] xarici və daxili müayənəsində
+[2025-07-01T12:05:41 --> 2025-07-01T12:05:43] çoxlu travmalara rast gəlir.
+
+[Segment 076 @ 2025-07-01T12:05:41 --> 2025-07-01T12:05:51]
+[2025-07-01T12:05:41 --> 2025-07-01T12:05:49] Medin daxili müayinəsi zamanı aşağıdakı xəsarətlər aşərlədi, daxili üzv və toxmalarda.
+
+[Segment 077 @ 2025-07-01T12:05:53 --> 2025-07-01T12:06:03]
+[2025-07-01T12:05:53 --> 2025-07-01T12:06:02] Başın dərsini aralıyarkən sümüşlərdən dərinin iç sətində geniş qansızmalar çöldən küt alətin təsiri nəticəsində.
+
+[Segment 078 @ 2025-07-01T12:06:02 --> 2025-07-01T12:06:12]
+[2025-07-01T12:06:03 --> 2025-07-01T12:06:09] Kəllə qapağı açıldıqdan sonra baş beynin həm sərt qişasında, həm də yumşaq qişada...
+
+[Segment 079 @ 2025-07-01T12:06:14 --> 2025-07-01T12:06:24]
+[2025-07-01T12:06:16 --> 2025-07-01T12:06:24] Döş qəfəsinin küt travması ilə əlaqədar qabırğaların iki tərəfli, çoxsaylı, bir neçə...
+
+[Segment 080 @ 2025-07-01T12:06:22 --> 2025-07-01T12:06:32]
+[2025-07-01T12:06:22 --> 2025-07-01T12:06:28] anatomik xətlər üzrə yer dəyişmiş sınıqları təxminən hər tərəfdə.
+
+[Segment 081 @ 2025-07-01T12:06:30 --> 2025-07-01T12:06:40]
+[2025-07-01T12:06:30 --> 2025-07-01T12:06:38] Qabırğanın yer dəyişən sınıqları və bu sınıqlar o dərəcədə çobud idi və yer dəyişən idi ki,
+
+[Segment 082 @ 2025-07-01T12:06:38 --> 2025-07-01T12:06:48]
+[2025-07-01T12:06:38 --> 2025-07-01T12:06:46] Birini dəyişib sınıq ucuları içərdə parietal plevranı və ağ ciyəri zədələmişdir.
+
+[Segment 083 @ 2025-07-01T12:06:50 --> 2025-07-01T12:07:00]
+[2025-07-01T12:06:50 --> 2025-07-01T12:06:58] Yəqin ki, orada mütləq döş qəfəsinə həm qan tökülüb, həm də ağ ciyərin sərsindən hava girib.
+
+[Segment 084 @ 2025-07-01T12:06:58 --> 2025-07-01T12:07:08]
+[2025-07-01T12:06:58 --> 2025-07-01T12:07:06] Toraqs. Döş qəfəsinə qanın və havanın yığılması. Nə qədər doğransa da, kəsilsə də, gizlədilsə də.
+
+[Segment 085 @ 2025-07-01T12:07:10 --> 2025-07-01T12:07:20]
+[2025-07-01T12:07:10 --> 2025-07-01T12:07:18] Ağciyərin cırılmış, kəsilmiş, sümüş tərəfindən sümün, sınıq ucuları tərəfindən kəsilmiş yerlərin.
+
+[Segment 086 @ 2025-07-01T12:07:19 --> 2025-07-01T12:07:29]
+[2025-07-01T12:07:19 --> 2025-07-01T12:07:49] Yekaterinburgda iyunun 27-sində Rusiya hüquq mühafizə orqanlarının əməkdaşları tərəfindən Azərbaycanlara qarşı keçirilən əməliyyatlarla əməkdaşlarla əməkdaşlarla əməkdaşlarla əməkdaşlarla əməkdaşlarla əməkdaşlarla əməkdaşlarla əməkdaşlarla.
+
+[Segment 087 @ 2025-07-01T12:07:31 --> 2025-07-01T12:07:41]
+[2025-07-01T12:07:31 --> 2025-07-01T12:07:41] Bakır Səfərovun məhkəmə prosesi başlayıb. Onun barəsində, iyunun 29-unda seçilən üç günlük həbs qətimkan tədbirinin uzadılıb-uzadılmaması məsələdir.
+
+[Segment 088 @ 2025-07-01T12:07:39 --> 2025-07-01T12:07:49]
+[2025-07-01T12:07:39 --> 2025-07-01T12:07:40] Məsələsinə baxılıb.
+[2025-07-01T12:07:40 --> 2025-07-01T12:07:44] Yekaterinburg Məhkəməsi artıq Bakir Səfərov barəsində yeni qərar çıxarıb.
+[2025-07-01T12:07:45 --> 2025-07-01T12:07:47] Məhkəmənin qərarı ilə Bakir Səfərov barəsində...
+
+[Segment 089 @ 2025-07-01T12:07:51 --> 2025-07-01T12:08:01]
+[2025-07-01T12:07:51 --> 2025-07-01T12:08:02] Belə ki, məhkəmə Bakir Səfərov barəsində 22 günlü həbs qətimkan tədbiri seçərək onu ilun 19-una dəyik istintak təcrübə edib.
+
+[Segment 090 @ 2025-07-01T12:07:59 --> 2025-07-01T12:08:09]
+[2025-07-01T12:07:59 --> 2025-07-01T12:08:29] İzlədiyiniz üçün təşəkkürlər.
+
+[Segment 091 @ 2025-07-01T12:08:12 --> 2025-07-01T12:08:22]
+[2025-07-01T12:08:12 --> 2025-07-01T12:08:16] həbsiqət imkan tədbirinin uzadılıb-uzadılmaması məsələsinə baxılacaq.
+[2025-07-01T12:08:16 --> 2025-07-01T12:08:21] Məlum işlə bağlı saxlanılan Şahin Lalayevin məhkəməsi isə sabaha təyin olunub.
+
+[Segment 092 @ 2025-07-01T12:08:20 --> 2025-07-01T12:08:30]
+[2025-07-01T12:08:22 --> 2025-07-01T12:08:27] TV Xəbər hazırda Lenski rayon məhkəməsindədir, İqridənburun məhkəməsindədir.
+
+[Segment 093 @ 2025-07-01T12:08:32 --> 2025-07-01T12:08:42]
+[2025-07-01T12:08:32 --> 2025-07-01T12:08:41] Başkonsul Əsfəsəniz Cəhədən, Şöhrət Mustafayev, konsulun digər əməkdaşları, İqtirmudakı Azərbaycan Diyasporunun lideri Şahin Şıxrinski.
+
+[Segment 094 @ 2025-07-01T12:08:40 --> 2025-07-01T12:08:50]
+[2025-07-01T12:08:40 --> 2025-07-01T12:08:48] Və Rusiyanın media, İktirin bugün yerli mediyası, federal mediyada bugün məhkəmə prosesini şıqlandırır.
+
+[Segment 095 @ 2025-07-01T12:08:52 --> 2025-07-01T12:09:02]
+[2025-07-01T12:08:52 --> 2025-07-01T12:09:01] Məhkəmənin çıxardığı qərarı, Bakır Səfərov barəsində çıxardığı qərar barədə ətraflı məlumat verəcəyik.
+
+[Segment 096 @ 2025-07-01T12:09:01 --> 2025-07-01T12:09:11]
+[2025-07-01T12:09:01 --> 2025-07-01T12:09:09] Yunan 29-da barəsində üç günlük həbs qətimkən tədbiri seçilən digər Azərbaycanlı əhriman gəncə.
+
+[Segment 097 @ 2025-07-01T12:09:13 --> 2025-07-01T12:09:23]
+[2025-07-01T12:09:13 --> 2025-07-01T12:09:23] Digər həm yerlimiz Şahid Lalayevin məhkəmə prosesi isə sabaha təyin olunub, onlar barəsində 3 günlük 72 saat.
+
+[Segment 098 @ 2025-07-01T12:09:21 --> 2025-07-01T12:09:31]
+[2025-07-01T12:09:21 --> 2025-07-01T12:09:26] Yəni, həbs qəti imkan tədbirinin uzadılıb-uzadılmaması məsələsinə baxılacaq.
+
+[Segment 099 @ 2025-07-01T12:09:33 --> 2025-07-01T12:09:43]
+[2025-07-01T12:09:33 --> 2025-07-01T12:09:35] seçildi. Lakin mən də öz müvəkkilim
+[2025-07-01T12:09:35 --> 2025-07-01T12:09:37] kimi bu tədbiri qanunsuz hesab edirəm.
+[2025-07-01T12:09:37 --> 2025-07-01T12:09:39] Biz bu qərara sözsüz ki, etiraz edəcəyik.
+[2025-07-01T12:09:40 --> 2025-07-01T12:09:42] Ən ali distansiyaya qədər getməyə çalışacaq.
+[2025-07-01T12:09:42 --> 2025-07-01T12:09:44] Hazırda o fiziki olaraq normal vəzifətdir.
+
+[Segment 100 @ 2025-07-01T12:09:41 --> 2025-07-01T12:09:51]
+[2025-07-01T12:09:41 --> 2025-07-01T12:09:50] Biz sadəcə olaraq ümid edirik ki, İstintak Təcrübxanasının administrasiyası müvəqqilimin lazımı qulluq, lazımı tibbi xidmətlərdən yararlanması üçün...
+
+[Segment 101 @ 2025-07-01T12:09:54 --> 2025-07-01T12:10:04]
+[2025-07-01T12:09:54 --> 2025-07-01T12:10:01] O cümlədən ürək damar xəstəliyindən əziyyət çəkir. Ümid edirik ki, o təcrüb xanadan olduğundan daha ağır vəziyyətdə çıxmayacaq.
+
+[Segment 102 @ 2025-07-01T12:10:02 --> 2025-07-01T12:10:12]
+[2025-07-01T12:10:02 --> 2025-07-01T12:10:08] Bakıda Rusiya vətəndaşlarından ibarət iki mütəşəkkil cinayətkar dəstə saxlanılıb.
+[2025-07-01T12:10:08 --> 2025-07-01T12:10:11] Daxilişlər Nazirliyinin məlumatına görə...
+
+[Segment 103 @ 2025-07-01T12:10:14 --> 2025-07-01T12:10:24]
+[2025-07-01T12:10:14 --> 2025-07-01T12:10:18] kotik tranziti və onlayn dələduzluqda şübhəli bilinirlər.
+
+[Segment 104 @ 2025-07-01T12:10:18 --> 2025-07-01T12:10:28]
+[2025-07-01T12:10:18 --> 2025-07-01T12:10:23] Prezidentinin təqaidləri və fəxri adlara görə təqaidlərin məbləqləri artırılıb.
+[2025-07-01T12:10:23 --> 2025-07-01T12:10:26] Artıq bu aydan itibarən təqaid və müavinətlər artımla alınır.
+
+[Segment 105 @ 2025-07-01T12:10:30 --> 2025-07-01T12:10:40]
+[2025-07-01T12:10:30 --> 2025-07-01T12:10:33] Qadınlar üzrə pensiya yaşı da 6 ay artırılır.
+[2025-07-01T12:10:34 --> 2025-07-01T12:10:38] Bugündən qadınlar üzrə pensiya yaşı 64 il 6 ay olacaq.
+
+[Segment 106 @ 2025-07-01T12:10:39 --> 2025-07-01T12:10:49]
+[2025-07-01T12:10:39 --> 2025-07-01T12:10:47] 2017-ci il iyulun birindən başlayaraq, 2021-ci il iyulun birinə dəyək, hər il 6 ay artırılaraq 65 yaş.
+
+[Segment 107 @ 2025-07-01T12:10:51 --> 2025-07-01T12:11:01]
+[2025-07-01T12:10:51 --> 2025-07-01T12:10:58] Yaş həddi də 2027-ci ilin iyulun birinədək hər il 6 ay artırılaraq 65 il olacaq.
+
+[Segment 108 @ 2025-07-01T12:10:59 --> 2025-07-01T12:11:09]
+[2025-07-01T12:10:59 --> 2025-07-01T12:11:04] Yasamal rayonunda məişət və təkər tullantıları yığılan sahədə yangın baş verib.
+
+[Segment 109 @ 2025-07-01T12:11:11 --> 2025-07-01T12:11:21]
+[2025-07-01T12:11:11 --> 2025-07-01T12:11:16] Yanğın genişlənməsinə imkan verilmədən qısa müddətdə söndürülüb.
+
+[Segment 110 @ 2025-07-01T12:11:19 --> 2025-07-01T12:11:29]
+
+[Segment 111 @ 2025-07-01T12:11:35 --> 2025-07-01T12:11:45]
+[2025-07-01T12:11:36 --> 2025-07-01T12:11:45] Davam edirik. Hindistanın Telingana bölgəsində kimyəvi zavodda partlayış olub, nəticədə bina dağılıb, güclü yangın baş verib.
+
+[Segment 112 @ 2025-07-01T12:11:40 --> 2025-07-01T12:11:50]
+[2025-07-01T12:11:40 --> 2025-07-01T12:11:44] Hadisə zamanı 34 nəfər ölüb, onlarla yaralı xəstəxanıya yerləşdirilib.
+[2025-07-01T12:11:45 --> 2025-07-01T12:11:47] Hadisə ilə bağlı araşdırma aparılır.
+
+[Segment 113 @ 2025-07-01T12:11:52 --> 2025-07-01T12:12:02]
+[2025-07-01T12:11:53 --> 2025-07-01T12:12:23] İzlədiyiniz üçün təşəkkür edirəm.
+
+[Segment 114 @ 2025-07-01T12:12:00 --> 2025-07-01T12:12:10]
+[2025-07-01T12:12:00 --> 2025-07-01T12:12:30] İzlədiyiniz üçün təşəkkür edirəm.
+
+[Segment 115 @ 2025-07-01T12:12:12 --> 2025-07-01T12:12:22]
+[2025-07-01T12:12:12 --> 2025-07-01T12:12:21] Məlumat yayıb. Səfər çərçivəsində Netanyahu Prezident Donald Trump ilə görüşəcək. Məlumata görə görüş ilin yedisində baş tutacaq.
+
+[Segment 116 @ 2025-07-01T12:12:20 --> 2025-07-01T12:12:30]
+[2025-07-01T12:12:20 --> 2025-07-01T12:12:50] İzlədiyiniz üçün təşəkkür edirəm.
+
+[Segment 117 @ 2025-07-01T12:12:33 --> 2025-07-01T12:12:43]
+[2025-07-01T12:12:33 --> 2025-07-01T12:12:35] İzlədiyiniz üçün təşəkkür edirik.
+
+[Segment 118 @ 2025-07-01T12:12:41 --> 2025-07-01T12:12:51]
+
+[Segment 119 @ 2025-07-01T12:12:53 --> 2025-07-01T12:13:03]
+[2025-07-01T12:12:53 --> 2025-07-01T12:13:23] İzlədiyiniz üçün təşəkkürlər.
+
+[Segment 120 @ 2025-07-01T12:13:02 --> 2025-07-01T12:13:12]
+
+[Segment 121 @ 2025-07-01T12:13:14 --> 2025-07-01T12:13:24]
+
+[Segment 122 @ 2025-07-01T12:13:24 --> 2025-07-01T12:13:34]
+
+[Segment 123 @ 2025-07-01T12:13:34 --> 2025-07-01T12:13:44]
+
+[Segment 124 @ 2025-07-01T12:13:44 --> 2025-07-01T12:13:54]
+
+[Segment 125 @ 2025-07-01T12:13:57 --> 2025-07-01T12:14:07]
+
+[Segment 126 @ 2025-07-01T12:14:04 --> 2025-07-01T12:14:14]
+[2025-07-01T12:14:04 --> 2025-07-01T12:14:34] İzlədiyiniz üçün təşəkkürlər.
+
+[Segment 127 @ 2025-07-01T12:14:13 --> 2025-07-01T12:14:23]
+
+[Segment 128 @ 2025-07-01T12:14:21 --> 2025-07-01T12:14:31]
+
+[Segment 129 @ 2025-07-01T12:14:34 --> 2025-07-01T12:14:44]
+
+[Segment 130 @ 2025-07-01T12:14:42 --> 2025-07-01T12:14:52]
+
+[Segment 131 @ 2025-07-01T12:14:52 --> 2025-07-01T12:15:02]
+
+[Segment 132 @ 2025-07-01T12:15:00 --> 2025-07-01T12:15:10]
+
+[Segment 133 @ 2025-07-01T12:15:12 --> 2025-07-01T12:15:22]
+
+[Segment 134 @ 2025-07-01T12:15:20 --> 2025-07-01T12:15:30]
+
+[Segment 135 @ 2025-07-01T12:15:33 --> 2025-07-01T12:15:43]
+[2025-07-01T12:15:34 --> 2025-07-01T12:15:38] Cəmi 15 suala cavab verib 100.000 manat qazanmaq istəyirsiniz.
+[2025-07-01T12:15:39 --> 2025-07-01T12:15:41] O zaman milyonların şovusu.
+
+[Segment 136 @ 2025-07-01T12:15:42 --> 2025-07-01T12:15:52]
+[2025-07-01T12:15:42 --> 2025-07-01T12:16:12] İzlədiyiniz üçün təşəkkürlər.
+
+[Segment 137 @ 2025-07-01T12:15:53 --> 2025-07-01T12:16:03]
+[2025-07-01T12:15:53 --> 2025-07-01T12:15:56] Əkçilərə və tamaşaçılara uğurlar arzu edir.
+
+[Segment 138 @ 2025-07-01T12:16:01 --> 2025-07-01T12:16:11]
+[2025-07-01T12:16:01 --> 2025-07-01T12:16:03] Şübhəxanım, mən dostumdur.
+[2025-07-01T12:16:03 --> 2025-07-01T12:16:05] Birinci növbəyə direkt də dostumdur.
+[2025-07-01T12:16:05 --> 2025-07-01T12:16:07] Dördüncü gün palıq günüdür.
+[2025-07-01T12:16:07 --> 2025-07-01T12:16:09] Gidək inşallah, siz adınızı dəyişərsiniz.
+
+[Segment 139 @ 2025-07-01T12:16:14 --> 2025-07-01T12:16:24]
+[2025-07-01T12:16:14 --> 2025-07-01T12:16:16] Əhvalımızı itirməyəcək
+[2025-07-01T12:16:16 --> 2025-07-01T12:16:17] Düzdür balıqlar
+[2025-07-01T12:16:17 --> 2025-07-01T12:16:18] Biz qalib olaraq elə kürü yədi
+[2025-07-01T12:16:18 --> 2025-07-01T12:16:20] Mərkəzə
+
+[Segment 140 @ 2025-07-01T12:16:18 --> 2025-07-01T12:16:28]
+[2025-07-01T12:16:18 --> 2025-07-01T12:16:26] Vətənsevərlərinə
+
+[Segment 141 @ 2025-07-01T12:16:31 --> 2025-07-01T12:16:41]
+[2025-07-01T12:16:31 --> 2025-07-01T12:16:34] Ya Rəbbəm, mən gəlib kənə Fəzurunu gördüyüm.
+[2025-07-01T12:16:34 --> 2025-07-01T12:16:38] Gəlmişik bu gözəl yurda, indi burada dinzəlirik.
+
+[Segment 142 @ 2025-07-01T12:16:39 --> 2025-07-01T12:16:49]
+[2025-07-01T12:16:39 --> 2025-07-01T12:16:43] Hər bura çıxanda mən nə hisslər keçirdirəm, onu Allah bilir.
+
+[Segment 143 @ 2025-07-01T12:16:51 --> 2025-07-01T12:17:01]
+[2025-07-01T12:16:51 --> 2025-07-01T12:17:21] İzlədiyiniz üçün təşəkkürlər.
+
+[Segment 144 @ 2025-07-01T12:16:59 --> 2025-07-01T12:17:09]
+[2025-07-01T12:16:59 --> 2025-07-01T12:17:03] İYILIN 5-İ SAAT 17.25-DƏ
+
+[Segment 145 @ 2025-07-01T12:17:11 --> 2025-07-01T12:17:21]
+[2025-07-01T12:17:16 --> 2025-07-01T12:17:19] Artıq arzuların üçün pulunu sərbəst yığa bilərsən.
+[2025-07-01T12:17:20 --> 2025-07-01T12:17:21] İstər filial olsun, istər filial olsun.
+
+[Segment 146 @ 2025-07-01T12:17:19 --> 2025-07-01T12:17:29]
+[2025-07-01T12:17:19 --> 2025-07-01T12:17:24] İstər tətbiq, bir bank yığım hesabında arzuladığın məbləqdən yığmağa başla.
+[2025-07-01T12:17:24 --> 2025-07-01T12:17:25] İstədiyin var.
+[2025-07-01T12:17:26 --> 2025-07-01T12:17:27] İstədiyin qədər hesabını artır.
+
+[Segment 147 @ 2025-07-01T12:17:32 --> 2025-07-01T12:17:42]
+[2025-07-01T12:17:32 --> 2025-07-01T12:17:41] Ən əsası, ehtiyac olanda gözləmə. Anında pulunu hesabından götür. İllik 70% qazancın da özünə qalsın.
+
+[Segment 148 @ 2025-07-01T12:17:40 --> 2025-07-01T12:17:50]
+[2025-07-01T12:17:40 --> 2025-07-01T12:17:48] Saçlarımın rəngini qorumaq.
+
+[Segment 149 @ 2025-07-01T12:17:52 --> 2025-07-01T12:18:02]
+[2025-07-01T12:17:52 --> 2025-07-01T12:17:56] Sevrəng eksperti C vitamini və UV filtrlə zənginləşdirilib.
+[2025-07-01T12:17:56 --> 2025-07-01T12:17:59] Boyamış saçları bərpa edir və qoruyur.
+[2025-07-01T12:17:59 --> 2025-07-01T12:18:00] 10 həftiyədək.
+[2025-07-01T12:18:00 --> 2025-07-01T12:18:01] Güneşdən müdafiə.
+
+[Segment 150 @ 2025-07-01T12:18:00 --> 2025-07-01T12:18:10]
+[2025-07-01T12:18:00 --> 2025-07-01T12:18:06] Qalıcı rəng, sudan müdafiə, qalıcı rəng, əlsev rəng eksperti, L'Oreal Parisdən, sən buna layiqsən.
+
+[Segment 151 @ 2025-07-01T12:18:12 --> 2025-07-01T12:18:22]
+[2025-07-01T12:18:12 --> 2025-07-01T12:18:22] Mənim üçün önəmlidir.
+
+[Segment 152 @ 2025-07-01T12:18:21 --> 2025-07-01T12:18:31]
+[2025-07-01T12:18:21 --> 2025-07-01T12:18:25] Devrəng eksperti C vitamini və UV filtrlə zənginləşdirilib.
+[2025-07-01T12:18:25 --> 2025-07-01T12:18:27] Boyamış saçları bərpa edir və qoruyur.
+[2025-07-01T12:18:28 --> 2025-07-01T12:18:29] 10 həftiyədək.
+
+[Segment 153 @ 2025-07-01T12:18:33 --> 2025-07-01T12:18:43]
+[2025-07-01T12:18:33 --> 2025-07-01T12:18:39] Qalıcı rəng, sudan müdafiə, qalıcı rəng, əlsev rəng eksperti, L'Oreal Parisdən, sən buna layiqsən.
+
+[Segment 154 @ 2025-07-01T12:18:41 --> 2025-07-01T12:18:51]
+[2025-07-01T12:18:41 --> 2025-07-01T12:18:49] Yaxşı köpüklənən süngərlər, əla, yapışmayan perqamentlər, mükəmməl və heç bir şey sızmayan paketlər, bu isə super qədər.
+
+[Segment 155 @ 2025-07-01T12:18:53 --> 2025-07-01T12:19:03]
+[2025-07-01T12:18:54 --> 2025-07-01T12:18:57] Şeynizin qayxısına qalmaq ömürlü məsuliyyətdir.
+[2025-07-01T12:18:58 --> 2025-07-01T12:19:03] Mükəmməlləşdirilmiş Purina One qidası ilə dəyişikliyi 21 günə görə bilərsiniz.
+
+[Segment 156 @ 2025-07-01T12:19:01 --> 2025-07-01T12:19:11]
+[2025-07-01T12:19:01 --> 2025-07-01T12:19:07] İçda və yüksək enerji sağlam həzm üçün bağırsaq mikroflorasını yaxşılaşdırır.
+[2025-07-01T12:19:07 --> 2025-07-01T12:19:09] Işıldayan tükördüyü və parlaq gözlər.
+
+[Segment 157 @ 2025-07-01T12:19:14 --> 2025-07-01T12:19:24]
+[2025-07-01T12:19:14 --> 2025-07-01T12:19:44] İzlədiyiniz üçün təşəkkürlər.
+
+[Segment 158 @ 2025-07-01T12:19:22 --> 2025-07-01T12:19:32]
+[2025-07-01T12:19:22 --> 2025-07-01T12:19:23] Qoltuq 6 dərisi üçün.
+
+[Segment 159 @ 2025-07-01T12:19:34 --> 2025-07-01T12:19:44]
+[2025-07-01T12:19:36 --> 2025-07-01T12:19:40] Nescafa, Cappuccino, Latvət və Rapsili ilə əhvalını paylaş.
+[2025-07-01T12:19:40 --> 2025-07-01T12:19:44] Artıq arzuların üçün pulunu sərbəst yığa bilərsən.
+
+[Segment 160 @ 2025-07-01T12:19:38 --> 2025-07-01T12:19:48]
+[2025-07-01T12:19:38 --> 2025-07-01T12:19:45] İstər filial olsun, istər tətbiq, bir bank yığım hesabında arzuladığın məbləqdən yığmağa başla.
+[2025-07-01T12:19:45 --> 2025-07-01T12:19:49] İstədiyin vaxt, istədiyin qədər hesabını artır, fayda.
+
+[Segment 161 @ 2025-07-01T12:19:54 --> 2025-07-01T12:20:04]
+[2025-07-01T12:19:54 --> 2025-07-01T12:20:24] İzlədiyiniz üçün təşəkkürlər.
+
+[Segment 162 @ 2025-07-01T12:19:59 --> 2025-07-01T12:20:09]
+[2025-07-01T12:19:59 --> 2025-07-01T12:20:00] Özünə qalsın!
+
+[Segment 163 @ 2025-07-01T12:20:11 --> 2025-07-01T12:20:21]
+[2025-07-01T12:20:11 --> 2025-07-01T12:20:12] İzlədiyiniz üçün təşəkkürlər.
+
+[Segment 164 @ 2025-07-01T12:20:19 --> 2025-07-01T12:20:29]
+
+[Segment 165 @ 2025-07-01T12:20:32 --> 2025-07-01T12:20:42]
+[2025-07-01T12:20:33 --> 2025-07-01T12:21:03] İNSTAGRAM.COM.AZERBAYCAN
+
+[Segment 166 @ 2025-07-01T12:20:41 --> 2025-07-01T12:20:51]
+[2025-07-01T12:20:42 --> 2025-07-01T12:21:12] İzlədiyiniz üçün təşəkkürlər.
+
+[Segment 167 @ 2025-07-01T12:20:52 --> 2025-07-01T12:21:02]
+[2025-07-01T12:20:52 --> 2025-07-01T12:20:58] Şəkin khanlarının qarşısında mümkün olan arxitektura əməliyyatı var.
+[2025-07-01T12:20:58 --> 2025-07-01T12:21:02] Bu, ümumiyyətlə, şəkin khanlarının qarşısında mümkün olan arxitektura əməliyyatı var.
+
+[Segment 168 @ 2025-07-01T12:21:00 --> 2025-07-01T12:21:10]
+[2025-07-01T12:21:00 --> 2025-07-01T12:21:30] Əlbəttə, əlbəttə, əlbəttə, əlbəttə.
+
+[Segment 169 @ 2025-07-01T12:21:12 --> 2025-07-01T12:21:22]
+[2025-07-01T12:21:12 --> 2025-07-01T12:21:42] Qeyri-qeyri-qeyri-qeyri-qeyri-qeyri.
+
+[Segment 170 @ 2025-07-01T12:21:21 --> 2025-07-01T12:21:31]
+[2025-07-01T12:21:22 --> 2025-07-01T12:21:23] Ətə, nisə oqluş ki, xanım?
+[2025-07-01T12:21:24 --> 2025-07-01T12:21:25] Ətə, şəbəkə.
+[2025-07-01T12:21:25 --> 2025-07-01T12:21:26] Ah, şəbəkə?
+[2025-07-01T12:21:27 --> 2025-07-01T12:21:28] Da, şəbəkə.
+[2025-07-01T12:21:28 --> 2025-07-01T12:21:29] Ə, tibər, proşu vəz.
+
+[Segment 171 @ 2025-07-01T12:21:33 --> 2025-07-01T12:21:43]
+[2025-07-01T12:21:33 --> 2025-07-01T12:22:06] Təşəkkür edirəm, təşəkkür edirəm.
+
+[Segment 172 @ 2025-07-01T12:21:41 --> 2025-07-01T12:21:51]
+[2025-07-01T12:21:41 --> 2025-07-01T12:21:43] Mama bəyəm bilmir ki, mən məyqus qursam.
+[2025-07-01T12:21:43 --> 2025-07-01T12:21:48] Bilir, ona görə dedi ki, qarşı saraya, hafiyyətindən qutaran kimi təzəyə gəlsin.
+[2025-07-01T12:21:48 --> 2025-07-01T12:21:49] Nə olacaq?
+
+[Segment 173 @ 2025-07-01T12:21:53 --> 2025-07-01T12:22:03]
+[2025-07-01T12:21:53 --> 2025-07-01T12:22:00] Yaxşı, sən ged öyə, mamiyə diki, mən əmələ məktəbdə iki dərsim var, qutaran kimi gələm, ged.
+
+[Segment 174 @ 2025-07-01T12:22:01 --> 2025-07-01T12:22:11]
+[2025-07-01T12:22:04 --> 2025-07-01T12:22:06] Nə, İstanbul?
+[2025-07-01T12:22:06 --> 2025-07-01T12:22:08] Nə, Əlmürə?
+[2025-07-01T12:22:08 --> 2025-07-01T12:22:10] Nə, nə, bəs bir saati sardım.
+
+[Segment 175 @ 2025-07-01T12:22:13 --> 2025-07-01T12:22:23]
+[2025-07-01T12:22:13 --> 2025-07-01T12:22:17] İskəndər əmin oğlu. İskəndər əmin iki yıldır ki, o da Allah rəhmətinə gedib.
+[2025-07-01T12:22:17 --> 2025-07-01T12:22:21] Oğlanma Əli Murad saxsalamad. Yaşıyır İstanbulda.
+[2025-07-01T12:22:21 --> 2025-07-01T12:22:23] Ezidə maşallah, varlı-hallıdır.
+
+[Segment 176 @ 2025-07-01T12:22:22 --> 2025-07-01T12:22:32]
+[2025-07-01T12:22:22 --> 2025-07-01T12:22:24] Sən bunları hardan bilirsən?
+[2025-07-01T12:22:25 --> 2025-07-01T12:22:26] Hıh, hardan bilirsən?
+[2025-07-01T12:22:27 --> 2025-07-01T12:22:28] Bəs kildi mənim işin peşəm nədir?
+[2025-07-01T12:22:29 --> 2025-07-01T12:22:30] Bu xarabada uşaqlar...
+
+[Segment 177 @ 2025-07-01T12:22:34 --> 2025-07-01T12:22:44]
+[2025-07-01T12:22:34 --> 2025-07-01T12:22:37] Niyə, yox! Bütün Türkiyəni alt üst eləmişəm onu tapana qədər.
+[2025-07-01T12:22:37 --> 2025-07-01T12:22:40] Sağ olsun yenə Mahmudu, o kömək elədi.
+[2025-07-01T12:22:40 --> 2025-07-01T12:22:44] Aslı oğlu Əhvatı İstanbulda işdi, konsuluqda.
+
+[Segment 178 @ 2025-07-01T12:22:42 --> 2025-07-01T12:22:52]
+[2025-07-01T12:22:42 --> 2025-07-01T12:22:44] Nə baxırsan, dağın oğul.
+[2025-07-01T12:22:46 --> 2025-07-01T12:22:49] Təəssüf ki, bizim axtarışlarımız bir nəticə vermədi.
+[2025-07-01T12:22:49 --> 2025-07-01T12:22:50] Şükür olsun, amma mənim qarşı qarşı qarşı qarşı qarşı qarşı qarşı qarşı.
+
+[Segment 179 @ 2025-07-01T12:22:54 --> 2025-07-01T12:23:04]
+[2025-07-01T12:22:54 --> 2025-07-01T12:23:01] Sənin məktubu alanda hamımız, mən də, türkən də, uşaqlar da çox məmnun olduk.
+[2025-07-01T12:23:01 --> 2025-07-01T12:23:03] Sevincimizin hətti hüdudu yoxdur.
+
+[Segment 180 @ 2025-07-01T12:23:02 --> 2025-07-01T12:23:12]
+[2025-07-01T12:23:02 --> 2025-07-01T12:23:06] Oh, oh, oh, mən yazmışam kağıdı olaraq.
+[2025-07-01T12:23:06 --> 2025-07-01T12:23:10] Sənin xaş.
+
+[Segment 181 @ 2025-07-01T12:23:14 --> 2025-07-01T12:23:24]
+[2025-07-01T12:23:14 --> 2025-07-01T12:23:22] Sənə və Nuriye xanıma viza göndərirəm. Sizi tezliklə İstanbulda görmək ümidindəyik.
+
+[Segment 182 @ 2025-07-01T12:23:19 --> 2025-07-01T12:23:29]
+[2025-07-01T12:23:19 --> 2025-07-01T12:23:21] Haydi, növizə!
+
+[Segment 183 @ 2025-07-01T12:23:31 --> 2025-07-01T12:23:41]
+[2025-07-01T12:23:31 --> 2025-07-01T12:23:33] Peçatı ilə, zadı ilə...
+[2025-07-01T12:23:33 --> 2025-07-01T12:23:35] ...Hər şey necə lazımdır.
+[2025-07-01T12:23:35 --> 2025-07-01T12:23:36] Bu da!
+[2025-07-01T12:23:37 --> 2025-07-01T12:23:38] İndi nə olsun ki?
+
+[Segment 184 @ 2025-07-01T12:23:39 --> 2025-07-01T12:23:49]
+[2025-07-01T12:23:39 --> 2025-07-01T12:23:44] Daha nə olmalıdır ki, indi axma olmaq lazımdır ki, bu fürsiyyətdən istifadə eləməyəsəm.
+[2025-07-01T12:23:44 --> 2025-07-01T12:23:47] Qədər o, həm qovm qardaşla tanış olar o.
+
+[Segment 185 @ 2025-07-01T12:23:51 --> 2025-07-01T12:24:01]
+[2025-07-01T12:23:51 --> 2025-07-01T12:23:56] Həm tüccarət!
+[2025-07-01T12:23:56 --> 2025-07-01T12:24:01] Nuriyev, İskəndər əmin oğlu tapılıqdı, laf yaxşı!
+
+[Segment 186 @ 2025-07-01T12:23:59 --> 2025-07-01T12:24:09]
+[2025-07-01T12:23:59 --> 2025-07-01T12:24:06] Mən çox şadım, amma sən məni başa sal görürüm, ax, sən məndən icazəsiz bu işləri niyə görürsən?
+[2025-07-01T12:24:06 --> 2025-07-01T12:24:08] Bəh, bəh, bəh, eşidirsən!
+
+[Segment 187 @ 2025-07-01T12:24:11 --> 2025-07-01T12:24:21]
+[2025-07-01T12:24:11 --> 2025-07-01T12:24:15] Bu da bunun mağa çox sağlıdır.
+[2025-07-01T12:24:15 --> 2025-07-01T12:24:19] Baxsa, kimi cazə verirdin məmadımdan kağız yazasın?
+[2025-07-01T12:24:19 --> 2025-07-01T12:24:21] Özlə nə seçdiyəsən?
+
+[Segment 188 @ 2025-07-01T12:24:19 --> 2025-07-01T12:24:29]
+[2025-07-01T12:24:22 --> 2025-07-01T12:24:26] Səndən soruşuram, kim saycazə verirdi mənim adımdan kağız yazıb, nəsə istəyəsən?
+
+[Segment 189 @ 2025-07-01T12:24:32 --> 2025-07-01T12:24:42]
+[2025-07-01T12:24:32 --> 2025-07-01T12:24:35] Suğur Aqava!
+[2025-07-01T12:24:35 --> 2025-07-01T12:24:37] Suğur Aqava!
+[2025-07-01T12:24:37 --> 2025-07-01T12:24:39] Nə oluqdur?
+[2025-07-01T12:24:39 --> 2025-07-01T12:24:41] Mən bayaq sahə nə dedim?
+
+[Segment 190 @ 2025-07-01T12:24:40 --> 2025-07-01T12:24:50]
+[2025-07-01T12:24:40 --> 2025-07-01T12:24:42] Mən o qulu kişini görürüm, mən kağızı oxuyan kimsə, hə nə deyidim?
+[2025-07-01T12:24:42 --> 2025-07-01T12:24:44] Deyin, diqlağas, görsən, Ağlı oğlu nə deyir?
+
+[Segment 191 @ 2025-07-01T12:24:52 --> 2025-07-01T12:25:02]
+[2025-07-01T12:24:53 --> 2025-07-01T12:24:54] Sövünürəm, sövünürəm.
+[2025-07-01T12:24:56 --> 2025-07-01T12:24:59] Sən məni sakit başa sal görüm, axı biz niyə İstanbula getməliyox?
+[2025-07-01T12:25:01 --> 2025-07-01T12:25:02] 12 minarda qomuta...
+
+[Segment 192 @ 2025-07-01T12:25:00 --> 2025-07-01T12:25:10]
+[2025-07-01T12:25:00 --> 2025-07-01T12:25:02] Qapılıqdı, gərək cümub getsin o yana.
+[2025-07-01T12:25:03 --> 2025-07-01T12:25:06] Eşidirsə oğuz, eşidirsə oğuz aqızdan!
+[2025-07-01T12:25:06 --> 2025-07-01T12:25:08] Papa ağız dəli oluqdu, onu doktora...
+
+[Segment 193 @ 2025-07-01T12:25:12 --> 2025-07-01T12:25:22]
+[2025-07-01T12:25:13 --> 2025-07-01T12:25:15] İndi hamı Türkiyəyə gedir ayolur.
+[2025-07-01T12:25:16 --> 2025-07-01T12:25:18] Çəkin yar sordu olub da.
+[2025-07-01T12:25:19 --> 2025-07-01T12:25:20] Kim gedir?
+[2025-07-01T12:25:22 --> 2025-07-01T12:25:22] Gedenlərin yar sordu.
+
+[Segment 194 @ 2025-07-01T12:25:20 --> 2025-07-01T12:25:30]
+[2025-07-01T12:25:20 --> 2025-07-01T12:25:21] Alvericilərdir.
+[2025-07-01T12:25:23 --> 2025-07-01T12:25:24] Bizə eləşək yaraşar?
+[2025-07-01T12:25:24 --> 2025-07-01T12:25:26] Yoo, Allah eləməsin.
+[2025-07-01T12:25:26 --> 2025-07-01T12:25:28] Bizə ömür boyu borçunda sürünmək yaraşar.
+
+[Segment 195 @ 2025-07-01T12:25:32 --> 2025-07-01T12:25:42]
+[2025-07-01T12:25:32 --> 2025-07-01T12:25:34] Qabağa-qabağa qoyur, fikirləşmirsən də qaraq.
+[2025-07-01T12:25:34 --> 2025-07-01T12:25:36] Övdə üç göz uşağı böyür.
+[2025-07-01T12:25:36 --> 2025-07-01T12:25:38] Sabir üçün onları köçüdümək lazım olacaq.
+[2025-07-01T12:25:38 --> 2025-07-01T12:25:40] O barədə fikirləşmirsən.
+[2025-07-01T12:25:40 --> 2025-07-01T12:25:42] Yaraşmaz bizə.
+
+[Segment 196 @ 2025-07-01T12:25:41 --> 2025-07-01T12:25:51]
+[2025-07-01T12:25:41 --> 2025-07-01T12:25:43] Ay qulu kişinin oğlu.
+[2025-07-01T12:25:43 --> 2025-07-01T12:25:46] Bir ətrafa bağ, hamı işlə nəşuldur pul qazanır.
+[2025-07-01T12:25:46 --> 2025-07-01T12:25:49] İndi balacı bəbə də başa çür ki, maaşla dolanmaq olmaz.
+
+[Segment 197 @ 2025-07-01T12:25:53 --> 2025-07-01T12:26:03]
+[2025-07-01T12:25:53 --> 2025-07-01T12:25:57] Buna bir bax, yapışıb doğxan sarayın quyruğuna əl çəkmək istəmir.
+[2025-07-01T12:25:57 --> 2025-07-01T12:26:01] Bu nadir binanın dikintisində niyətun yadınımı qıvoz diqa.
+[2025-07-01T12:26:01 --> 2025-07-01T12:26:02] Cəmatı ələ salır.
+
+[Segment 198 @ 2025-07-01T12:26:01 --> 2025-07-01T12:26:11]
+[2025-07-01T12:26:01 --> 2025-07-01T12:26:03] İndən sən orda nə qidəsizsən, müslüman göstərin!
+[2025-07-01T12:26:03 --> 2025-07-01T12:26:05] Allah gələn danışmadan oraya!
+[2025-07-01T12:26:06 --> 2025-07-01T12:26:08] Onları sonradan ruslar vururdu.
+[2025-07-01T12:26:08 --> 2025-07-01T12:26:10] Rimontiliyən də!
+
+[Segment 199 @ 2025-07-01T12:26:13 --> 2025-07-01T12:26:23]
+[2025-07-01T12:26:14 --> 2025-07-01T12:26:16] Sən niyə xora getmək istəmirsən?
+[2025-07-01T12:26:17 --> 2025-07-01T12:26:19] Nuriə kağızı oxuyanda elə sövəndim ki,
+[2025-07-01T12:26:20 --> 2025-07-01T12:26:23] Allah İskəndərə rəhmət eləsin, nə yaxşı oğlu varmış.
+
+[Segment 200 @ 2025-07-01T12:26:21 --> 2025-07-01T12:26:31]
+[2025-07-01T12:26:22 --> 2025-07-01T12:26:28] Orada amma danı attı, ömründə bizi görməkdi, amma nə yaxşı sözlər yazdı.
+
+[Segment 201 @ 2025-07-01T12:26:33 --> 2025-07-01T12:26:43]
+[2025-07-01T12:26:33 --> 2025-07-01T12:26:35] Nə olsun ki, vizam?
+[2025-07-01T12:26:36 --> 2025-07-01T12:26:39] Heç bilsən, ora girib-gəlməyə nə qədər qull lazım?
+[2025-07-01T12:26:39 --> 2025-07-01T12:26:40] Bilirux, bilirux.
+[2025-07-01T12:26:40 --> 2025-07-01T12:26:42] Allaha şükür, hələ qardaşlarım ölməyik.
+
+[Segment 202 @ 2025-07-01T12:26:42 --> 2025-07-01T12:26:52]
+[2025-07-01T12:26:42 --> 2025-07-01T12:26:47] Yəni də eləyənlər!
+[2025-07-01T12:26:47 --> 2025-07-01T12:26:48] Nuş olsun!
+[2025-07-01T12:26:48 --> 2025-07-01T12:26:50] Əssoq arağın yox idi?
+[2025-07-01T12:26:50 --> 2025-07-01T12:26:52] Əssoq arağın nə nisə olsun, boğazı ozaqlayar.
+
+[Segment 203 @ 2025-07-01T12:26:52 --> 2025-07-01T12:27:02]
+[2025-07-01T12:26:52 --> 2025-07-01T12:27:01] Sorar, sorar.
+
+[Segment 204 @ 2025-07-01T12:27:01 --> 2025-07-01T12:27:11]
+[2025-07-01T12:27:01 --> 2025-07-01T12:27:07] Daha nəsə ora, sənin bacı ona ağlı xarab oldu, heç bilirsən bilət nə şeyədi, təkcə bilət.
+[2025-07-01T12:27:07 --> 2025-07-01T12:27:08] Deyirəm, nə olsun ki?
+[2025-07-01T12:27:08 --> 2025-07-01T12:27:09] Ə, necə nə olsun?
+
+[Segment 205 @ 2025-07-01T12:27:12 --> 2025-07-01T12:27:22]
+[2025-07-01T12:27:13 --> 2025-07-01T12:27:14] Borc üçün də boğulurum.
+[2025-07-01T12:27:15 --> 2025-07-01T12:27:16] Təkcə sağa nə qədər borcumuz var.
+[2025-07-01T12:27:17 --> 2025-07-01T12:27:18] Məa görəsən, darıqma.
+[2025-07-01T12:27:18 --> 2025-07-01T12:27:21] Mən Allahı şüur, nə qədər lazımdır gözləyə bilərəm.
+[2025-07-01T12:27:21 --> 2025-07-01T12:27:22] Nə olsun ki, sən gözləyərsən.
+
+[Segment 206 @ 2025-07-01T12:27:21 --> 2025-07-01T12:27:31]
+[2025-07-01T12:27:21 --> 2025-07-01T12:27:25] Məsələ onda döyül axır, indi İstanbul bizim haramıza yarar.
+[2025-07-01T12:27:25 --> 2025-07-01T12:27:29] Hə, sən bilirsən, Nuriyevə qınamaq olmaz da, yadından çıxar,
+
+[Segment 207 @ 2025-07-01T12:27:33 --> 2025-07-01T12:27:43]
+[2025-07-01T12:27:33 --> 2025-07-01T12:27:36] Ə, nə sapırarsa oğuz, lazım olanı oradan alarsa oğuz.
+[2025-07-01T12:27:36 --> 2025-07-01T12:27:40] Ə, bu fürsəti əldən vermək olmaz, e, yezləyin, valla künah be!
+[2025-07-01T12:27:40 --> 2025-07-01T12:27:43] Ə, cəmaat arzusundadır ki, o tərəflər də bir qovmasa da olsun.
+
+[Segment 208 @ 2025-07-01T12:27:41 --> 2025-07-01T12:27:51]
+[2025-07-01T12:27:41 --> 2025-07-01T12:27:46] Sanota, maşallah, tüm məhkəmə əmni oğla özü İstanbullun gövəyində, hətta nə lazım ki?
+[2025-07-01T12:27:47 --> 2025-07-01T12:27:48] Nə bilim, ballı?
+
+[Segment 209 @ 2025-07-01T12:27:53 --> 2025-07-01T12:28:03]
+[2025-07-01T12:27:53 --> 2025-07-01T12:27:55] Əbəs ərzən gələmişdi.
+[2025-07-01T12:27:55 --> 2025-07-01T12:27:56] Maşallah!
+[2025-07-01T12:27:56 --> 2025-07-01T12:27:58] Əbəs sən nə bilmişdi?
+[2025-07-01T12:27:58 --> 2025-07-01T12:28:01] Nə, bacım, Allah canın sağ olasın, belə şeylər də yeməndə idi başda?
+[2025-07-01T12:28:01 --> 2025-07-01T12:28:03] Dedim ona ki, yox, hərcə mənə boynumaş.
+
+[Segment 210 @ 2025-07-01T12:28:01 --> 2025-07-01T12:28:11]
+[2025-07-01T12:28:01 --> 2025-07-01T12:28:03] Həvaqım kəna zor, onda qaytar hərs ola.
+[2025-07-01T12:28:03 --> 2025-07-01T12:28:04] Nazım!
+[2025-07-01T12:28:04 --> 2025-07-01T12:28:05] Qəram!
+[2025-07-01T12:28:05 --> 2025-07-01T12:28:07] Ətə qatır idin də yiyidin biloxma.
+[2025-07-01T12:28:07 --> 2025-07-01T12:28:08] Yox, istəmirəm.
+[2025-07-01T12:28:08 --> 2025-07-01T12:28:09] Yaxşı, sağ ol.
+
+[Segment 211 @ 2025-07-01T12:28:13 --> 2025-07-01T12:28:23]
+[2025-07-01T12:28:15 --> 2025-07-01T12:28:20] Müraba, mən sabah işləmirəm, akşam gəlir pulu hapa.
+
+[Segment 212 @ 2025-07-01T12:28:21 --> 2025-07-01T12:28:31]
+[2025-07-01T12:28:21 --> 2025-07-01T12:28:23] Gör belə bir abidəni nağarsız.
+[2025-07-01T12:28:24 --> 2025-07-01T12:28:26] Daha ayrı yer yox idi restoran açmaq.
+[2025-07-01T12:28:29 --> 2025-07-01T12:28:30] Hər şey.
+
+[Segment 213 @ 2025-07-01T12:28:34 --> 2025-07-01T12:28:44]
+[2025-07-01T12:28:34 --> 2025-07-01T12:28:36] Qalqa!
+[2025-07-01T12:28:36 --> 2025-07-01T12:28:38] Atarıqma, hər şey cələcək!
+[2025-07-01T12:28:41 --> 2025-07-01T12:28:43] Allah sakinlə, olsun əyəzinə!
+
+[Segment 214 @ 2025-07-01T12:28:42 --> 2025-07-01T12:28:52]
+[2025-07-01T12:28:45 --> 2025-07-01T12:28:47] Üft, yiyin, yoxsa bir avrolaram orda.
+[2025-07-01T12:28:47 --> 2025-07-01T12:28:51] Ay, ay, ötə öylə, axır iki ayda üç yüzlərdir elə satmışaq, hamısı yoxla.
+
+[Segment 215 @ 2025-07-01T12:28:50 --> 2025-07-01T12:29:00]
+[2025-07-01T12:28:50 --> 2025-07-01T12:28:51] Yaxşı bük.
+[2025-07-01T12:28:51 --> 2025-07-01T12:28:51] Gözümüz.
+[2025-07-01T12:28:52 --> 2025-07-01T12:28:54] Oralarda bu çox yaxşı deyil.
+[2025-07-01T12:28:55 --> 2025-07-01T12:28:57] Amma mən bir dəyən şey başa düşənmirəm.
+[2025-07-01T12:28:57 --> 2025-07-01T12:28:59] Amma qədər diril tükləyinə elə lazımdır.
+[2025-07-01T12:28:59 --> 2025-07-01T12:29:01] O qədər ki, bizim şəkillər ora paylaşırlar.
+
+[Segment 216 @ 2025-07-01T12:29:00 --> 2025-07-01T12:29:10]
+[2025-07-01T12:29:00 --> 2025-07-01T12:29:02] Bütün Türkiyədə işləşilmək var.
+[2025-07-01T12:29:02 --> 2025-07-01T12:29:04] Səni!
+[2025-07-01T12:29:04 --> 2025-07-01T12:29:06] Heyr olsun!
+[2025-07-01T12:29:06 --> 2025-07-01T12:29:08] Çox sağol!
+
+[Segment 217 @ 2025-07-01T12:29:12 --> 2025-07-01T12:29:22]
+[2025-07-01T12:29:12 --> 2025-07-01T12:29:14] Otur, otur, görürüm.
+[2025-07-01T12:29:14 --> 2025-07-01T12:29:15] Mala desto bil.
+[2025-07-01T12:29:15 --> 2025-07-01T12:29:17] Hardan bu onun ağzına gəl.
+[2025-07-01T12:29:17 --> 2025-07-01T12:29:20] Özünə bir şey sənin bacon beyinə girdi və səlim.
+[2025-07-01T12:29:20 --> 2025-07-01T12:29:22] İstəyirsən özü öldür.
+
+[Segment 218 @ 2025-07-01T12:29:21 --> 2025-07-01T12:29:31]
+[2025-07-01T12:29:21 --> 2025-07-01T12:29:22] Xeyri yoxdur, bildiyini eləyəcək.
+[2025-07-01T12:29:22 --> 2025-07-01T12:29:25] Əbə qandız deyirsən, o barədə qapmağı oxşaydı.
+[2025-07-01T12:29:25 --> 2025-07-01T12:29:27] İndi cə vurdu idi, sən qıbandır getdi.
+[2025-07-01T12:29:27 --> 2025-07-01T12:29:29] Borc üstə məyə gəlmişdi.
+[2025-07-01T12:29:29 --> 2025-07-01T12:29:31] Ən olsun ki.
+
+[Segment 219 @ 2025-07-01T12:29:33 --> 2025-07-01T12:29:43]
+[2025-07-01T12:29:33 --> 2025-07-01T12:29:36] Bəs kimi yana getsin, onda dağ qoğun qardaşı nədəni ötürürdü?
+[2025-07-01T12:29:37 --> 2025-07-01T12:29:41] Naşəni, o peqarından götürdüyümüz oğlanlağına varam, kimi saxlayıroq?
+[2025-07-01T12:29:41 --> 2025-07-01T12:29:42] Adamlığa cəhəti bıraxam.
+[2025-07-01T12:29:42 --> 2025-07-01T12:29:43] Tutmaq lazım.
+
+[Segment 220 @ 2025-07-01T12:29:41 --> 2025-07-01T12:29:51]
+[2025-07-01T12:29:41 --> 2025-07-01T12:29:43] Azı müdaa ver, köpək uşaqlarını!
+[2025-07-01T12:29:43 --> 2025-07-01T12:29:45] Amma daha nağar mı oğlan?
+[2025-07-01T12:29:45 --> 2025-07-01T12:29:47] Rus demişkən, ni poyman, ni vor!
+[2025-07-01T12:29:47 --> 2025-07-01T12:29:48] Bıraq getsin!
+[2025-07-01T12:29:48 --> 2025-07-01T12:29:51] Amma mənim adımdan tapışır, bir də belə bir şey eşitəm ağa!
+[2025-07-01T12:29:51 --> 2025-07-01T12:29:52] Tup basıc...
+
+[Segment 221 @ 2025-07-01T12:29:53 --> 2025-07-01T12:30:03]
+[2025-07-01T12:29:53 --> 2025-07-01T12:29:55] Necə məcləflərə?
+[2025-07-01T12:29:55 --> 2025-07-01T12:30:03] Yaxşı, İstanburg yalma şəhərd, hamı deyil?
+
+[Segment 222 @ 2025-07-01T12:30:01 --> 2025-07-01T12:30:11]
+[2025-07-01T12:30:01 --> 2025-07-01T12:30:06] Çingiz, nə edir Mustafa?
+[2025-07-01T12:30:06 --> 2025-07-01T12:30:10] Bəlkə, bəlkə bir sən danışasan onunla.
+[2025-07-01T12:30:10 --> 2025-07-01T12:30:11] Kimlər?
+
+[Segment 223 @ 2025-07-01T12:30:14 --> 2025-07-01T12:30:24]
+[2025-07-01T12:30:14 --> 2025-07-01T12:30:19] Nuriyeynə, bilirsən, Nuriyey istəyir ki, biz ora şeyşi yaparaq satmağı.
+[2025-07-01T12:30:19 --> 2025-07-01T12:30:24] Ə, aləmsənə, Mustafa, ə, bəs necə, bəs necə, bəs necə, bəs necə, bəs necə, bəs necə, bəs necə,
+
+[Segment 224 @ 2025-07-01T12:30:22 --> 2025-07-01T12:30:32]
+[2025-07-01T12:30:22 --> 2025-07-01T12:30:25] Heç olmasa, bu keşkionz xəşləri çıxarmalısın ya yox?
+[2025-07-01T12:30:25 --> 2025-07-01T12:30:27] Ə, qərib adamsam valla.
+[2025-07-01T12:30:27 --> 2025-07-01T12:30:29] Əlbəttə lazımdır.
+[2025-07-01T12:30:29 --> 2025-07-01T12:30:31] Amma daha ora hər xırda mırda şey yaparmaq olmaz.
+[2025-07-01T12:30:31 --> 2025-07-01T12:30:33] Elə şəxs edəcəm.
+
+[Segment 225 @ 2025-07-01T12:30:34 --> 2025-07-01T12:30:44]
+[2025-07-01T12:30:34 --> 2025-07-01T12:30:36] Bir şey yaparmaq lazımdır ki, yaxşı pula geçsin.
+[2025-07-01T12:30:36 --> 2025-07-01T12:30:37] Başa çürsən, nə mənim?
+[2025-07-01T12:30:37 --> 2025-07-01T12:30:39] Bir yaxşı qədimi xalç yaparmaq olar.
+[2025-07-01T12:30:39 --> 2025-07-01T12:30:40] Təz olmasa dolar.
+[2025-07-01T12:30:41 --> 2025-07-01T12:30:43] Özlə deyəsən, mən sizdə elə bir şey görmüşəm.
+
+[Segment 226 @ 2025-07-01T12:30:38 --> 2025-07-01T12:30:48]
+[2025-07-01T12:30:38 --> 2025-07-01T12:30:42] Belki də tam o ucunda bizim Topal Məmədiyyəni oğlu rəhman işləyirdi.
+[2025-07-01T12:30:42 --> 2025-07-01T12:30:44] Bilmirəm, gen orda işləyir ya yox.
+[2025-07-01T12:30:44 --> 2025-07-01T12:30:46] Hamazan gelib öyrənmək olar.
+[2025-07-01T12:30:46 --> 2025-07-01T12:30:48] İşləməsi deyib yoxdur.
+
+[Segment 227 @ 2025-07-01T12:30:50 --> 2025-07-01T12:31:00]
+[2025-07-01T12:30:50 --> 2025-07-01T12:30:56] Amma nə deyirsən dinə, getmək yolu çox yaxşıdır, sizin yerinizdə mən söylənirəm, valla.
+[2025-07-01T12:30:56 --> 2025-07-01T12:30:57] Nə bilinməş?
+[2025-07-01T12:30:57 --> 2025-07-01T12:30:59] Pul bar göcündə madiyyət.
+
+[Segment 228 @ 2025-07-01T12:30:59 --> 2025-07-01T12:31:09]
+[2025-07-01T12:30:59 --> 2025-07-01T12:31:03] Əvvəlgə, zət duyuruq ki, öz dəvrəyi onsuxmaq, nə vaxt imkanın onda qaytararsın.
+[2025-07-01T12:31:04 --> 2025-07-01T12:31:08] Yaxşı, sağ ol.
+
+[Segment 229 @ 2025-07-01T12:31:10 --> 2025-07-01T12:31:20]
+[2025-07-01T12:31:10 --> 2025-07-01T12:31:11] Sağ ol.
+[2025-07-01T12:31:18 --> 2025-07-01T12:31:20] Çingiz, mədəmsdə.
+
+[Segment 230 @ 2025-07-01T12:31:18 --> 2025-07-01T12:31:28]
+[2025-07-01T12:31:18 --> 2025-07-01T12:31:23] Bilirsən, mən başa düşürəm, indi zaman əvvəlki zamanda öylü.
+[2025-07-01T12:31:23 --> 2025-07-01T12:31:26] Amma gənə soruşmaq istəyirəm.
+[2025-07-01T12:31:26 --> 2025-07-01T12:31:27] Sən belə şeyləri yaxşı bilərsən.
+[2025-07-01T12:31:27 --> 2025-07-01T12:31:28] Nəyi?
+
+[Segment 231 @ 2025-07-01T12:31:31 --> 2025-07-01T12:31:41]
+[2025-07-01T12:31:31 --> 2025-07-01T12:31:36] Mən ömrüm boyu anketlərdə yazmışam ki, xaricdə qovmum sadım yoxdur.
+[2025-07-01T12:31:36 --> 2025-07-01T12:31:39] Bəs indi soruşmazlar ki, bu qovmlar haradan çıxdı?
+
+[Segment 232 @ 2025-07-01T12:31:39 --> 2025-07-01T12:31:49]
+[2025-07-01T12:31:39 --> 2025-07-01T12:31:42] Sələm, sələm, Mustafa, ee, kim sorusuz ki, kim?
+[2025-07-01T12:31:42 --> 2025-07-01T12:31:44] Vəfəl, valla!
+[2025-07-01T12:31:46 --> 2025-07-01T12:31:48] Salam!
+
+[Segment 233 @ 2025-07-01T12:31:51 --> 2025-07-01T12:32:01]
+[2025-07-01T12:31:51 --> 2025-07-01T12:31:56] Baxdım, valayı qonş, yarım il dəfə arat, dildən şey yalv eləmirdim.
+[2025-07-01T12:31:56 --> 2025-07-01T12:31:59] Özlə, məlum, şirrəşib eləmək, küsəyik otur.
+[2025-07-01T12:31:59 --> 2025-07-01T12:32:01] Valla sonra mənə sağ ol deyil o.
+
+[Segment 234 @ 2025-07-01T12:31:59 --> 2025-07-01T12:32:09]
+[2025-07-01T12:31:59 --> 2025-07-01T12:32:01] Tam orjini deyin, gitməz də.
+[2025-07-01T12:32:01 --> 2025-07-01T12:32:04] Allah fəryada açasın, camadan onu daşıyır.
+[2025-07-01T12:32:04 --> 2025-07-01T12:32:05] Bu nədir ki, ki, olsa odur ki, aparat.
+[2025-07-01T12:32:06 --> 2025-07-01T12:32:08] Soruşsalar deyin, şəkdə belə adətdir.
+[2025-07-01T12:32:08 --> 2025-07-01T12:32:09] Hər hənin özünün aparatı olmaz.
+
+[Segment 235 @ 2025-07-01T12:32:11 --> 2025-07-01T12:32:21]
+[2025-07-01T12:32:11 --> 2025-07-01T12:32:13] Yaxşı, televizor sabah yəqin olaca idi, hə?
+[2025-07-01T12:32:13 --> 2025-07-01T12:32:17] Allah qoysa, tezdən geyəcəm bazıya, gün ortadan sonra dəyərsən.
+[2025-07-01T12:32:17 --> 2025-07-01T12:32:18] Şilalist, hə?
+[2025-07-01T12:32:18 --> 2025-07-01T12:32:21] Görək, daha hansından olur, ya Şilalist, ya Şilalist.
+
+[Segment 236 @ 2025-07-01T12:32:20 --> 2025-07-01T12:32:30]
+[2025-07-01T12:32:20 --> 2025-07-01T12:32:22] ...ya da Yunus, siz orada ha biləcəksiniz.
+[2025-07-01T12:32:22 --> 2025-07-01T12:32:24] Hə, yaxşı, bunların ikisini də götürürəm.
+[2025-07-01T12:32:24 --> 2025-07-01T12:32:25] Hımm.
+[2025-07-01T12:32:26 --> 2025-07-01T12:32:27] Təsadüfə də öylü ki...
+[2025-07-01T12:32:27 --> 2025-07-01T12:32:29] ...adam başına düşən milli gəlirin həcmi...
+
+[Segment 237 @ 2025-07-01T12:32:32 --> 2025-07-01T12:32:42]
+[2025-07-01T12:32:32 --> 2025-07-01T12:32:36] Səhminə görə, İsveç və Kapitalist ölkələri arasında birinci yer tutun.
+[2025-07-01T12:32:39 --> 2025-07-01T12:32:41] Sualı olan var.
+
+[Segment 238 @ 2025-07-01T12:32:40 --> 2025-07-01T12:32:50]
+[2025-07-01T12:32:41 --> 2025-07-01T12:32:42] Hə, nədir adi?
+[2025-07-01T12:32:42 --> 2025-07-01T12:32:47] Məlim, oduzdu ki, siz həmçəli stüdyada qalmaq istəyirsək, tabi də qalmaq istəyirsək.
+[2025-07-01T12:32:48 --> 2025-07-01T12:32:50] Nəsar saxlayırsan, al.
+
+[Segment 239 @ 2025-07-01T12:32:53 --> 2025-07-01T12:33:03]
+[2025-07-01T12:32:53 --> 2025-07-01T12:32:56] Qadir, bu axmaq fikir səyə ağlaq ardan gəlir?
+[2025-07-01T12:32:57 --> 2025-07-01T12:32:58] Otur.
+[2025-07-01T12:32:59 --> 2025-07-01T12:33:03] Hamı deyir ki, Mustafa müəllimin orada qardaşı yaşayır.
+
+[Segment 240 @ 2025-07-01T12:33:02 --> 2025-07-01T12:33:12]
+[2025-07-01T12:33:02 --> 2025-07-01T12:33:03] O da api də qayıtmaz.
+[2025-07-01T12:33:05 --> 2025-07-01T12:33:07] Yalnız axmaq adamlar belə deyə bilərlər.
+[2025-07-01T12:33:08 --> 2025-07-01T12:33:11] Əvvəla qardaşım yox, əmm o.
+[2025-07-01T12:33:11 --> 2025-07-01T12:33:12] İkincisi də ki,
+
+[Segment 241 @ 2025-07-01T12:33:13 --> 2025-07-01T12:33:23]
+[2025-07-01T12:33:13 --> 2025-07-01T12:33:15] Ki, hər adam öz torpağını, öz vətənini sevməyir.
+[2025-07-01T12:33:16 --> 2025-07-01T12:33:20] Mən, məsələn, Şəkinin dünyanın heç bir şəhərinə dəyişmərəm.
+[2025-07-01T12:33:20 --> 2025-07-01T12:33:22] Rab, İstanbul olmur, nə olur olsun.
 
