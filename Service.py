@@ -1,14 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Service.py
-
-Optimized HLS live transcription with faster-whisper:
-- 8s segments + 1s overlap
-- Shared WhisperModel on GPU
-- Backlog monitoring with queue size warnings
-- Graceful shutdown on Ctrl+C
-"""
 import os
 import sys
 import signal
@@ -18,7 +7,7 @@ import threading
 import subprocess
 import queue
 import logging
-
+import psycopg2
 from faster_whisper import WhisperModel
 
 # --- Configuration ---
@@ -27,13 +16,19 @@ SEGMENT_TIME    = 8             # seconds per segment
 OVERLAP_TIME    = 1             # seconds overlap
 WAV_DIR         = "wav_segments"
 OUTPUT_DIR      = "transcripts"
-TRANSCRIPT_FILE = os.path.join(OUTPUT_DIR, "transcript.txt")
 MODEL_SIZE      = "large"       # tiny, base, small, medium, large
 BEAM_SIZE       = 4
 BEST_OF         = 4
 VAD_FILTER      = True
 WORKERS         = 3             # number of transcription threads
 BACKLOG_WARN    = WORKERS * 3   # threshold to warn about queue backlog
+
+# --- Database Configuration ---
+DB_HOST         = "localhost"  # Database host
+DB_NAME         = "speach_to_text"
+DB_USER         = "postgres"
+DB_PASSWORD     = "!2627251Rr"
+DB_PORT         = 5432  # Default PostgreSQL port
 
 # Internal state
 segment_queue = queue.Queue()
@@ -49,12 +44,20 @@ def setup_logging():
         level=logging.INFO
     )
 
+# PostgreSQL connection
+def connect_db():
+    return psycopg2.connect(
+        host=DB_HOST,
+        database=DB_NAME,
+        user=DB_USER,
+        password=DB_PASSWORD,
+        port=DB_PORT
+    )
+
 # Ensure directories exist
 def ensure_dirs():
     os.makedirs(WAV_DIR, exist_ok=True)
     os.makedirs(OUTPUT_DIR, exist_ok=True)
-    if not os.path.exists(TRANSCRIPT_FILE):
-        open(TRANSCRIPT_FILE, 'w', encoding='utf-8').close()
 
 # Start ffmpeg to segment HLS into WAV files
 def start_ffmpeg():
@@ -112,6 +115,7 @@ def transcribe_worker(worker_id):
         except queue.Empty:
             continue
         logging.info(f"[W{worker_id}] Transcribing segment @ {st.time()}–{en.time()}")
+
         # Whisper transcription (batch or single-file)
         try:
             segs_list, _ = model.transcribe(
@@ -131,17 +135,27 @@ def transcribe_worker(worker_id):
                 best_of=BEST_OF,
                 vad_filter=VAD_FILTER
             )
-        
-        # Append to transcript
-        with open(TRANSCRIPT_FILE, 'a', encoding='utf-8') as f:
-            f.write(f"[Segment @ {st.isoformat()} --> {en.isoformat()}]\n")
-            for seg in segments:
-                s = st + datetime.timedelta(seconds=seg.start)
-                e = st + datetime.timedelta(seconds=seg.end)
-                text = seg.text.strip()
-                f.write(f"[{s.isoformat()} --> {e.isoformat()}] {text}\n")
-            f.write("\n")
-        
+
+        # Connect to the database
+        conn = connect_db()
+        cursor = conn.cursor()
+
+        # Insert the segments into PostgreSQL
+        for seg in segments:
+            s = st + datetime.timedelta(seconds=seg.start)
+            e = st + datetime.timedelta(seconds=seg.end)
+            text = seg.text.strip()
+
+            # Insert data into the database
+            cursor.execute("""
+                INSERT INTO transcripts (start_time, end_time, text)
+                VALUES (%s, %s, %s)
+            """, (s, e, text))
+
+        conn.commit()
+        cursor.close()
+        conn.close()
+
         # Cleanup
         try:
             os.remove(path)
