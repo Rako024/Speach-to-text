@@ -1,63 +1,64 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Service_dynamic_batch_v2.py
+Service.py
 
-Optimized real-time transcription for Ryzen5 6-core + RTX3050:
-- faster-whisper ONNX float16 backend
-- dynamic queue of 10s segments with 1s overlap
-- multiple transcription worker threads (configurable)
-- per-segment beam search + VAD filter for quality
-- optional punctuation restoration
-- monitor thread for queue/backlog alerts
-- human-readable timestamps (seconds precision) and segment indices
+Optimized HLS live transcription with faster-whisper:
+- 8s segments + 1s overlap
+- Shared WhisperModel on GPU
+- Backlog monitoring with queue size warnings
+- Graceful shutdown on Ctrl+C
 """
-
-import subprocess
 import os
+import sys
+import signal
 import time
 import datetime
 import threading
+import subprocess
 import queue
+import logging
+
 from faster_whisper import WhisperModel
 
-# Optional punctuation restoration
-try:
-    from deepmultilingualpunctuation import PunctuationModel
-    USE_PUNCT = True
-except ImportError:
-    print("[WARN] deepmultilingualpunctuation not installed; punctuation disabled.")
-    USE_PUNCT = False
-
 # --- Configuration ---
-HLS_URL           = "https://live.itv.az/itv.m3u8"
-SEGMENT_TIME      = 10            # seconds per segment
-OVERLAP_TIME      = 1             # seconds overlap
-WAV_DIR           = "wav_segments"
-OUTPUT_DIR        = "transcripts"
-MODEL_SIZE        = "large"       # tiny, base, small, medium, large
-TRANSCRIPT_FILE   = os.path.join(OUTPUT_DIR, "transcript.txt")
-BEAM_SIZE         = 4             # beam search width
-BEST_OF           = 4             # best_of candidates
-VAD_FILTER        = True          # faster-whisper vad_filter
-WORKER_COUNT      = 2             # number of transcription threads
-MONITOR_INTERVAL  = 5             # seconds between monitor checks
-BACKLOG_WARNING   = WORKER_COUNT * 2  # queue size threshold for warnings
+HLS_URL         = "https://live.itv.az/itv.m3u8"
+SEGMENT_TIME    = 8             # seconds per segment
+OVERLAP_TIME    = 1             # seconds overlap
+WAV_DIR         = "wav_segments"
+OUTPUT_DIR      = "transcripts"
+TRANSCRIPT_FILE = os.path.join(OUTPUT_DIR, "transcript.txt")
+MODEL_SIZE      = "large"       # tiny, base, small, medium, large
+BEAM_SIZE       = 4
+BEST_OF         = 4
+VAD_FILTER      = True
+WORKERS         = 3             # number of transcription threads
+BACKLOG_WARN    = WORKERS * 3   # threshold to warn about queue backlog
 
-# Internal queue for segments
+# Internal state
 segment_queue = queue.Queue()
+shutdown_event = threading.Event()
+ffmpeg_proc = None
+model = None
 
+# Setup logging
+def setup_logging():
+    logging.basicConfig(
+        format='%(asctime)s [%(levelname)s] %(message)s',
+        datefmt='%H:%M:%S',
+        level=logging.INFO
+    )
 
+# Ensure directories exist
 def ensure_dirs():
     os.makedirs(WAV_DIR, exist_ok=True)
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     if not os.path.exists(TRANSCRIPT_FILE):
-        open(TRANSCRIPT_FILE, "w", encoding="utf-8").close()
+        open(TRANSCRIPT_FILE, 'w', encoding='utf-8').close()
 
-
+# Start ffmpeg to segment HLS into WAV files
 def start_ffmpeg():
-    # produce SEGMENT_TIME-second files sliding by (SEGMENT_TIME - OVERLAP_TIME)
-    return subprocess.Popen([
+    cmd = [
         "ffmpeg", "-y",
         "-i", HLS_URL,
         "-vn", "-ac", "1", "-ar", "16000",
@@ -66,42 +67,54 @@ def start_ffmpeg():
         "-segment_time_delta", str(OVERLAP_TIME),
         "-reset_timestamps", "1",
         os.path.join(WAV_DIR, "segment_%03d.wav")
-    ], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    ]
+    return subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
-
+# Producer: watch for new WAV segments
 def watch_segments():
-    """Producer: waits for new wav files and enqueues them along with index and timestamps."""
     idx = 0
-    while True:
+    while not shutdown_event.is_set():
         path = os.path.join(WAV_DIR, f"segment_{idx:03d}.wav")
-        while not os.path.exists(path):
+        # Wait until file appears
+        while not os.path.exists(path) and not shutdown_event.is_set():
             time.sleep(0.1)
+        if shutdown_event.is_set():
+            break
+        # Wait until writing completes
         prev_size = -1
         while True:
-            curr_size = os.path.getsize(path)
-            if curr_size == prev_size and curr_size > 0:
+            curr = os.path.getsize(path)
+            if curr == prev_size and curr > 0:
                 break
-            prev_size = curr_size
+            prev_size = curr
             time.sleep(0.1)
         end_ts = datetime.datetime.now(datetime.timezone.utc)
         start_ts = end_ts - datetime.timedelta(seconds=SEGMENT_TIME)
-        segment_queue.put((idx, path, start_ts, end_ts))
+        segment_queue.put((path, start_ts, end_ts))
         idx += 1
 
+# Monitor: print queue size and backlog warnings
+def monitor_queue():
+    while not shutdown_event.is_set():
+        qsize = segment_queue.qsize()
+        logging.info(f"[Monitor] Queue size={qsize}")
+        if qsize > BACKLOG_WARN:
+            logging.warning(f"[Monitor] Backlog={qsize} exceeds threshold ({BACKLOG_WARN})")
+        time.sleep(5)
 
+# Consumer: transcribe segments
 def transcribe_worker(worker_id):
-    """Consumer: dequeues segments, runs inference, writes outputs."""
-    print(f"[Worker {worker_id}] Loading model '{MODEL_SIZE}' (float16 GPU)...")
-    model = WhisperModel(MODEL_SIZE, device="cuda", compute_type="float16")
-    print(f"[Worker {worker_id}] Model ready.")
-    if USE_PUNCT:
-        punct_model = PunctuationModel("oliverguhr/fullstop-punctuation-multilang-large")
-
-    while True:
-        idx, path, st, en = segment_queue.get()
-        print(f"[Worker {worker_id}] Transcribing segment #{idx:03d} @ {st.strftime('%H:%M:%S')}–{en.strftime('%H:%M:%S')}")
+    global model
+    logging.info(f"[W{worker_id}] Ready")
+    while not shutdown_event.is_set():
         try:
-            segments_list, _ = model.transcribe(
+            path, st, en = segment_queue.get(timeout=1)
+        except queue.Empty:
+            continue
+        logging.info(f"[W{worker_id}] Transcribing segment @ {st.time()}–{en.time()}")
+        # Whisper transcription (batch or single-file)
+        try:
+            segs_list, _ = model.transcribe(
                 [path],
                 language="az",
                 beam_size=BEAM_SIZE,
@@ -109,7 +122,7 @@ def transcribe_worker(worker_id):
                 vad_filter=VAD_FILTER,
                 batch_size=1
             )
-            segments = segments_list[0]
+            segments = segs_list[0]
         except TypeError:
             segments, _ = model.transcribe(
                 path,
@@ -118,61 +131,62 @@ def transcribe_worker(worker_id):
                 best_of=BEST_OF,
                 vad_filter=VAD_FILTER
             )
-
-        # Write transcript block
-        with open(TRANSCRIPT_FILE, "a", encoding="utf-8") as f:
-            header = f"[Segment {idx:03d} @ {st.strftime('%Y-%m-%dT%H:%M:%S')} --> {en.strftime('%Y-%m-%dT%H:%M:%S')}]\n"
-            f.write(header)
+        
+        # Append to transcript
+        with open(TRANSCRIPT_FILE, 'a', encoding='utf-8') as f:
+            f.write(f"[Segment @ {st.isoformat()} --> {en.isoformat()}]\n")
             for seg in segments:
                 s = st + datetime.timedelta(seconds=seg.start)
                 e = st + datetime.timedelta(seconds=seg.end)
                 text = seg.text.strip()
-                if USE_PUNCT and text:
-                    try:
-                        text = punct_model([text])[0]
-                    except Exception:
-                        pass
-                f.write(f"[{s.strftime('%Y-%m-%dT%H:%M:%S')} --> {e.strftime('%Y-%m-%dT%H:%M:%S')}] {text}\n")
+                f.write(f"[{s.isoformat()} --> {e.isoformat()}] {text}\n")
             f.write("\n")
+        
+        # Cleanup
         try:
             os.remove(path)
         except OSError:
             pass
-        print(f"[Worker {worker_id}] Done segment #{idx:03d}, removed file.")
+        segment_queue.task_done()
+        logging.info(f"[W{worker_id}] Done & removed {path}")
 
+# Signal handler for graceful shutdown
+def signal_handler(sig, frame):
+    logging.info("Shutting down...")
+    shutdown_event.set()
+    if ffmpeg_proc:
+        ffmpeg_proc.terminate()
+    sys.exit(0)
 
-def monitor():
-    """Monitor: periodically logs queue size and warns if backlog grows."""
-    while True:
-        qsize = segment_queue.qsize()
-        print(f"[Monitor] Queue size: {qsize}")
-        if qsize > BACKLOG_WARNING:
-            print(f"[Monitor] WARNING: backlog of {qsize} segments")
-        time.sleep(MONITOR_INTERVAL)
-
-
+# Main entry
 def main():
+    global ffmpeg_proc, model
+    setup_logging()
+    signal.signal(signal.SIGINT, signal_handler)
+
     ensure_dirs()
-    ff = start_ffmpeg()
-    print(f"[Main] FFmpeg started (pid={ff.pid})")
+    logging.info("Starting HLS transcription service...")
 
-    # Start producer thread
-    t_watch = threading.Thread(target=watch_segments, daemon=True)
-    t_watch.start()
-    # Start monitor thread
-    t_mon = threading.Thread(target=monitor, daemon=True)
-    t_mon.start()
-    # Start transcription worker threads
-    for i in range(WORKER_COUNT):
-        t = threading.Thread(target=transcribe_worker, args=(i,), daemon=True)
-        t.start()
+    # Load Whisper once
+    logging.info(f"Loading Whisper model '{MODEL_SIZE}' on cuda float16...")
+    model = WhisperModel(MODEL_SIZE, device="cuda", compute_type="float16")
+    logging.info("Whisper model ready.")
 
+    # Start ffmpeg and worker threads
+    ffmpeg_proc = start_ffmpeg()
+    logging.info(f"FFmpeg started (pid={ffmpeg_proc.pid})")
+
+    threading.Thread(target=watch_segments, daemon=True).start()
+    threading.Thread(target=monitor_queue, daemon=True).start()
+    for i in range(WORKERS):
+        threading.Thread(target=transcribe_worker, args=(i,), daemon=True).start()
+
+    # Keep alive until Ctrl+C
     try:
         while True:
             time.sleep(1)
     except KeyboardInterrupt:
-        print("[Main] Shutting down...")
-        ff.terminate()
+        signal_handler(None, None)
 
 if __name__ == "__main__":
     main()
