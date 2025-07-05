@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from app.api.routes import router
+from app.api.routers import router
 from app.config import Settings
 import os
 

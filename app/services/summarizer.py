@@ -39,6 +39,9 @@ class DeepSeekClient:
             user_prompt = (
                 f"Verilmiş mətndə “{keyword}” sözü ilə bağlı bütün cümlələri "
                 f"birinəşdirərək 2–3 cümləlik xülasə hazırla:\n\n{full_text}"
+                "Bu mətində verilmiş söz haqqında pozitiv mi, neqativmi yoxsa neytalmı fikir bildirildiyini bizə de."
+                "Tam olaraq sənə göndərilən mətində nə danışıldığını, nədən bəhsolunuduğu bizə açıqla. əlavə uzadıcı ifadə bildirici sözlər yazma."
+                "Ən sonda isə sintaktik və məna səhvlərinin düzəldilmiş versiyadakı mətini - Verimiş mətn : - deyərək sonda yaz."
             )
         else:
             user_prompt = (
