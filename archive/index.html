@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="az">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Arxiv Klip Axtar</title>
+</head>
+
+<body>
+    <h3>Keyword ilə axtar:</h3>
+    <input id="kw" placeholder="məs: pasha bank" />
+    <button id="btn">Axtar</button>
+
+    <h3>DeepSeek Qısa Xülasə:</h3>
+    <pre id="summary"></pre>
+
+    <h3>Tapılan parçalar:</h3>
+    <div id="results"></div>
+
+    <h3>Seçilmiş klip (15s əvvəli/soncasi ilə):</h3>
+    <video id="player" controls width="640"></video>
+
+    <script>
+        const btn = document.getElementById("btn");
+        const kwIn = document.getElementById("kw");
+        const sumEl = document.getElementById("summary");
+        const resEl = document.getElementById("results");
+        const player = document.getElementById("player");
+
+        btn.addEventListener("click", async () => {
+            const kw = kwIn.value.trim();
+            if (!kw) return alert("Bir keyword daxil edin");
+
+            const r = await fetch(`/search?keyword=${encodeURIComponent(kw)}`);
+            if (!r.ok) return alert("Xəta: " + r.statusText);
+            const { summary, segments } = await r.json();
+
+            sumEl.textContent = summary;
+            resEl.innerHTML = "";
+
+            segments.forEach(seg => {
+                const time = new Date(seg.start_time).toLocaleTimeString();
+                const b = document.createElement("button");
+                b.textContent = "Play (±15s)";
+                b.dataset.file = seg.segment_filename;
+                b.dataset.off = seg.offset_secs;
+                b.dataset.dur = seg.duration_secs;
+
+                const div = document.createElement("div");
+                div.innerHTML = `<strong>[${time}]</strong> ${seg.text} `;
+                div.appendChild(b);
+                resEl.appendChild(div);
+
+                b.onclick = () => {
+                    let start = parseFloat(b.dataset.off) - 15;
+                    if (start < 0) start = 0;
+                    const dur = parseFloat(b.dataset.dur) + 30;
+
+                    player.src = `/video_clip?video_file=${encodeURIComponent(b.dataset.file)}`
+                        + `&start=${start}&duration=${dur}`;
+                    player.load();
+                    player.play();
+                };
+            });
+        });
+    </script>
+</body>
+
+</html>
