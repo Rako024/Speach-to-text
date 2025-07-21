@@ -6,97 +6,124 @@ import threading
 import subprocess
 import datetime
 import logging
-
-from app.config import Settings
+from app.config import Settings, Channel
 
 logger = logging.getLogger(__name__)
 
 class Archiver:
-    def __init__(self, settings: Settings):
-        # HLS → TS archiving
-        self.hls_url         = settings.hls_url
-        self.archive_dir     = settings.archive_dir
-        self.ts_seg_time     = settings.ts_segment_time
-        self.ts_list_size    = settings.ts_list_size
+    def __init__(self, channel: Channel, settings: Settings):
+        self.channel     = channel
+        self.hls_url     = channel.hls_url
+        self.archive_dir = os.path.join(settings.archive_base, channel.id)
+        self.wav_dir     = os.path.join(settings.wav_base,     channel.id)
 
-        # HLS → WAV segmentation
-        self.wav_dir          = settings.wav_dir
-        self.wav_seg_time     = settings.wav_segment_time
-        self.wav_overlap      = settings.wav_overlap_time
+        # Seqmentləmə parametrləri
+        self.ts_seg_time = settings.ts_segment_time
 
-        # daxili queue & stop-flag
-        self.wav_queue        = queue.Queue()
-        self._shutdown        = threading.Event()
+        # WAV üçün queue + stop-flag
+        self.wav_queue   = queue.Queue()
+        self._shutdown   = threading.Event()
 
     def start_ts(self):
-        """HLS-dən .ts və index.m3u8 yaradır."""
+        """
+        HLS → .ts seqmentləri yazır:
+        itv_20250721T153012.ts
+        """
         os.makedirs(self.archive_dir, exist_ok=True)
-        logger.info("TS archiver işə düşdü, m3u8 yazılır → %s", self.archive_dir)
-        cmd = [
-            "ffmpeg", "-y", "-i", self.hls_url,
-            "-c", "copy", "-f", "hls",
-            "-hls_time", str(self.ts_seg_time),
-            "-hls_list_size", str(self.ts_list_size),
-            "-hls_flags", "delete_segments+append_list",
-            "-hls_segment_filename", os.path.join(self.archive_dir, "segment_%05d.ts"),
-            os.path.join(self.archive_dir, "index.m3u8")
-        ]
-        self.ts_proc = subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        logger.info("[%s] TS archiver started → %s", self.channel.id, self.archive_dir)
 
-    def start_wav(self):
-        """HLS-dən .wav seqmentləri yaradır və watch thread-i işə salır."""
-        os.makedirs(self.wav_dir, exist_ok=True)
-        logger.info("WAV segmenter işə düşdü, fayllar → %s", self.wav_dir)
+        ts_pattern = os.path.join(
+            self.archive_dir,
+            f"{self.channel.id}_" + "%Y%m%dT%H%M%S.ts"
+        )
         cmd = [
             "ffmpeg", "-y", "-i", self.hls_url,
-            "-vn", "-ac", "1", "-ar", "16000",
+            "-c", "copy",
             "-f", "segment",
-            "-segment_time", str(self.wav_seg_time),
-            "-segment_time_delta", str(self.wav_overlap),
-            "-reset_timestamps", "1",
-            os.path.join(self.wav_dir, "segment_%03d.wav")
+            "-segment_time",    str(self.ts_seg_time),
+            "-reset_timestamps","1",
+            "-strftime",        "1",       # vaxt möhürü fayl adına
+            ts_pattern
         ]
-        self.wav_proc = subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        threading.Thread(target=self._watch_wavs, daemon=True).start()
+        logger.debug("[%s] TS cmd: %s", self.channel.id, " ".join(cmd))
+        self.ts_proc = subprocess.Popen(
+            cmd,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
+        )
 
-    def _watch_wavs(self):
-        """Yazılmış wav fayllarını gözləyir, tamalananda queue-ya atır."""
-        idx = 0
+    def start_watcher(self):
+        """
+        Arxiv qovluğundakı yeni .ts fayllarını gözləyir,
+        onlardan .wav çıxarıb queue-ya atır.
+        """
+        os.makedirs(self.wav_dir, exist_ok=True)
+        logger.info("[%s] WAV-watcher started → %s", self.channel.id, self.wav_dir)
+        threading.Thread(target=self._watch_ts_and_generate_wav, daemon=True).start()
+
+    def _watch_ts_and_generate_wav(self):
+        processed = set()
         while not self._shutdown.is_set():
-            path = os.path.join(self.wav_dir, f"segment_{idx:03d}.wav")
-            if not os.path.exists(path):
-                time.sleep(0.1)
-                continue
+            for fname in sorted(os.listdir(self.archive_dir)):
+                if not fname.endswith(".ts") or fname in processed:
+                    continue
 
-            logger.debug("Yeni WAV tapıldı: %s", path)
+                ts_path = os.path.join(self.archive_dir, fname)
+                wav_name = os.path.splitext(fname)[0] + ".wav"
+                wav_path = os.path.join(self.wav_dir, wav_name)
 
-            # Yazılmanın tamamlanmasını gözləyirik
-            prev_size = -1
-            while True:
-                size = os.path.getsize(path)
-                if size == prev_size and size > 0:
-                    break
-                prev_size = size
-                time.sleep(0.05)
+                # Faylın tamam yazılmasını gözlə
+                prev = -1
+                while True:
+                    size = os.path.getsize(ts_path)
+                    if size == prev and size > 0:
+                        break
+                    prev = size
+                    time.sleep(0.05)
 
-            # Başlanğıc zamanını epoch şəklində hesablayırıq
-            end_dt   = datetime.datetime.now(datetime.timezone.utc)
-            start_dt = end_dt - datetime.timedelta(seconds=self.wav_seg_time)
-            self.wav_queue.put((path, start_dt.timestamp()))
-            logger.info("WAV hazırlandı və queue-yə göndərildi: %s", path)
+                # .wav çıxar
+                cmd = [
+                    "ffmpeg", "-y", "-i", ts_path,
+                    "-vn", "-ac", "1", "-ar", "16000",
+                    wav_path
+                ]
+                logger.debug("[%s] WAV gen cmd: %s", self.channel.id, " ".join(cmd))
+                subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
-            idx += 1
+                # Başlanğıc timestamp
+                start_ts = self._extract_ts_from_filename(fname)
+
+                # Queue-ya at
+                self.wav_queue.put((self.channel.id, wav_path, start_ts))
+                logger.info("[%s] WAV generated and queued: %s", self.channel.id, wav_path)
+                processed.add(fname)
+
+            time.sleep(0.1)
+
+    def _extract_ts_from_filename(self, fname: str) -> float:
+        """
+        itv_20250721T153012.ts → epoch saniyəsi
+        """
+        try:
+            ts_str = os.path.splitext(fname)[0].split("_",1)[1]
+            dt = datetime.datetime.strptime(ts_str, "%Y%m%dT%H%M%S")
+            dt = dt.replace(tzinfo=datetime.timezone.utc)
+            return dt.timestamp()
+        except Exception as e:
+            logger.warning("[%s] TS parse error: %s", self.channel.id, e)
+            return datetime.datetime.now(datetime.timezone.utc).timestamp()
 
     def wav_generator(self):
-        """Daemon thread-lər üçün iterator: (wav_path, start_ts)."""
+        """
+        Hər çağırışda (channel_id, wav_path, start_ts) qaytarır.
+        """
         while True:
             yield self.wav_queue.get()
 
     def stop(self):
-        """Həm ts, həm wav process-lərini dayandırır."""
-        logger.info("Archiver dayandırılır…")
+        """
+        Prosesləri dayandır.
+        """
         self._shutdown.set()
-        if hasattr(self, "ts_proc"):
+        if hasattr(self, 'ts_proc'):
             self.ts_proc.terminate()
-        if hasattr(self, "wav_proc"):
-            self.wav_proc.terminate()

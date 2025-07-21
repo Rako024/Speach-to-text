@@ -1,30 +1,73 @@
+# app/api/routers.py
+
+import os
+import subprocess
+
 from fastapi import APIRouter, HTTPException, Query
 from fastapi.responses import StreamingResponse
-import os, subprocess
-from app.services.db import DBClient
-from app.services.summarizer import DeepSeekClient
-from app.api.schemas import SearchResponse
+
 from app.config import Settings
+from app.services.db import DBClient
+from app.services.deepseek_client import DeepSeekClient
+from app.api.schemas import SearchResponse, SegmentInfo
 
 router = APIRouter()
-s = Settings()
-db = DBClient(s)
-ds = DeepSeekClient(s)
+
+# Settings & clients
+settings = Settings()
+db = DBClient(settings)
+ds = DeepSeekClient(settings)
+
 
 @router.get("/search/", response_model=SearchResponse)
-def search(keyword: str = Query(..., min_length=1)):
-    rows = db.search(keyword)
-    if not rows:
-        raise HTTPException(404, "Not found")
-    summary = ds.summarize(rows, keyword)
-    from app.api.schemas import SegmentInfo
-    segments = [ SegmentInfo(**dict(zip(["start_time","end_time","text","segment_filename","offset_secs","duration_secs"], r))) for r in rows ]
+def search(
+    keyword: str = Query(..., min_length=1),
+    channel: str | None = Query(None),
+):
+    """
+    Açar söz üzrə transkript seqmentlərini axtarır,
+    DeepSeek ilə xülasə yaradır və həm mətn, həm də
+    metadata (fayl adı, offset, duration) qaytarır.
+    """
+    # 1) DB-dən tapılan seqmentlər
+    segments = db.search(keyword, channel)
+    if not segments:
+        raise HTTPException(status_code=404, detail="Açar söz tapılmadı")
+
+    # 2) DeepSeek ilə xülasə
+    summary = ds.summarize(segments, keyword)
+
+    # 3) Cavabı qaytar
     return SearchResponse(summary=summary, segments=segments)
 
-@router.get("/video_clip/")
-def clip(video_file: str, start: float, duration: float):
-    path = os.path.join(s.archive_dir, video_file)
-    if not os.path.exists(path): raise HTTPException(404)
-    cmd = ["ffmpeg","-ss",str(start),"-i",path,"-t",str(duration),"-c","copy","-f","mp4","pipe:1"]
+
+@router.get("/video_clip/", response_class=StreamingResponse)
+def clip(
+    channel: str = Query(..., description="Kanal ID"),
+    video_file: str = Query(..., description="TS fayl adı"),
+    start: float = Query(..., description="Başlanğıc offset, saniyə ilə"),
+    duration: float = Query(..., description="Müddət, saniyə ilə"),
+):
+    """
+    Verilən kanal və fayl adı üçün start‑offset və müddət əsasında
+    MP4 klip çıxarır.
+    """
+    folder = os.path.join(settings.archive_base, channel)
+    path = os.path.join(folder, video_file)
+
+    if not os.path.exists(path):
+        raise HTTPException(status_code=404, detail="Video seqment tapılmadı")
+
+    cmd = [
+        "ffmpeg",
+        "-ss", str(start),
+        "-i", path,
+        "-t", str(duration),
+        "-c", "copy",
+        "-bsf:a", "aac_adtstoasc",
+        "-movflags", "frag_keyframe+empty_moov",
+        "-f", "mp4",
+        "pipe:1",
+    ]
     proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
     return StreamingResponse(proc.stdout, media_type="video/mp4")

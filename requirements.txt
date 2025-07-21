@@ -1,6 +1,22 @@
-fastapi
-uvicorn
-psycopg2-binary
-requests
-faster-whisper
-python-dotenv
+# HTTP API framework and server
+fastapi>=0.95.0
+uvicorn[standard]>=0.22.0
+
+# Pydantic BaseSettings replacement
+pydantic-settings>=2.0.0
+
+# PostgreSQL driver
+psycopg2-binary>=2.9.6
+
+# REST client for DeepSeek API
+requests>=2.28.0
+
+# Whisper transcription
+faster-whisper>=0.10.1
+torch>=2.0.0
+
+# .env support
+python-dotenv>=1.0.0
+
+# (Optional) Type extensions for older Python
+typing-extensions>=4.0.0

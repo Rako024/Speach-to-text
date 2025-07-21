@@ -1,4 +1,4 @@
-# app/services/deepseek_client.py
+# app/services/summarizer.py
 
 import requests
 import logging
@@ -10,7 +10,8 @@ logger = logging.getLogger(__name__)
 
 class DeepSeekClient:
     """
-    DeepSeek API ilə əlaqə saxlayır, həm tam transkriptləri, həm də açar sözə fokuslanmış xülasələri hazırlayır.
+    DeepSeek API ilə əlaqə saxlayır, həm tam transkriptləri,
+    həm də açar sözə fokuslanmış xülasələri hazırlayır.
     """
 
     def __init__(self, settings: Settings):
@@ -23,29 +24,42 @@ class DeepSeekClient:
         keyword: Optional[str] = None
     ) -> str:
         """
-        Açar sözlə axtarış nəticəsində əldə olunmuş SegmentInfo-ları birləşdirib xülasə verir.
-        Əgər `keyword` verilibsə, o söz ətrafında 2–3 cümləlik fokuslanmış xülasə,
-        yoxdursa ümumi nöqtəli bəndli xülasə qaytarır.
+        Açar sözlə axtarış nəticəsində əldə olunmuş SegmentInfo-ları
+        birləşdirib xülasə verir. 
+        - Əgər `keyword` verilibsə, hər hit üçün [fayl_adı +offset] və sentiment
+          (pozitiv/negativ/neytral) göstərilir, sonra yekun xülasə.
+        - Keyword verilməyibsə, ümumi nöqtəli bəndli xülasə qaytarır.
         """
-        full_text = " ".join(seg.text for seg in segments)
-
-        system_prompt = (
-            "Sən transkript mətinlərini xülasə etmək üçün ixtisaslaşmış modelisən. "
-            "Cavabını Azərbaycan dilində, aydın və konkret ver."
-            "Tam olaraq sənə göndərilən mətində nə danışıldığını, nədən bəhsolunuduğu bizə açıqla. əlavə uzadıcı ifadə bildirici sözlər yazma."
-            "Ən sonda isə sintaktik və məna səhvlərinin düzəldilmiş versiyadakı mətini - Verimiş mətn : - deyərək sonda yaz."
+        # Seqmentləri formatlı mətn halına gətiririk
+        formatted = "\n\n".join(
+            f"[{i+1}] ({seg.segment_filename} +{seg.offset_secs:.1f}s): {seg.text}"
+            for i, seg in enumerate(segments)
         )
+
+        # Əsas sistem promptu
+        base_system = (
+            "Sən transkript seqmentlərini başa düşən və onları strukturlaşdırılmış, "
+            "aydın xülasə edən modelsən. Cavabını Azərbaycan dilində ver."
+        )
+
         if keyword:
+            system_prompt = (
+                base_system +
+                " Axtarılan söz “{kw}” üçün hər hit-də sentimenti (pozitiv/negativ/neytral) "
+                "qiymətləndir və göstər."
+            ).format(kw=keyword)
             user_prompt = (
-                f"Verilmiş mətndə “{keyword}” sözü ilə bağlı bütün cümlələri "
-                f"birinəşdirərək 2–3 cümləlik xülasə hazırla:\n\n{full_text}"
-                "Bu mətində verilmiş söz haqqında pozitiv mi, neqativmi yoxsa neytalmı fikir bildirildiyini bizə de."
-                "Tam olaraq sənə göndərilən mətində nə danışıldığını, nədən bəhsolunuduğu bizə açıqla. əlavə uzadıcı ifadə bildirici sözlər yazma."
-                "Ən sonda isə sintaktik və məna səhvlərinin düzəldilmiş versiyadakı mətini - Verimiş mətn : - deyərək sonda yaz."
+                f"Aşağıda transkript seqmentləri var. Axtarılan söz “{keyword}”:\n\n"
+                f"{formatted}\n\n"
+                "1) Hər hit üçün `[fayl_adı +offset] cümlə` formatında yaz.\n"
+                "2) Hər bir hit üçün sentiment (pozitiv/negativ/neytral) əlavə et.\n"
+                "3) Sonda yekun xülasəni qısa, nöqtəli bəndlərlə ver."
             )
         else:
+            system_prompt = base_system + " Aşağıdakı seqmentlərdən ümumi əsas məqamları çıxar."
             user_prompt = (
-                f"Aşağıdakı transkripti oxu və əsas məqamları qısa, nöqtəli bəndlərlə ver:\n\n{full_text}"
+                "Aşağıdakı transkript seqmentlərini oxu və əsas məqamları "
+                "qısa, nöqtəli bəndlərlə ver:\n\n" + formatted
             )
 
         payload = {
@@ -73,11 +87,10 @@ class DeepSeekClient:
 
     def summarize_text(self, text: str) -> str:
         """
-        Yalnız uzun bir mətn parçasını (transkript deyil) xülasə etmək üçün istifadə olunur.
+        Uzun bir mətn parçasını (transkript deyil) qısa xülasə etmək üçün.
         """
         system_prompt = (
-            "Sən mətnləri qısa və konkret xülasə etmək üçün ixtisaslaşmış modelisən. "
-            "Cavabını Azərbaycan dilində ver."
+            "Sən mətnləri qısa və konkret xülasə etmək üçün ixtisaslaşmış modelisən. Cavabını Azərbaycan dilində ver."
         )
         user_prompt = f"Aşağıdakı mətni qısa, nöqtəli bəndlərlə xülasə et:\n\n{text}"
 

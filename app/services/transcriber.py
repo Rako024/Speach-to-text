@@ -1,33 +1,31 @@
 #!/usr/bin/env python3
 import os
 import datetime
-from typing import List
+from typing import List, Dict
 
 from faster_whisper import WhisperModel
-from app.api.schemas import SegmentInfo
-
 
 class Transcriber:
     """
     WAV faylını Whisper vasitəsilə transkripsiya edən sinif.
+    İndi raw dict siyahısı qaytarır, Pydantic modelləşdirməni main.py-də edəcəyik.
     """
 
     def __init__(self, settings):
-        # Whisper modelini yükle
+        # Whisper modelini yükləyirik
         self.model = WhisperModel(
             settings.whisper_model,
             device=settings.device,
             compute_type=settings.compute_type
         )
 
-    def transcribe(self, wav_path: str, start_ts: float) -> List[SegmentInfo]:
+    def transcribe(self, wav_path: str, start_ts: float) -> List[Dict]:
         """
-        Verilmiş WAV yolunu transkripsiya edir və hər bir tapılmış
-        seqment üçün SegmentInfo siyahısı qaytarır.
+        Verilmiş WAV faylını transkripsiya edir və hər bir seqment üçün dict siyahısı qaytarır.
 
         :param wav_path: Lokal WAV faylının tam yolu
-        :param start_ts: Seqmentin başladığı epoch ilə ifadə olunan zaman
-        :return: List[SegmentInfo]
+        :param start_ts:  Seqmentin başladığı epoch şəklində zaman
+        :return:          List[Dict] — hər dict Pydantic SegmentInfo-un girişinə uyğun
         """
         # Whisper transcribe çağırışı
         segments, _ = self.model.transcribe(
@@ -35,36 +33,32 @@ class Transcriber:
             language="az",
             beam_size=4,
             best_of=4,
-            vad_filter=True
+            vad_filter=False
         )
 
-        result: List[SegmentInfo] = []
+        # .wav fayl adından eyni baza ilə .ts adını çıxarırıq:
+        # misal: "itv_20250721T143236.wav" → "itv_20250721T143236.ts"
+        basename         = os.path.basename(wav_path)
+        name_without_ext, _ = os.path.splitext(basename)
+        ts_file          = f"{name_without_ext}.ts"
+
+        result: List[Dict] = []
         for seg in segments:
-            # Absolyut başlanğıc və son zamanlarını hesabla
-            abs_start_ts = start_ts + seg.start
-            abs_end_ts   = start_ts + seg.end
-
+            # Absolyut vaxtları hesabla
             abs_start = datetime.datetime.fromtimestamp(
-                abs_start_ts, datetime.timezone.utc
+                start_ts + seg.start, datetime.timezone.utc
             )
-            abs_end = datetime.datetime.fromtimestamp(
-                abs_end_ts, datetime.timezone.utc
+            abs_end   = datetime.datetime.fromtimestamp(
+                start_ts + seg.end,   datetime.timezone.utc
             )
 
-            # .wav fayl adından TS fayl adını çıxar
-            # misal: "segment_012.wav" → idx=12 → "segment_00012.ts"
-            basename = os.path.basename(wav_path)
-            idx = int(basename.split('_')[1].split('.')[0])
-            ts_file = f"segment_{idx:05d}.ts"
-
-            # SegmentInfo obyektini doldur
-            result.append(SegmentInfo(
-                start_time       = abs_start.isoformat(),
-                end_time         = abs_end.isoformat(),
-                text             = seg.text.strip(),
-                segment_filename = ts_file,
-                offset_secs      = float(seg.start),
-                duration_secs    = float(seg.end - seg.start)
-            ))
+            result.append({
+                "start_time":       abs_start.isoformat(),
+                "end_time":         abs_end.isoformat(),
+                "text":             seg.text.strip(),
+                "segment_filename": ts_file,
+                "offset_secs":      float(seg.start),
+                "duration_secs":    float(seg.end - seg.start)
+            })
 
         return result

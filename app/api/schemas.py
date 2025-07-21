@@ -1,7 +1,7 @@
 from pydantic import BaseModel
-from typing import List
 
 class SegmentInfo(BaseModel):
+    channel_id: str
     start_time: str
     end_time:   str
     text:       str
@@ -11,4 +11,4 @@ class SegmentInfo(BaseModel):
 
 class SearchResponse(BaseModel):
     summary: str
-    segments: List[SegmentInfo]
+    segments: list[SegmentInfo]
