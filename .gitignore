@@ -1,0 +1,8 @@
+# ─── wav_segments içindəki bütün elementləri ignor et ───
+/wav_segments/*
+
+# ─── archive içində hamısını ignor et ───
+/archive/*
+
+# ─── amma index.html-i yenidən izləməyə daxil et ───
+!/archive/index.html
