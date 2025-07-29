@@ -1,6 +1,14 @@
+# app/services/db.py
+#!/usr/bin/env python3
 import psycopg2
-from typing import List
+from typing import List, NamedTuple
 from app.api.schemas import SegmentInfo
+import datetime
+
+class OldSegment(NamedTuple):
+    id: int
+    channel_id: str
+    segment_filename: str
 
 class DBClient:
     def __init__(self, settings):
@@ -27,7 +35,8 @@ class DBClient:
             text             TEXT    NOT NULL,
             segment_filename TEXT    NOT NULL,
             offset_secs      REAL    NOT NULL,
-            duration_secs    REAL    NOT NULL
+            duration_secs    REAL    NOT NULL,
+            deleted          BOOLEAN NOT NULL DEFAULT FALSE
         )
         """)
         conn.commit()
@@ -57,11 +66,6 @@ class DBClient:
         conn.close()
 
     def search(self, keyword: str, channel_id: str | None = None) -> List[SegmentInfo]:
-        """
-        Açar sözü böyük/kiçik hərf fərqinə baxmadan axtarır.
-        Əgər channel_id verilsə, yalnız o kanalda axtarış edir.
-        Nəticələri start_time üzrə sıralayır.
-        """
         conn = self.get_conn()
         cur = conn.cursor()
         ilike_kw = f"%{keyword}%"
@@ -73,6 +77,7 @@ class DBClient:
                   FROM transcripts
                  WHERE text ILIKE %s
                    AND channel_id = %s
+                   AND deleted = FALSE
                  ORDER BY start_time
             """, (ilike_kw, channel_id))
         else:
@@ -81,6 +86,7 @@ class DBClient:
                        segment_filename, offset_secs, duration_secs
                   FROM transcripts
                  WHERE text ILIKE %s
+                   AND deleted = FALSE
                  ORDER BY start_time
             """, (ilike_kw,))
 
@@ -112,6 +118,7 @@ class DBClient:
                  WHERE start_time >= %s
                    AND end_time   <= %s
                    AND channel_id = %s
+                   AND deleted = FALSE
                  ORDER BY start_time
             """, (start_time, end_time, channel_id))
         else:
@@ -120,6 +127,7 @@ class DBClient:
                   FROM transcripts
                  WHERE start_time >= %s
                    AND end_time   <= %s
+                   AND deleted = FALSE
                  ORDER BY start_time
             """, (start_time, end_time))
 
@@ -127,3 +135,32 @@ class DBClient:
         cur.close()
         conn.close()
         return " ".join(r[0] for r in rows)
+
+    # ——— Aşağıdakılar fayl təmizləmə üçün ———
+
+    def get_segments_older_than(self, cutoff: datetime.datetime) -> List[OldSegment]:
+        conn = self.get_conn()
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT id, channel_id, segment_filename
+              FROM transcripts
+             WHERE end_time < %s
+               AND deleted = FALSE
+        """, (cutoff,))
+        rows = cur.fetchall()
+        cur.close()
+        conn.close()
+        return [OldSegment(*r) for r in rows]
+
+    def mark_segments_deleted(self, ids: List[int]) -> None:
+        if not ids:
+            return
+        conn = self.get_conn()
+        cur = conn.cursor()
+        cur.execute(
+            "UPDATE transcripts SET deleted = TRUE WHERE id = ANY(%s)",
+            (ids,)
+        )
+        conn.commit()
+        cur.close()
+        conn.close()

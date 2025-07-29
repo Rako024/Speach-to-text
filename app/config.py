@@ -38,6 +38,14 @@ class Settings(BaseSettings):
     db_user:     str
     db_password: str
 
+    # Cleanup schedule & retention
+    #   CLEANUP_HOUR           – hour of day (UTC) to run cleanup
+    #   CLEANUP_MINUTE         – minute of the hour to run cleanup
+    #   CLEANUP_RETENTION_DAYS – how many days to keep before deleting
+    cleanup_hour:           int = 3
+    cleanup_minute:         int = 0
+    cleanup_retention_days: int = 30
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8"

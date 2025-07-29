@@ -1,14 +1,25 @@
 #!/usr/bin/env python3
-import os, signal, sys, time, threading, logging
+import os
+import signal
+import sys
+import time
+import threading
+import logging
+import datetime
 
 from prometheus_client import start_http_server, Counter, Gauge
+from apscheduler.schedulers.background import BackgroundScheduler
+
 from app.api.schemas import SegmentInfo
 from app.config import Settings
 from app.services.archiver import Archiver
 from app.services.transcriber import Transcriber
 from app.services.db import DBClient
+from app.services.cleanup import cleanup_old_ts
 
-# 1) Loglama konfiqurasiyası
+# 1) Settings & Loglama konfiqurasiyası
+settings = Settings()
+
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s [%(levelname)s] %(message)s"
@@ -24,12 +35,26 @@ QUEUE_LEN = Gauge('wav_queue_length',           'WAV queue uzunluğu',     ['cha
 start_http_server(8001)
 logger.info("Prometheus metrics server started on :8001")
 
-# 4) Servislər
-settings    = Settings()
+# 4) Scheduler: vaxtı .env-dən gələnə uyğun qur
+scheduler = BackgroundScheduler(timezone="UTC")
+scheduler.add_job(
+    cleanup_old_ts, 'cron',
+    hour   = settings.cleanup_hour,
+    minute = settings.cleanup_minute
+)
+scheduler.start()
+logger.info(
+    "Scheduled cleanup_old_ts(): every day at %02d:%02d UTC, retaining %d days",
+    settings.cleanup_hour,
+    settings.cleanup_minute,
+    settings.cleanup_retention_days
+)
+
+# 5) Servislər
 db_client   = DBClient(settings)
 transcriber = Transcriber(settings)
 
-# 5) DB sxemi
+# 6) DB sxemi (cədvəl yoxdursa yaradır)
 try:
     db_client.init_db()
     logger.info("DB uğurla yaradıldı və ya yoxlanıldı")
@@ -39,11 +64,11 @@ except Exception as e:
 
 archivers = []
 
-# 6) Hər kanal üçün .ts → .wav watcher + worker-lar
+# 7) Hər kanal üçün Archiver və worker-lar
 for channel in settings.channels:
     arch = Archiver(channel, settings)
-    arch.start_ts()       # TS seqmentlə
-    arch.start_watcher()  # TS→WAV çevir və queue
+    arch.start_ts()
+    arch.start_watcher()
     archivers.append(arch)
     logger.info("Archiver started for channel: %s", channel.id)
 
@@ -56,13 +81,15 @@ for channel in settings.channels:
                 try:
                     raw_segs = transcriber.transcribe(wav_path, start_ts)
                     segments = [
-                        SegmentInfo(channel_id       = ch_id,
-                                    start_time       = r["start_time"],
-                                    end_time         = r["end_time"],
-                                    text             = r["text"],
-                                    segment_filename = r["segment_filename"],
-                                    offset_secs      = r["offset_secs"],
-                                    duration_secs    = r["duration_secs"])
+                        SegmentInfo(
+                            channel_id       = ch_id,
+                            start_time       = r["start_time"],
+                            end_time         = r["end_time"],
+                            text             = r["text"],
+                            segment_filename = r["segment_filename"],
+                            offset_secs      = r["offset_secs"],
+                            duration_secs    = r["duration_secs"]
+                        )
                         for r in raw_segs
                     ]
                     db_client.insert_segments(segments)
@@ -79,12 +106,12 @@ for channel in settings.channels:
                         logger.warning("[%s] WAV silinə bilmədi: %s", ch_id, wav_path)
         return threading.Thread(target=worker, daemon=True)
 
-    # 2 paralel worker
+    # hər arch üçün 2 paralel worker
     for _ in range(2):
         t = make_worker(arch)
         t.start()
 
-# 7) Siqnal handler
+# 8) Siqnal handler
 def shutdown(sig, frame):
     logger.info("Shutdown signal (%s) alındı, dayandırılır…", sig)
     for a in archivers:

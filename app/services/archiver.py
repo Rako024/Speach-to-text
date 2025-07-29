@@ -20,14 +20,17 @@ class Archiver:
         # Seqmentləmə parametrləri
         self.ts_seg_time = settings.ts_segment_time
 
-        # WAV üçün queue + stop-flag
+        # WAV üçün queue + stop‑flag
         self.wav_queue   = queue.Queue()
         self._shutdown   = threading.Event()
+
+        # Startup zamanı mövcud .ts faylları emal olundu sayılacaq
+        self._processed = set()
 
     def start_ts(self):
         """
         HLS → .ts seqmentləri yazır:
-        itv_20250721T153012.ts
+        fayllar audio‑copy + video H.264/CRF=28, 360p
         """
         os.makedirs(self.archive_dir, exist_ok=True)
         logger.info("[%s] TS archiver started → %s", self.channel.id, self.archive_dir)
@@ -36,16 +39,22 @@ class Archiver:
             self.archive_dir,
             f"{self.channel.id}_" + "%Y%m%dT%H%M%S.ts"
         )
+
         cmd = [
             "ffmpeg", "-y", "-i", self.hls_url,
-            "-c", "copy",
+            "-c:a", "copy",
+            "-c:v", "libx264",
+            "-preset", "veryfast",
+            "-crf", "28",
+            "-vf", "scale=-2:360",
             "-f", "segment",
             "-segment_time",    str(self.ts_seg_time),
             "-reset_timestamps","1",
-            "-strftime",        "1",       # vaxt möhürü fayl adına
+            "-strftime",        "1",
             ts_pattern
         ]
         logger.debug("[%s] TS cmd: %s", self.channel.id, " ".join(cmd))
+
         self.ts_proc = subprocess.Popen(
             cmd,
             stdout=subprocess.DEVNULL,
@@ -55,17 +64,23 @@ class Archiver:
     def start_watcher(self):
         """
         Arxiv qovluğundakı yeni .ts fayllarını gözləyir,
-        onlardan .wav çıxarıb queue-ya atır.
+        yalnız startup-dan sonra yarananları .wav-ə çevirib queue-ya atır.
         """
         os.makedirs(self.wav_dir, exist_ok=True)
-        logger.info("[%s] WAV-watcher started → %s", self.channel.id, self.wav_dir)
+        logger.info("[%s] WAV‑watcher started → %s", self.channel.id, self.wav_dir)
+
+        # Startup zamanı mövcud .ts fayllarını artıq emal edildi say
+        self._processed = {
+            fname for fname in os.listdir(self.archive_dir)
+            if fname.endswith(".ts")
+        }
+
         threading.Thread(target=self._watch_ts_and_generate_wav, daemon=True).start()
 
     def _watch_ts_and_generate_wav(self):
-        processed = set()
         while not self._shutdown.is_set():
             for fname in sorted(os.listdir(self.archive_dir)):
-                if not fname.endswith(".ts") or fname in processed:
+                if not fname.endswith(".ts") or fname in self._processed:
                     continue
 
                 ts_path = os.path.join(self.archive_dir, fname)
@@ -93,10 +108,12 @@ class Archiver:
                 # Başlanğıc timestamp
                 start_ts = self._extract_ts_from_filename(fname)
 
-                # Queue-ya at
+                # Queue‑ya at
                 self.wav_queue.put((self.channel.id, wav_path, start_ts))
                 logger.info("[%s] WAV generated and queued: %s", self.channel.id, wav_path)
-                processed.add(fname)
+
+                # Bu fayl artıq emal edildi sayılır
+                self._processed.add(fname)
 
             time.sleep(0.1)
 
