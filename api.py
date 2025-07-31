@@ -12,6 +12,11 @@ from app.services.db import DBClient
 from app.services.summarizer import DeepSeekClient
 from app.api.schemas import SearchResponse, SegmentInfo
 
+# ————————————————————————————————
+# New: import scheduling router
+# ————————————————————————————————
+from app.api.routers import router
+
 settings = Settings()
 app = FastAPI()
 
@@ -40,6 +45,8 @@ app.mount(
 # ————————————————————————————————
 db = DBClient(settings)
 db.init_db()
+db.init_schedule_table()          # ← new: create schedule_intervals table
+app.include_router(router)  # ← new: enable /schedule/ endpoints
 ds = DeepSeekClient(settings)
 
 # ————————————————————————————————
@@ -89,14 +96,14 @@ def clip(
     # ffmpeg komandası ilə faylı MP4 formatında kəs
     cmd = [
         "ffmpeg",
-        "-ss", str(start),        # Başlanğıc nöqtəsi
-        "-i", path,               # Giriş .ts faylı
-        "-t", str(duration),      # Müddət
-        "-c", "copy",             # Yenidən kodlaşdırma yox
+        "-ss", str(start),
+        "-i", path,
+        "-t", str(duration),
+        "-c", "copy",
         "-bsf:a", "aac_adtstoasc",
         "-movflags", "frag_keyframe+empty_moov",
-        "-f", "mp4",              # Çıxış formatı
-        "pipe:1"                  # Standart çıxışa yönləndir
+        "-f", "mp4",
+        "pipe:1"
     ]
 
     try:
@@ -105,52 +112,7 @@ def clip(
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE
         )
-
-        return StreamingResponse(
-            proc.stdout,
-            media_type="video/mp4"
-        )
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"FFmpeg xətası: {str(e)}")@app.get("/video_clip/", response_class=StreamingResponse)
-    
-def clip(
-    channel: str,
-    video_file: str,
-    start: float,
-    duration: float
-):
-    # Faylın tam yolunu qururuq: archive/itv/itv_20250721Txxxxxx.ts
-    folder = os.path.join(settings.archive_base, channel)
-    path = os.path.join(folder, video_file)
-
-    # Fayl mövcuddursa davam et
-    if not os.path.exists(path):
-        raise HTTPException(status_code=404, detail=f"Fayl tapılmadı: {path}")
-
-    # ffmpeg komandası ilə faylı MP4 formatında kəs
-    cmd = [
-        "ffmpeg",
-        "-ss", str(start),        # Başlanğıc nöqtəsi
-        "-i", path,               # Giriş .ts faylı
-        "-t", str(duration),      # Müddət
-        "-c", "copy",             # Yenidən kodlaşdırma yox
-        "-bsf:a", "aac_adtstoasc",
-        "-movflags", "frag_keyframe+empty_moov",
-        "-f", "mp4",              # Çıxış formatı
-        "pipe:1"                  # Standart çıxışa yönləndir
-    ]
-
-    try:
-        proc = subprocess.Popen(
-            cmd,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE
-        )
-
-        return StreamingResponse(
-            proc.stdout,
-            media_type="video/mp4"
-        )
+        return StreamingResponse(proc.stdout, media_type="video/mp4")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"FFmpeg xətası: {str(e)}")
 

@@ -24,6 +24,9 @@ class Archiver:
         self.wav_queue   = queue.Queue()
         self._shutdown   = threading.Event()
 
+        # Watcher thread reference
+        self._watcher_thread = None
+
         # Startup zamanı mövcud .ts faylları emal olundu sayılacaq
         self._processed = set()
 
@@ -66,6 +69,10 @@ class Archiver:
         Arxiv qovluğundakı yeni .ts fayllarını gözləyir,
         yalnız startup-dan sonra yarananları .wav-ə çevirib queue-ya atır.
         """
+        # Əvvəlki watcher varsa, çıx
+        if self._watcher_thread and self._watcher_thread.is_alive():
+            return
+
         os.makedirs(self.wav_dir, exist_ok=True)
         logger.info("[%s] WAV‑watcher started → %s", self.channel.id, self.wav_dir)
 
@@ -75,7 +82,13 @@ class Archiver:
             if fname.endswith(".ts")
         }
 
-        threading.Thread(target=self._watch_ts_and_generate_wav, daemon=True).start()
+        # Yeni watcher thread
+        self._shutdown.clear()
+        self._watcher_thread = threading.Thread(
+            target=self._watch_ts_and_generate_wav,
+            daemon=True
+        )
+        self._watcher_thread.start()
 
     def _watch_ts_and_generate_wav(self):
         while not self._shutdown.is_set():
@@ -142,5 +155,15 @@ class Archiver:
         Prosesləri dayandır.
         """
         self._shutdown.set()
+        if self._watcher_thread:
+            self._watcher_thread.join(timeout=1)
         if hasattr(self, 'ts_proc'):
             self.ts_proc.terminate()
+
+    def resume(self):
+        """
+        Dayandırılmış archiver-i yenidən işə sal.
+        """
+        self.stop()
+        self.start_ts()
+        self.start_watcher()

@@ -4,11 +4,20 @@ import psycopg2
 from typing import List, NamedTuple
 from app.api.schemas import SegmentInfo
 import datetime
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 class OldSegment(NamedTuple):
     id: int
     channel_id: str
     segment_filename: str
+
+class ScheduleInterval(NamedTuple):
+    id: int
+    start_time: datetime.time
+    end_time:   datetime.time
 
 class DBClient:
     def __init__(self, settings):
@@ -62,6 +71,7 @@ class DBClient:
                 seg.duration_secs
             ))
         conn.commit()
+        logger.info("%d seqment DB-yə yazıldı", len(segments))
         cur.close()
         conn.close()
 
@@ -164,3 +174,48 @@ class DBClient:
         conn.commit()
         cur.close()
         conn.close()
+    
+    def init_schedule_table(self):
+        conn = self.get_conn()
+        cur = conn.cursor()
+        cur.execute("""
+          CREATE TABLE IF NOT EXISTS schedule_intervals (
+            id         SERIAL PRIMARY KEY,
+            start_time TIME    NOT NULL,
+            end_time   TIME    NOT NULL
+          )
+        """)
+        conn.commit()
+        cur.close()
+        conn.close()
+
+    def get_intervals(self) -> list[ScheduleInterval]:
+        conn = self.get_conn(); cur = conn.cursor()
+        cur.execute("SELECT id, start_time, end_time FROM schedule_intervals ORDER BY id")
+        rows = cur.fetchall()
+        cur.close(); conn.close()
+        return [ScheduleInterval(*r) for r in rows]
+
+    def add_interval(self, start_time: datetime.time, end_time: datetime.time) -> ScheduleInterval:
+        conn = self.get_conn(); cur = conn.cursor()
+        cur.execute(
+          "INSERT INTO schedule_intervals (start_time, end_time) VALUES (%s, %s) RETURNING id",
+          (start_time, end_time)
+        )
+        new_id = cur.fetchone()[0]
+        conn.commit(); cur.close(); conn.close()
+        return ScheduleInterval(new_id, start_time, end_time)
+
+    def update_interval(self, id: int, start_time: datetime.time, end_time: datetime.time) -> None:
+        conn = self.get_conn(); cur = conn.cursor()
+        cur.execute(
+          "UPDATE schedule_intervals SET start_time=%s, end_time=%s WHERE id=%s",
+          (start_time, end_time, id)
+        )
+        conn.commit(); cur.close(); conn.close()
+
+    def delete_interval(self, id: int) -> None:
+        conn = self.get_conn(); cur = conn.cursor()
+        cur.execute("DELETE FROM schedule_intervals WHERE id=%s", (id,))
+        conn.commit(); cur.close(); conn.close()
+    

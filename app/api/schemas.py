@@ -8,7 +8,7 @@ class SegmentInfo(BaseModel):
     segment_filename: str
     offset_secs: float
     duration_secs: float
-    deleted:         bool
+    deleted:         bool = False
 
 class SearchResponse(BaseModel):
     summary: str

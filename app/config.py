@@ -27,6 +27,8 @@ class Settings(BaseSettings):
     device:        str
     compute_type:  str
 
+    timezone: str = "UTC"  # default, .env-dən override olunacaq
+
     # DeepSeek API
     deepseek_api_url: str
     deepseek_key:     str
