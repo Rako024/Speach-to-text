@@ -69,6 +69,7 @@
             box-shadow: var(--shadow);
             white-space: pre-wrap;
             margin-bottom: 2rem;
+            min-height: 4rem;
         }
 
         #results {
@@ -96,7 +97,7 @@
         .card-footer {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            gap: 0.5rem;
         }
 
         .card-footer button {
@@ -138,7 +139,7 @@
     </div>
 
     <h2>DeepSeek Qısa Xülasə:</h2>
-    <div id="summary"></div>
+    <div id="summary">Burada seçilmiş seqmentin ±15s konteksti üzrə xülasə görünəcək</div>
 
     <h2>Tapılan seqmentlər:</h2>
     <div id="results"></div>
@@ -159,16 +160,19 @@
             const channel = chIn.value;
             if (!kw) return alert("Keyword daxil edin");
 
+            // 1) Search çağırırıq
             let url = `/search/?keyword=${encodeURIComponent(kw)}`;
             if (channel) url += `&channel=${encodeURIComponent(channel)}`;
 
-            const r = await fetch(url);
-            if (!r.ok) return alert("Xəta: " + r.statusText);
-            const { summary, segments } = await r.json();
+            const resp = await fetch(url);
+            if (!resp.ok) return alert("Xəta: " + resp.statusText);
+            const segments = await resp.json();
 
-            sumEl.textContent = summary;
+            // 2) UI-ni sıfırla
+            sumEl.textContent = "";
             resEl.innerHTML = "";
 
+            // 3) Kartları qur
             segments.forEach(seg => {
                 const time = new Date(seg.start_time).toLocaleTimeString();
                 const card = document.createElement("div");
@@ -177,21 +181,31 @@
           <p><strong>[${time}]</strong> ${seg.text}</p>
           <div class="card-footer">
             <small>${seg.channel_id.toUpperCase()}</small>
-            <button>Play</button>
+            <button class="play">Play</button>
+            <button class="sum">Xülasə</button>
           </div>
         `;
-
-                const playBtn = card.querySelector("button");
-                playBtn.addEventListener("click", () => {
+                // Play düyməsi
+                card.querySelector(".play").addEventListener("click", () => {
                     let start = parseFloat(seg.offset_secs) - 15;
                     if (start < 0) start = 0;
                     const dur = parseFloat(seg.duration_secs) + 30;
-
-                    player.src = `/video_clip/?channel=${encodeURIComponent(seg.channel_id)}` +
-                        `&video_file=${encodeURIComponent(seg.segment_filename)}` +
-                        `&start=${start}&duration=${dur}`;
+                    player.src = `/video_clip/?channel=${encodeURIComponent(seg.channel_id)}`
+                        + `&video_file=${encodeURIComponent(seg.segment_filename)}`
+                        + `&start=${start}&duration=${dur}`;
                     player.load();
                     player.play();
+                });
+                // Summarize düyməsi
+                card.querySelector(".sum").addEventListener("click", async () => {
+                    sumEl.textContent = "Xülasə əldə edilir…";
+                    const r2 = await fetch(`/summarize/${seg.id}`);
+                    if (!r2.ok) {
+                        sumEl.textContent = "Xülasə alınarkən xəta: " + r2.statusText;
+                        return;
+                    }
+                    const data = await r2.json();
+                    sumEl.textContent = data.summary;
                 });
 
                 resEl.appendChild(card);

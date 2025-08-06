@@ -1,13 +1,12 @@
+# app/scheduler_manager.py
 import datetime
 import logging
 from apscheduler.schedulers.base import BaseScheduler
-from app.services.db import DBClient
-from app.services.archiver import Archiver
 
 logger = logging.getLogger(__name__)
 
 class SchedulerManager:
-    def __init__(self, scheduler: BaseScheduler, db: DBClient, archivers: list[Archiver]):
+    def __init__(self, scheduler: BaseScheduler, db, archivers: list):
         self.scheduler = scheduler
         self.db        = db
         self.archivers = archivers
@@ -27,7 +26,7 @@ class SchedulerManager:
         # 2) DB-dən intervaları götür
         intervals = self.db.get_intervals()
 
-        # 3) Hər interval üçün enable/disable job planla (saniyə səviyyəsinə qədər)
+        # 3) Hər interval üçün enable/disable job planla
         for interval in intervals:
             sid = interval.id
             sh, sm, ss = (
@@ -46,14 +45,16 @@ class SchedulerManager:
                 func=self.enable_all,
                 trigger='cron',
                 hour=sh, minute=sm, second=ss,
-                id=f"enable_{sid}"
+                id=f"enable_{sid}",
+                replace_existing=True
             )
             # Disable job
             self.scheduler.add_job(
                 func=self.disable_all,
                 trigger='cron',
                 hour=eh, minute=em, second=es,
-                id=f"disable_{sid}"
+                id=f"disable_{sid}",
+                replace_existing=True
             )
             logger.info(
                 "Scheduled interval %d: %02d:%02d:%02d → %02d:%02d:%02d",
@@ -66,12 +67,10 @@ class SchedulerManager:
         for interval in intervals:
             st, et = interval.start_time, interval.end_time
             if st <= et:
-                # adi interval
                 if st <= now < et:
                     should_enable = True
                     break
             else:
-                # gecə yarısından sonra davam edən interval
                 if now >= st or now < et:
                     should_enable = True
                     break
@@ -98,6 +97,7 @@ class SchedulerManager:
         if self._enabled:
             for arch in self.archivers:
                 arch.stop()
+            # ─── BURADA ƏSAS DÜZƏLİŞ ───
             self._enabled = False
             logger.info("→ Archiving DISABLED for all channels")
         else:

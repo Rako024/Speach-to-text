@@ -1,3 +1,5 @@
+# requirements.txt
+
 # HTTP API framework and server
 fastapi>=0.95.0
 uvicorn[standard]>=0.22.0
@@ -11,9 +13,11 @@ psycopg2-binary>=2.9.6
 # REST client for DeepSeek API
 requests>=2.28.0
 
-# Whisper transcription
+# Whisper transcription wrapper (model özü Dockerfile-də quraşdırılacaq)
 faster-whisper>=0.10.1
-torch>=2.0.0
+
+# CTranslate2 (cuDNN8 ilə uyğun)
+ctranslate2==4.4.0
 
 # .env support
 python-dotenv>=1.0.0
@@ -21,4 +25,8 @@ python-dotenv>=1.0.0
 # (Optional) Type extensions for older Python
 typing-extensions>=4.0.0
 
+# Scheduler
 apscheduler>=3.9.1
+
+# Prometheus metrics
+prometheus-client>=0.14.1
