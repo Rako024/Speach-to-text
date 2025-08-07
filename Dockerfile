@@ -50,4 +50,4 @@ EXPOSE 8000 8001
 
 # Konteynerin başlanğıc nöqtəsi
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["python", "main.py"]
+CMD []

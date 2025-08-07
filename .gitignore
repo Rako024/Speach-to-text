@@ -1,8 +1,42 @@
-# ─── wav_segments içindəki bütün elementləri ignor et ───
-/wav_segments/*
+# ───────────── Python bytecode-lar ─────────────
+__pycache__/
+*.py[cod]
+*$py.class
 
-# ─── archive içində hamısını ignor et ───
-/archive/*
+# ───────────── Virtual environment ─────────────
+venv/
+.env
+.env.*
 
-# ─── amma index.html-i yenidən izləməyə daxil et ───
+# ───────────── IDE və sistem faylları ─────────────
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ───────────── Log və cache faylları ─────────────
+*.log
+*.tmp
+
+# ───────────── DB və metadata faylları ─────────────
+*.sqlite3
+*.db
+*.egg-info/
+
+# ───────────── Build/output faylları ─────────────
+build/
+dist/
+*.whl
+
+# ───────────── Docker / cudnn və əlavə fayllar ─────────────
+cudnn-local-repo-ubuntu2004-8.9.0.131_1.0-1_amd64.deb
+.dockerignore
+
+# ───────────── Transcribe və media ilə bağlı qovluqlar ─────────────
+archive/*
 !/archive/index.html
+wav_segments/*
+
+# ───────────── Cache test ssenariləri, lokal scriplər ─────────────
+test-gpu.sh
+servicepy.txt
