@@ -1,42 +1,44 @@
-# ───────────── Python bytecode-lar ─────────────
+# ───────────── Python Bytecode-lar ─────────────
 __pycache__/
 *.py[cod]
 *$py.class
 
-# ───────────── Virtual environment ─────────────
+# ───────────── Virtual Environment ─────────────
 venv/
+.venv/
+env/
 .env
 .env.*
 
-# ───────────── IDE və sistem faylları ─────────────
+# ───────────── IDE və Sistem Faylları ─────────────
 .vscode/
 .idea/
 .DS_Store
 Thumbs.db
 
-# ───────────── Log və cache faylları ─────────────
+# ───────────── Log və Temp Faylları ─────────────
 *.log
 *.tmp
 
-# ───────────── DB və metadata faylları ─────────────
+# ───────────── DB və Metadata Faylları ─────────────
 *.sqlite3
 *.db
 *.egg-info/
 
-# ───────────── Build/output faylları ─────────────
+# ───────────── Build və Distribution Faylları ─────────────
 build/
 dist/
 *.whl
 
-# ───────────── Docker / cudnn və əlavə fayllar ─────────────
+# ───────────── Docker və Installer Faylları ─────────────
 cudnn-local-repo-ubuntu2004-8.9.0.131_1.0-1_amd64.deb
 .dockerignore
 
-# ───────────── Transcribe və media ilə bağlı qovluqlar ─────────────
+# ───────────── Transcribe və Media Faylları ─────────────
 archive/*
 !/archive/index.html
 wav_segments/*
 
-# ───────────── Cache test ssenariləri, lokal scriplər ─────────────
+# ───────────── Test və Lokal Scriptlər ─────────────
 test-gpu.sh
 servicepy.txt

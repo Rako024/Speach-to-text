@@ -1,6 +1,0 @@
-# kontektdən çıxarılacaq qovluqlar/fayllar
-wav_segments/
-venv/
-__pycache__/
-*.pyc
-.git
