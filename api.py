@@ -10,6 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.config import Settings
 from app.services.db import DBClient
 from app.api.routers import router
+from app.api.auth_deps import require_auth
 
 settings = Settings()
 

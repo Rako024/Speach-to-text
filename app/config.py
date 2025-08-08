@@ -55,8 +55,26 @@ class Settings(BaseSettings):
     cleanup_hour:           int = 3
     cleanup_minute:         int = 0
     cleanup_retention_days: int = 30
+     # Yeni env-lər üçün field-lar (alias ilə)
+    log_level: str = Field('INFO', alias='LOG_LEVEL')
+    nintel_diag: int = Field(0, alias='NINTEL_DIAG')
+    run_scheduler_in_api: int = Field(0, alias='RUN_SCHEDULER_IN_API')
+
+    db_pool_min: int = Field(1, alias='DB_POOL_MIN')
+    db_pool_max: int = Field(10, alias='DB_POOL_MAX')
+
+    gpu_max_jobs: int = Field(2, alias='GPU_MAX_JOBS')
+    max_queue_size: int = Field(200, alias='MAX_QUEUE_SIZE')
+    
+    
+    
+     # JWT / Auth
+    jwt_secret: str | None = Field(None, alias="JWT_SECRET")      # HS256 üçün
+    static_token: str | None = Field(None, alias="STATIC_TOKEN")  # X-API-Key / Bearer statik açar
+
 
     model_config = SettingsConfigDict(
         env_file=".env",
-        env_file_encoding="utf-8"
+        env_file_encoding="utf-8",
+        extra='ignore'         
     )

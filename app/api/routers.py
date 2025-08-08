@@ -14,6 +14,7 @@ from app.services.db import DBClient, ScheduleInterval
 from app.services.summarizer import DeepSeekClient
 from app.scheduler_manager import SchedulerManager
 from app.api.deps import get_db, get_summarizer, get_scheduler_manager
+from app.api.auth_deps import require_auth
 from app.api.schemas import (
     SegmentInfo,
     IntervalIn,
@@ -37,6 +38,7 @@ def search(
     threshold: float = Query(0.2, ge=0.0, le=1.0),
     limit:     int = Query(50, ge=1, le=500),
     db: DBClient = Depends(get_db),  # <-- singleton dependency
+    claims: dict = Depends(require_auth)
 ):
     results = db.search(
         keyword=keyword,
@@ -71,12 +73,14 @@ class SummarizeOut(BaseModel):
 @router.get(
     "/summarize/{segment_id}",
     response_model=SummarizeOut,
-    summary="Seçilmiş seqmentin ±15s kontekstini xülasə et"
+    summary="Seçilmiş seqmentin ±15s kontekstini xülasə et",
+    
 )
 def summarize_segment(
     segment_id: int,
     db: DBClient = Depends(get_db),                 # <-- singleton dependency
     ds: DeepSeekClient = Depends(get_summarizer),   # <-- lazy singleton
+    claims: dict = Depends(require_auth)
 ):
     # 1) Seçilmiş seqmenti götür
     seg = db.get_segment(segment_id)
@@ -142,7 +146,8 @@ def clip(
     channel: str = Query(..., description="Channel ID"),
     video_file: str = Query(..., description="TS filename"),
     start: float = Query(..., description="Start offset in seconds"),
-    duration: float = Query(..., description="Duration in seconds")
+    duration: float = Query(..., description="Duration in seconds"),
+    claims: dict = Depends(require_auth)
 ):
     folder = os.path.join(settings.archive_base, channel)
     path = os.path.join(folder, video_file)
@@ -167,7 +172,8 @@ def clip(
     summary="List all scheduling intervals"
 )
 def list_intervals(
-    db: DBClient = Depends(get_db)   # <-- singleton dependency
+    db: DBClient = Depends(get_db),   # <-- singleton dependency
+    claims: dict = Depends(require_auth)
 ):
     return db.get_intervals()
 
@@ -180,7 +186,8 @@ def list_intervals(
 def create_interval(
     data: IntervalIn,
     db: DBClient = Depends(get_db),
-    sched_mgr: SchedulerManager = Depends(get_scheduler_manager)
+    sched_mgr: SchedulerManager = Depends(get_scheduler_manager),
+    claims: dict = Depends(require_auth)
 ):
     new = db.add_interval(data.start_time, data.end_time)
     sched_mgr.load_and_schedule_intervals()
@@ -195,7 +202,8 @@ def update_interval(
     interval_id: int,
     data: IntervalIn,
     db: DBClient = Depends(get_db),
-    sched_mgr: SchedulerManager = Depends(get_scheduler_manager)
+    sched_mgr: SchedulerManager = Depends(get_scheduler_manager),
+    claims: dict = Depends(require_auth)
 ):
     db.update_interval(interval_id, data.start_time, data.end_time)
     sched_mgr.load_and_schedule_intervals()
@@ -208,7 +216,8 @@ def update_interval(
 def delete_interval(
     interval_id: int,
     db: DBClient = Depends(get_db),
-    sched_mgr: SchedulerManager = Depends(get_scheduler_manager)
+    sched_mgr: SchedulerManager = Depends(get_scheduler_manager),
+    claims: dict = Depends(require_auth)
 ):
     db.delete_interval(interval_id)
     sched_mgr.load_and_schedule_intervals()

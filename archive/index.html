@@ -11,55 +11,68 @@
             --accent: #3498db;
             --bg: #ecf0f1;
             --card-bg: #ffffff;
-            --radius: 0.5rem;
-            --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --radius: .5rem;
+            --shadow: 0 2px 8px rgba(0, 0, 0, .1);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
-            padding: 0;
+            padding: 0
         }
 
         body {
             font-family: 'Segoe UI', sans-serif;
             background: var(--bg);
             color: var(--primary);
-            padding: 1rem;
+            padding: 1rem
         }
 
         h1,
         h2 {
             text-align: center;
-            margin-bottom: 1rem;
+            margin-bottom: 1rem
         }
 
         .controls {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
+            gap: .5rem;
             justify-content: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem
         }
 
         .controls input,
         .controls select,
         .controls button {
-            padding: 0.5rem 1rem;
+            padding: .5rem 1rem;
             font-size: 1rem;
             border: 1px solid #bdc3c7;
-            border-radius: var(--radius);
+            border-radius: var(--radius)
         }
 
         .controls button {
             background: var(--accent);
             color: #fff;
             border: none;
-            cursor: pointer;
+            cursor: pointer
         }
 
         .controls button:hover {
-            background: #2980b9;
+            background: #2980b9
+        }
+
+        .auth {
+            display: flex;
+            gap: .5rem;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap
+        }
+
+        .auth input {
+            min-width: 360px
         }
 
         #summary {
@@ -69,14 +82,14 @@
             box-shadow: var(--shadow);
             white-space: pre-wrap;
             margin-bottom: 2rem;
-            min-height: 4rem;
+            min-height: 4rem
         }
 
         #results {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 1rem;
-            margin-bottom: 2rem;
+            margin-bottom: 2rem
         }
 
         .card {
@@ -86,32 +99,32 @@
             box-shadow: var(--shadow);
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: space-between
         }
 
         .card p {
-            margin-bottom: 0.5rem;
-            flex-grow: 1;
+            margin-bottom: .5rem;
+            flex-grow: 1
         }
 
         .card-footer {
             display: flex;
             justify-content: space-between;
-            gap: 0.5rem;
+            gap: .5rem
         }
 
         .card-footer button {
-            padding: 0.4rem 0.8rem;
-            font-size: 0.9rem;
+            padding: .4rem .8rem;
+            font-size: .9rem;
             border: none;
             border-radius: var(--radius);
             background: var(--primary);
             color: #fff;
-            cursor: pointer;
+            cursor: pointer
         }
 
         .card-footer button:hover {
-            opacity: 0.9;
+            opacity: .9
         }
 
         video {
@@ -119,13 +132,20 @@
             margin: 0 auto;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            max-width: 100%;
+            max-width: 100%
         }
     </style>
 </head>
 
 <body>
     <h1>TV Arxiv &amp; Klip Axtar</h1>
+
+    <!-- Token sahəsi -->
+    <div class="auth">
+        <input id="token" placeholder="Bearer JWT tokeni bura yapışdır (və ya STATIC_TOKEN)" />
+        <button id="saveToken">Tokeni yadda saxla</button>
+        <button id="clearToken" type="button">Təmizlə</button>
+    </div>
 
     <div class="controls">
         <input id="kw" placeholder="Keyword (məs: pasha bank)" />
@@ -148,68 +168,146 @@
     <video id="player" controls></video>
 
     <script>
+        // --- Token idarəsi ---
+        const tokenInput = document.getElementById("token");
+        const saveBtn = document.getElementById("saveToken");
+        const clearBtn = document.getElementById("clearToken");
+
+        function getToken() {
+            const t = localStorage.getItem("auth_token");
+            return (t && t.trim()) ? t.trim() : "";
+        }
+        function setToken(t) {
+            localStorage.setItem("auth_token", (t || "").trim());
+        }
+        function ensureTokenOrAlert() {
+            const t = getToken();
+            if (!t) {
+                alert("Zəhmət olmasa əvvəl token daxil edin və 'Tokeni yadda saxla' düyməsinə basın.");
+                return false;
+            }
+            return true;
+        }
+        function authHeaders() {
+            const t = getToken();
+            return { "Authorization": `Bearer ${t}` };
+        }
+
+        // UI init
+        tokenInput.value = getToken();
+        saveBtn.addEventListener("click", () => {
+            setToken(tokenInput.value);
+            alert("Token yadda saxlandı");
+        });
+        clearBtn.addEventListener("click", () => {
+            setToken("");
+            tokenInput.value = "";
+            alert("Token təmizləndi");
+        });
+
+        // --- Axtarış və video ---
         const btn = document.getElementById("btn");
         const kwIn = document.getElementById("kw");
         const chIn = document.getElementById("channel");
         const sumEl = document.getElementById("summary");
         const resEl = document.getElementById("results");
         const player = document.getElementById("player");
+        let currentBlobUrl = null;
 
         btn.addEventListener("click", async () => {
+            if (!ensureTokenOrAlert()) return;
+
             const kw = kwIn.value.trim();
             const channel = chIn.value;
             if (!kw) return alert("Keyword daxil edin");
 
-            // 1) Search çağırırıq
-            let url = `/search/?keyword=${encodeURIComponent(kw)}`;
-            if (channel) url += `&channel=${encodeURIComponent(channel)}`;
+            try {
+                // 1) Search
+                let url = `/search/?keyword=${encodeURIComponent(kw)}`;
+                if (channel) url += `&channel=${encodeURIComponent(channel)}`;
 
-            const resp = await fetch(url);
-            if (!resp.ok) return alert("Xəta: " + resp.statusText);
-            const segments = await resp.json();
+                const sResp = await fetch(url, { headers: authHeaders() });
+                if (!sResp.ok) {
+                    const txt = await sResp.text().catch(() => "");
+                    throw new Error(`Search error ${sResp.status}: ${txt || sResp.statusText}`);
+                }
+                const segments = await sResp.json();
 
-            // 2) UI-ni sıfırla
-            sumEl.textContent = "";
-            resEl.innerHTML = "";
+                // 2) UI reset
+                sumEl.textContent = "";
+                resEl.innerHTML = "";
 
-            // 3) Kartları qur
-            segments.forEach(seg => {
-                const time = new Date(seg.start_time).toLocaleTimeString();
-                const card = document.createElement("div");
-                card.className = "card";
-                card.innerHTML = `
-          <p><strong>[${time}]</strong> ${seg.text}</p>
-          <div class="card-footer">
-            <small>${seg.channel_id.toUpperCase()}</small>
-            <button class="play">Play</button>
-            <button class="sum">Xülasə</button>
-          </div>
-        `;
-                // Play düyməsi
-                card.querySelector(".play").addEventListener("click", () => {
-                    let start = parseFloat(seg.offset_secs) - 15;
-                    if (start < 0) start = 0;
-                    const dur = parseFloat(seg.duration_secs) + 30;
-                    player.src = `/video_clip/?channel=${encodeURIComponent(seg.channel_id)}`
-                        + `&video_file=${encodeURIComponent(seg.segment_filename)}`
-                        + `&start=${start}&duration=${dur}`;
-                    player.load();
-                    player.play();
+                // 3) Kartlar
+                segments.forEach(seg => {
+                    const time = new Date(seg.start_time).toLocaleTimeString();
+                    const card = document.createElement("div");
+                    card.className = "card";
+                    card.innerHTML = `
+            <p><strong>[${time}]</strong> ${seg.text}</p>
+            <div class="card-footer">
+              <small>${seg.channel_id.toUpperCase()}</small>
+              <button class="play">Play</button>
+              <button class="sum">Xülasə</button>
+            </div>
+          `;
+
+                    // Play — <video> custom header mümkün deyil → fetch+blob
+                    card.querySelector(".play").addEventListener("click", async () => {
+                        if (!ensureTokenOrAlert()) return;
+
+                        let start = parseFloat(seg.offset_secs) - 15;
+                        if (start < 0) start = 0;
+                        const dur = parseFloat(seg.duration_secs) + 30;
+
+                        const clipUrl = `/video_clip/?channel=${encodeURIComponent(seg.channel_id)}`
+                            + `&video_file=${encodeURIComponent(seg.segment_filename)}`
+                            + `&start=${start}&duration=${dur}`;
+
+                        player.pause();
+                        try {
+                            const vResp = await fetch(clipUrl, { headers: authHeaders() });
+                            if (!vResp.ok) {
+                                const txt = await vResp.text().catch(() => "");
+                                throw new Error(`Clip error ${vResp.status}: ${txt || vResp.statusText}`);
+                            }
+                            const blob = await vResp.blob();
+                            if (currentBlobUrl) URL.revokeObjectURL(currentBlobUrl);
+                            currentBlobUrl = URL.createObjectURL(blob);
+                            player.src = currentBlobUrl;
+                            await player.play();
+                        } catch (e) {
+                            alert(e.message || "Klip yüklənmədi");
+                        }
+                    });
+
+                    // Summarize
+                    card.querySelector(".sum").addEventListener("click", async () => {
+                        if (!ensureTokenOrAlert()) return;
+
+                        sumEl.textContent = "Xülasə əldə edilir…";
+                        try {
+                            const r2 = await fetch(`/summarize/${seg.id}`, { headers: authHeaders() });
+                            if (!r2.ok) {
+                                const txt = await r2.text().catch(() => "");
+                                throw new Error(`Summarize error ${r2.status}: ${txt || r2.statusText}`);
+                            }
+                            const data = await r2.json();
+                            sumEl.textContent = data.summary;
+                        } catch (e) {
+                            sumEl.textContent = e.message || "Xülasə alınarkən xəta";
+                        }
+                    });
+
+                    resEl.appendChild(card);
                 });
-                // Summarize düyməsi
-                card.querySelector(".sum").addEventListener("click", async () => {
-                    sumEl.textContent = "Xülasə əldə edilir…";
-                    const r2 = await fetch(`/summarize/${seg.id}`);
-                    if (!r2.ok) {
-                        sumEl.textContent = "Xülasə alınarkən xəta: " + r2.statusText;
-                        return;
-                    }
-                    const data = await r2.json();
-                    sumEl.textContent = data.summary;
-                });
+            } catch (e) {
+                alert(e.message || "Xəta baş verdi");
+            }
+        });
 
-                resEl.appendChild(card);
-            });
+        // Səhifədən çıxanda blob URL-ləri təmizlə
+        window.addEventListener("beforeunload", () => {
+            if (currentBlobUrl) URL.revokeObjectURL(currentBlobUrl);
         });
     </script>
 </body>
