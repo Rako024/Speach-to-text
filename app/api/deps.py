@@ -1,42 +1,70 @@
 # app/api/deps.py
+from __future__ import annotations
+
+import os
+from typing import Optional
+from zoneinfo import ZoneInfo
+from apscheduler.schedulers.background import BackgroundScheduler
 
 from app.config import Settings
 from app.services.db import DBClient
 from app.services.summarizer import DeepSeekClient
 from app.scheduler_manager import SchedulerManager
-from apscheduler.schedulers.background import BackgroundScheduler
 
-# Load settings
+# -------------------------------------------------
+# Settings
+# -------------------------------------------------
 settings = Settings()
 
-# Initialize DB client and ensure tables exist
-_db_client = DBClient(settings)
+# -------------------------------------------------
+# DB client (singleton) + cədvəllərin init-i
+# -------------------------------------------------
+_db_client: DBClient = DBClient(settings)
 _db_client.init_db()
 _db_client.init_schedule_table()
 
-# Initialize DeepSeek client lazily
-_summ_client = None
-
-# Dependency: get DB client
 def get_db() -> DBClient:
+    """FastAPI dependency: shared DB client."""
     return _db_client
 
-# Dependency: get DeepSeek client
+# -------------------------------------------------
+# DeepSeek client (lazy singleton)
+# -------------------------------------------------
+_summ_client: Optional[DeepSeekClient] = None
+
 def get_summarizer() -> DeepSeekClient:
+    """FastAPI dependency: DeepSeek client (lazy)."""
     global _summ_client
     if _summ_client is None:
         _summ_client = DeepSeekClient(settings)
     return _summ_client
 
-# Set up scheduler for intervals
-# Use TIMEZONE from settings if available, else default to UTC
-tz = getattr(settings, 'timezone', 'UTC')
-scheduler = BackgroundScheduler(timezone=tz)
-scheduler.start()
+# -------------------------------------------------
+# Scheduler (lazy + optional start via env)
+# - API prosesində birdən çox nüsxənin qarşısını almaq üçün
+#   yalnız RUN_SCHEDULER_IN_API=1 olduqda start edilir.
+# - Adətən scheduler-i main.py (worker) idarə edir.
+# -------------------------------------------------
+_scheduler: Optional[BackgroundScheduler] = None
+_sched_mgr: Optional[SchedulerManager] = None
 
-# Create SchedulerManager with no archivers (API only reloads jobs)
-sched_mgr = SchedulerManager(scheduler, _db_client, archivers=[])
-
-# Dependency: get SchedulerManager
 def get_scheduler_manager() -> SchedulerManager:
-    return sched_mgr
+    """FastAPI dependency: SchedulerManager (lazy)."""
+    global _scheduler, _sched_mgr
+    if _sched_mgr is not None:
+        return _sched_mgr
+
+    tz_name = getattr(settings, "timezone", "UTC")
+    try:
+        tz = ZoneInfo(tz_name)
+    except Exception:
+        tz = ZoneInfo("UTC")
+
+    _scheduler = BackgroundScheduler(timezone=tz)
+
+    # Yalnız env=1 olduqda API prosesində scheduler-i start et
+    if os.getenv("RUN_SCHEDULER_IN_API", "0") == "1":
+        _scheduler.start()
+
+    _sched_mgr = SchedulerManager(_scheduler, _db_client, archivers=[])
+    return _sched_mgr

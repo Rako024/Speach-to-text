@@ -17,6 +17,8 @@ class DeepSeekClient:
     def __init__(self, settings: Settings):
         self.api_url = settings.deepseek_api_url
         self.api_key = settings.deepseek_key
+        # Konfiqurable timeout (saniyə) – istəsən Settings-ə də çıxara bilərik
+        self.timeout = 30
 
     def summarize(
         self,
@@ -78,12 +80,24 @@ class DeepSeekClient:
             "Accept": "application/json"
         }
 
-        resp = requests.post(self.api_url, headers=headers, json=payload)
-        if resp.status_code != 200:
-            logger.error("DeepSeek API error %s: %s", resp.status_code, resp.text)
-            raise RuntimeError("DeepSeek API error")
+        try:
+            resp = requests.post(self.api_url, headers=headers, json=payload, timeout=self.timeout)
+        except requests.exceptions.RequestException as e:
+            logger.error("DeepSeek API request error: %s", e)
+            # Fallback: modelləşdirilmiş sadə xülasə mesajı
+            return "Xülasə xidmətinə qoşulmaq mümkün olmadı. Daha sonra yenidən cəhd edin."
 
-        return resp.json()["choices"][0]["message"]["content"]
+        if resp.status_code != 200:
+            # DeepSeek qeyri-200 cavabları (rate limit, auth və s.)
+            logger.error("DeepSeek API error %s: %s", resp.status_code, resp.text)
+            return "Xülasə alınarkən xidmət xəta verdi. Zəhmət olmasa sonra yenidən yoxlayın."
+
+        try:
+            return resp.json()["choices"][0]["message"]["content"]
+        except Exception as e:
+            logger.error("DeepSeek API parse error: %s; body=%s", e, resp.text[:500])
+            return "Xülasə nəticəsini emal etmək mümkün olmadı."
+        
 
     def summarize_text(self, text: str) -> str:
         """
@@ -110,9 +124,18 @@ class DeepSeekClient:
             "Accept": "application/json"
         }
 
-        resp = requests.post(self.api_url, headers=headers, json=payload)
+        try:
+            resp = requests.post(self.api_url, headers=headers, json=payload, timeout=self.timeout)
+        except requests.exceptions.RequestException as e:
+            logger.error("DeepSeek API request error: %s", e)
+            return "Xülasə xidmətinə qoşulmaq mümkün olmadı. Daha sonra yenidən cəhd edin."
+
         if resp.status_code != 200:
             logger.error("DeepSeek API error %s: %s", resp.status_code, resp.text)
-            raise RuntimeError("DeepSeek API error")
+            return "Xülasə alınarkən xidmət xəta verdi. Zəhmət olmasa sonra yenidən yoxlayın."
 
-        return resp.json()["choices"][0]["message"]["content"]
+        try:
+            return resp.json()["choices"][0]["message"]["content"]
+        except Exception as e:
+            logger.error("DeepSeek API parse error: %s; body=%s", e, resp.text[:500])
+            return "Xülasə nəticəsini emal etmək mümkün olmadı."

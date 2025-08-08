@@ -5,6 +5,7 @@ import os
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import Settings
 from app.services.db import DBClient
@@ -18,6 +19,27 @@ db.init_db()
 db.init_schedule_table()
 
 app = FastAPI(title="TV Transcript API")
+
+# --- CORS (env ilə idarə) ---
+# .env: CORS_ORIGINS=http://localhost:3000,https://myapp.com
+origins_env = os.getenv("CORS_ORIGINS", "*")
+if origins_env.strip() == "*":
+    allow_origins = ["*"]
+else:
+    allow_origins = [o.strip() for o in origins_env.split(",") if o.strip()]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=allow_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# --- Healthcheck ---
+@app.get("/healthz", tags=["health"])
+def healthz():
+    return {"status": "ok"}
 
 # 1) Kök (“/”) üçün index.html
 @app.get("/", include_in_schema=False)

@@ -6,6 +6,7 @@ import subprocess
 import datetime
 import logging
 import queue
+from zoneinfo import ZoneInfo
 logger = logging.getLogger(__name__)
 
 class Archiver:
@@ -25,6 +26,8 @@ class Archiver:
         self._shutdown   = threading.Event()
         # artıq emal edilmiş .ts fayllar
         self._processed  = set()
+        # TS yazan ffmpeg prosesinə handle
+        self._ts_proc    = None
 
     def start_ts(self):
         """FFmpeg ilə HLS → .ts seqmentlərinə yazır."""
@@ -33,6 +36,13 @@ class Archiver:
             self.archive_dir,
             f"{self.channel.id}_%Y%m%dT%H%M%S.ts"
         )
+
+        # Əgər artıq ffmpeg işləyirsə, yenisini açma
+        if self._ts_proc is not None and self._ts_proc.poll() is None:
+            logger.debug("[%s] TS archiver already running (pid=%s)",
+                         self.channel.id, self._ts_proc.pid)
+            return
+
         if self.channel.media_type == "video":
             cmd = [
                 "ffmpeg", "-y", "-i", self.channel.hls_url,
@@ -56,7 +66,9 @@ class Archiver:
                 pattern
             ]
         logger.info("[%s] Starting TS archiver", self.channel.id)
-        subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        # Proses handle-ı saxlayırıq
+        self._ts_proc = subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        logger.debug("[%s] ffmpeg started (pid=%s)", self.channel.id, getattr(self._ts_proc, "pid", None))
 
     def start_watcher(self):
         """Yenilənən .tsləri götür, .wav çevir, queue-ya at."""
@@ -132,19 +144,48 @@ class Archiver:
 
     def _parse_ts(self, fname):
         try:
-            t = fname.split("_",1)[1].rsplit(".",1)[0]
+            t = fname.split("_", 1)[1].rsplit(".", 1)[0]  # 20250721T143236
             dt = datetime.datetime.strptime(t, "%Y%m%dT%H%M%S")
-            return dt.replace(tzinfo=datetime.timezone.utc).timestamp()
-        except:
+
+            # settings.timezone varsa onu istifadə et, yoxdursa UTC
+            tz_name = getattr(self.settings, "timezone", "UTC")
+            try:
+                tz = ZoneInfo(tz_name)
+            except Exception:
+                tz = ZoneInfo("UTC")
+
+            # Fayl adı lokal vaxtdır → əvvəlcə həmin TZ ver, sonra UTC epoch-a çevir
+            local_dt = dt.replace(tzinfo=tz)
+            utc_dt = local_dt.astimezone(datetime.timezone.utc)
+            return utc_dt.timestamp()
+
+        except Exception:
             return time.time()
 
     def stop(self):
-        """Watcher-i təmiz dayandırır."""
+        """Watcher-i təmiz dayandırır və ffmpeg prosesini söndürür."""
         # Stop siqnalı göndər
         self._shutdown.set()
         # Thread bitməsini gözlə (max 1 saniyə)
         if self._watcher:
             self._watcher.join(timeout=1)
+
+        # FFmpeg prosesini dayandır
+        if self._ts_proc is not None:
+            try:
+                if self._ts_proc.poll() is None:
+                    logger.info("[%s] Stopping TS archiver (pid=%s)", self.channel.id, self._ts_proc.pid)
+                    self._ts_proc.terminate()
+                    try:
+                        self._ts_proc.wait(timeout=1)
+                    except Exception:
+                        self._ts_proc.kill()
+                        try:
+                            self._ts_proc.wait(timeout=1)
+                        except Exception:
+                            pass
+            finally:
+                self._ts_proc = None
 
     def resume(self):
         """

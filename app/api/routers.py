@@ -23,19 +23,7 @@ from app.api.schemas import (
 router = APIRouter()
 settings = Settings()
 
-
-def _get_db() -> DBClient:
-    return DBClient(settings)
-
-_ds: Optional[DeepSeekClient] = None
-def _get_ds() -> DeepSeekClient:
-    global _ds
-    if _ds is None:
-        _ds = DeepSeekClient(settings)
-    return _ds
-
-
-# --- 1) YENİLƏNMİŞ SEARCH: sadəcə seqmentləri qaytarır ---
+# --- 1) SEARCH: boş nəticədə 404 yox, [] qaytarır ---
 @router.get(
     "/search/",
     response_model=List[SegmentInfo],
@@ -48,7 +36,7 @@ def search(
     end_date:   Optional[date] = Query(None),
     threshold: float = Query(0.2, ge=0.0, le=1.0),
     limit:     int = Query(50, ge=1, le=500),
-    db: DBClient = Depends(_get_db),
+    db: DBClient = Depends(get_db),  # <-- singleton dependency
 ):
     results = db.search(
         keyword=keyword,
@@ -58,8 +46,6 @@ def search(
         threshold=threshold,
         limit=limit
     )
-    if not results:
-        raise HTTPException(status_code=404, detail="Matching transcripts not found")
 
     return [
         SegmentInfo(
@@ -77,7 +63,7 @@ def search(
     ]
 
 
-# --- 2) YENİ SUMMARIZE endpoint: seçilmiş seqmentin ±15s kontekstini xülasə et ---
+# --- 2) SUMMARIZE: seçilmiş seqmentin ±15s konteksti ---
 class SummarizeOut(BaseModel):
     summary: str
     segments: List[SegmentInfo]
@@ -89,8 +75,8 @@ class SummarizeOut(BaseModel):
 )
 def summarize_segment(
     segment_id: int,
-    db: DBClient = Depends(_get_db),
-    ds: DeepSeekClient = Depends(_get_ds),
+    db: DBClient = Depends(get_db),                 # <-- singleton dependency
+    ds: DeepSeekClient = Depends(get_summarizer),   # <-- lazy singleton
 ):
     # 1) Seçilmiş seqmenti götür
     seg = db.get_segment(segment_id)
@@ -116,7 +102,7 @@ def summarize_segment(
     window_start = st_dt - timedelta(seconds=15)
     window_end   = en_dt + timedelta(seconds=15)
 
-    # 4) O kanal üçün həmin pəncərədəki bütün seqmentləri gətir
+    # 4) Overlap pəncərə: qismən düşənlər də gəlsin
     ctx = db.fetch_segments_in_window(
         channel=base.channel_id,
         start_iso=window_start.isoformat(),
@@ -146,7 +132,7 @@ def summarize_segment(
     return SummarizeOut(summary=summary, segments=segments)
 
 
-# --- 3) VIDEO_CLIP endpoint ---
+# --- 3) VIDEO_CLIP endpoint (hazırda dəyişmədik; cloud-a keçəcəksən deyə) ---
 @router.get(
     "/video_clip/",
     response_class=StreamingResponse,
@@ -181,7 +167,7 @@ def clip(
     summary="List all scheduling intervals"
 )
 def list_intervals(
-    db: DBClient = Depends(_get_db)
+    db: DBClient = Depends(get_db)   # <-- singleton dependency
 ):
     return db.get_intervals()
 
@@ -193,7 +179,7 @@ def list_intervals(
 )
 def create_interval(
     data: IntervalIn,
-    db: DBClient = Depends(_get_db),
+    db: DBClient = Depends(get_db),
     sched_mgr: SchedulerManager = Depends(get_scheduler_manager)
 ):
     new = db.add_interval(data.start_time, data.end_time)
@@ -208,7 +194,7 @@ def create_interval(
 def update_interval(
     interval_id: int,
     data: IntervalIn,
-    db: DBClient = Depends(_get_db),
+    db: DBClient = Depends(get_db),
     sched_mgr: SchedulerManager = Depends(get_scheduler_manager)
 ):
     db.update_interval(interval_id, data.start_time, data.end_time)
@@ -221,7 +207,7 @@ def update_interval(
 )
 def delete_interval(
     interval_id: int,
-    db: DBClient = Depends(_get_db),
+    db: DBClient = Depends(get_db),
     sched_mgr: SchedulerManager = Depends(get_scheduler_manager)
 ):
     db.delete_interval(interval_id)
