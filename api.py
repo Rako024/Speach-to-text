@@ -1,6 +1,7 @@
 # api.py
 #!/usr/bin/env python3
 import os
+import sys, logging
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
@@ -11,6 +12,13 @@ from app.config import Settings
 from app.services.db import DBClient
 from app.api.routers import router
 from app.api.auth_deps import require_auth
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(name)s %(message)s",
+    handlers=[logging.StreamHandler(sys.stdout)],
+)
+logging.getLogger("app.api.routers").setLevel(logging.INFO)
 
 settings = Settings()
 

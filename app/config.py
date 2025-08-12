@@ -73,6 +73,17 @@ class Settings(BaseSettings):
     static_token: str | None = Field(None, alias="STATIC_TOKEN")  # X-API-Key / Bearer statik açar
 
 
+    wasabi_upload_enabled: bool = Field(True, alias="WASABI_UPLOAD_ENABLED")
+    wasabi_access_key_id: str | None = Field(None, alias="WASABI_ACCESS_KEY_ID")
+    wasabi_secret_access_key: str | None = Field(None, alias="WASABI_SECRET_ACCESS_KEY")
+    wasabi_region: str | None = Field(None, alias="WASABI_REGION")
+    wasabi_bucket: str | None = Field(None, alias="WASABI_BUCKET")
+    wasabi_endpoint: str | None = Field("https://s3.wasabisys.com", alias="WASABI_ENDPOINT")
+    wasabi_prefix: str | None = Field("", alias="WASABI_PREFIX")
+    wasabi_delete_local_after_upload: bool = Field(True, alias="WASABI_DELETE_LOCAL_AFTER_UPLOAD")
+    wasabi_presign_expire: int = Field(3600, alias="WASABI_PRESIGN_EXPIRE")
+
+    ts_staging_dir: str | None = Field(None, alias="TS_STAGING_DIR")  
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",

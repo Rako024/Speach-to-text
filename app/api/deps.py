@@ -1,6 +1,7 @@
 # app/api/deps.py
 from __future__ import annotations
-
+from typing import Optional
+from app.services.storage import WasabiClient
 import os
 from typing import Optional
 from zoneinfo import ZoneInfo
@@ -22,7 +23,7 @@ settings = Settings()
 _db_client: DBClient = DBClient(settings)
 _db_client.init_db()
 _db_client.init_schedule_table()
-
+_storage: Optional[WasabiClient] = None
 def get_db() -> DBClient:
     """FastAPI dependency: shared DB client."""
     return _db_client
@@ -68,3 +69,15 @@ def get_scheduler_manager() -> SchedulerManager:
 
     _sched_mgr = SchedulerManager(_scheduler, _db_client, archivers=[])
     return _sched_mgr
+
+
+def get_storage() -> Optional[WasabiClient]:
+    global _storage
+    if not getattr(settings, "wasabi_upload_enabled", False):
+        return None
+    if _storage is None:
+        try:
+            _storage = WasabiClient(settings)
+        except Exception:
+            _storage = None
+    return _storage
