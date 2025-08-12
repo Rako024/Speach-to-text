@@ -7,12 +7,12 @@ import threading
 import time
 from datetime import datetime, timedelta, date
 from typing import List, Optional
-
+from typing import Dict
 from fastapi import APIRouter, HTTPException, Query, Depends
 from fastapi.responses import StreamingResponse
 from starlette.background import BackgroundTask
 from pydantic import BaseModel
-
+from app.api.admin_auth import require_admin
 from app.config import Settings
 from app.services.db import DBClient
 from app.services.summarizer import DeepSeekClient
@@ -28,7 +28,7 @@ settings = Settings()
 
 
 # --- presign URL cache (sadə, sürətli) ---
-_presign_cache: dict[str, tuple[str, float]] = {}  # rel_key -> (url, expire_ts)
+_presign_cache: Dict[str, tuple[str, float]] = {}
 
 def _presign_get_cached(wc: WasabiClient, rel_key: str, ttl_sec: int) -> str:
     """Wasabi üçün presigned URL-ni qısa müddət cache et (sürət üçün)."""
@@ -555,59 +555,69 @@ def video_triplet(
 
     return StreamingResponse(proc.stdout, media_type="video/mp4", background=BackgroundTask(_cleanup))
 
-# --- 5) SCHEDULE endpoints ---
-@router.get(
-    "/schedule/",
-    response_model=List[IntervalOut],
-    summary="List all scheduling intervals"
-)
+@router.get("/schedule/", response_model=List[IntervalOut], summary="List all scheduling intervals")
 def list_intervals(
     db: DBClient = Depends(get_db),
-    claims: dict = Depends(require_auth)
+    claims: dict = Depends(require_admin),   # << BURADA
 ):
-    return db.get_intervals()
+    try:
+        logger.info("Fetching all schedule intervals")
+        intervals = db.get_intervals()
+        logger.info(f"Successfully fetched {len(intervals)} intervals")
+        return intervals
+    except Exception as e:
+        logger.exception(f"Error fetching schedule intervals: {str(e)}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
 
-@router.post(
-    "/schedule/",
-    response_model=IntervalOut,
-    status_code=201,
-    summary="Create a new scheduling interval"
-)
+
+@router.post("/schedule/", response_model=IntervalOut, status_code=201, summary="Create a new scheduling interval")
 def create_interval(
     data: IntervalIn,
     db: DBClient = Depends(get_db),
     sched_mgr: SchedulerManager = Depends(get_scheduler_manager),
-    claims: dict = Depends(require_auth)
+    claims: dict = Depends(require_admin),   # << BURADA
 ):
-    new = db.add_interval(data.start_time, data.end_time)
-    sched_mgr.load_and_schedule_intervals()
-    return new
+    try:
+        logger.info(f"Creating new schedule interval from {data.start_time} to {data.end_time}")
+        new = db.add_interval(data.start_time, data.end_time)
+        sched_mgr.load_and_schedule_intervals()
+        logger.info(f"Created new interval with ID: {new.id}")
+        return new
+    except Exception as e:
+        logger.exception(f"Error creating new schedule interval: {str(e)}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
 
-@router.put(
-    "/schedule/{interval_id}",
-    status_code=204,
-    summary="Update an existing scheduling interval"
-)
+
+@router.put("/schedule/{interval_id}", status_code=204, summary="Update an existing scheduling interval")
 def update_interval(
     interval_id: int,
     data: IntervalIn,
     db: DBClient = Depends(get_db),
     sched_mgr: SchedulerManager = Depends(get_scheduler_manager),
-    claims: dict = Depends(require_auth)
+    claims: dict = Depends(require_admin),   # << BURADA
 ):
-    db.update_interval(interval_id, data.start_time, data.end_time)
-    sched_mgr.load_and_schedule_intervals()
+    try:
+        logger.info(f"Updating interval {interval_id} to new times: {data.start_time} - {data.end_time}")
+        db.update_interval(interval_id, data.start_time, data.end_time)
+        sched_mgr.load_and_schedule_intervals()
+        logger.info(f"Successfully updated interval {interval_id}")
+    except Exception as e:
+        logger.exception(f"Error updating schedule interval {interval_id}: {str(e)}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
 
-@router.delete(
-    "/schedule/{interval_id}",
-    status_code=204,
-    summary="Delete a scheduling interval"
-)
+
+@router.delete("/schedule/{interval_id}", status_code=204, summary="Delete a scheduling interval")
 def delete_interval(
     interval_id: int,
     db: DBClient = Depends(get_db),
     sched_mgr: SchedulerManager = Depends(get_scheduler_manager),
-    claims: dict = Depends(require_auth)
+    claims: dict = Depends(require_admin),   # << BURADA
 ):
-    db.delete_interval(interval_id)
-    sched_mgr.load_and_schedule_intervals()
+    try:
+        logger.info(f"Deleting schedule interval with ID: {interval_id}")
+        db.delete_interval(interval_id)
+        sched_mgr.load_and_schedule_intervals()
+        logger.info(f"Successfully deleted interval {interval_id}")
+    except Exception as e:
+        logger.exception(f"Error deleting schedule interval {interval_id}: {str(e)}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
