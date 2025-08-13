@@ -7,6 +7,8 @@ import secrets
 import logging
 from fastapi import Request, HTTPException
 
+from dotenv import load_dotenv
+load_dotenv(override=True)
 # Loglama konfiqurasiyası
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)

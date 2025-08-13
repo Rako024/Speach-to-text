@@ -17,6 +17,8 @@ from app.services.storage import WasabiClient
 
 logger = logging.getLogger(__name__)
 
+WORKSPACE_ROOT = os.getenv("WORKSPACE_ROOT", "/workspace")
+
 def _safe_remove(path: str, retries: int = 15, delay: float = 0.2) -> bool:
     """Faylı etibarlı sil (Windows kilid halları üçün retry-lə)."""
     for _ in range(retries):
@@ -33,22 +35,44 @@ def _safe_remove(path: str, retries: int = 15, delay: float = 0.2) -> bool:
                 break
     return False
 
+def _get_ts_root(settings) -> str:
+    """
+    TS staging directory seçimi:
+      - settings.ts_staging_dir verilmişsə → DƏQİQ HƏMİN QOVLUQ
+      - verilməyibsə və ya boşdursa → OS tmp (tempfile.gettempdir()).
+    """
+    tsd = getattr(settings, "ts_staging_dir", None)
+    if tsd and str(tsd).strip():
+        return str(tsd).strip()
+    return tempfile.gettempdir()
+
+def _resolve_under_workspace(path_like: Optional[str], default_subdir: str) -> str:
+    """
+    Nisbi yol gəlirsə /workspace altında qur, absolute-dursa olduğu kimi saxla.
+    (Mailə görə WAV_BASE çox vaxt 'wav_segments' olur → /workspace/wav_segments)
+    """
+    if path_like and os.path.isabs(path_like):
+        base = path_like
+    elif path_like and str(path_like).strip():
+        base = os.path.join(WORKSPACE_ROOT, str(path_like).strip())
+    else:
+        base = os.path.join(WORKSPACE_ROOT, default_subdir)
+    return os.path.abspath(base)
 
 class Archiver:
     def __init__(self, channel, settings, wav_queue: queue.Queue):
         self.channel  = channel
         self.settings = settings
 
-        # TS staging directory seçimi (öncə TS_STAGING_DIR varsa onu, yoxdursa Wasabi+delete=1 olduqda /tmp, əks halda archive_base)
-        if getattr(settings, "ts_staging_dir", None):
-            base_dir = settings.ts_staging_dir
-        elif getattr(settings, "wasabi_upload_enabled", False) and getattr(settings, "wasabi_delete_local_after_upload", True):
-            base_dir = tempfile.gettempdir()
-        else:
-            base_dir = settings.archive_base
+        # ❗ YENİ: TS staging logic razılaşmaya uyğun
+        base_dir = _get_ts_root(settings)
 
+        # Yollar
         self.archive_dir = os.path.abspath(os.path.join(base_dir, channel.id))
-        self.wav_dir     = os.path.abspath(os.path.join(settings.wav_base, channel.id))
+        self.wav_dir     = os.path.abspath(os.path.join(
+            _resolve_under_workspace(getattr(settings, "wav_base", "wav_segments"), "wav_segments"),
+            channel.id
+        ))
         self.ts_seg_time = int(settings.ts_segment_time)
         self.wav_queue   = wav_queue
 
@@ -134,7 +158,6 @@ class Archiver:
     def _spawn_ts_proc(self):
         pattern = os.path.join(self.archive_dir, f"{self.channel.id}_%Y%m%dT%H%M%S.ts")
 
-        # ffmpeg komanda
         cmd = [
             "ffmpeg",
             "-hide_banner", "-loglevel", os.getenv("FFMPEG_LOGLEVEL", "info"),
@@ -191,15 +214,15 @@ class Archiver:
 
         os.makedirs(self.wav_dir, exist_ok=True)
 
-        # startup-da qalan wav-ları təmizlə (istəyə bağlı — sadə saxlayaq)
+        # startup-da qalan wav-ları təmizlə (sadə)
         for f in os.listdir(self.wav_dir):
             if f.lower().endswith(".wav"):
                 try: os.remove(os.path.join(self.wav_dir, f))
                 except Exception: pass
 
-        # mövcud .ts-ləri "artıq emal olunub" kimi işarələ (soyuq startda sıçrayışdan qaçmaq üçün)
+        # ❗ YENİ: mövcud .ts-ləri processed-ə ATMIRIQ — hamısını emal edəcəyik
         os.makedirs(self.archive_dir, exist_ok=True)
-        self._processed = {f for f in os.listdir(self.archive_dir) if f.endswith(".ts")}
+        self._processed = set()
 
         self._watcher = threading.Thread(target=self._watch_loop, daemon=True)
         self._watcher.start()
@@ -253,6 +276,10 @@ class Archiver:
                         self.wav_queue.put_nowait((self.channel.id, wav_path, start_ts))
                     except queue.Full:
                         logger.warning("[%s] Queue dolu, seqment atlandı: %s", self.channel.id, wav_path)
+                        # ❗ YENİ: disk dolmasın deyə yaranmış WAV-ı dərhal sil
+                        try: os.remove(wav_path)
+                        except Exception: pass
+                        # processed-ə əlavə etmirik ki, növbəti dövrdə yenə cəhd etsin
                     else:
                         logger.info("[%s] WAV queued (q=%d): %s", self.channel.id, self.wav_queue.qsize(), wav_path)
                         self._processed.add(fname)

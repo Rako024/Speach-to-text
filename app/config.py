@@ -72,6 +72,8 @@ class Settings(BaseSettings):
     jwt_secret: str | None = Field(None, alias="JWT_SECRET")      # HS256 üçün
     static_token: str | None = Field(None, alias="STATIC_TOKEN")  # X-API-Key / Bearer statik açar
 
+    ts_local_max_age_min: int = Field(default=10, alias="TS_LOCAL_MAX_AGE_MIN")
+    ts_local_clean_interval_min: int = Field(default=5, alias="TS_LOCAL_CLEAN_INTERVAL_MIN")
 
     wasabi_upload_enabled: bool = Field(True, alias="WASABI_UPLOAD_ENABLED")
     wasabi_access_key_id: str | None = Field(None, alias="WASABI_ACCESS_KEY_ID")

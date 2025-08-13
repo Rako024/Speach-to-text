@@ -7,6 +7,10 @@ import logging
 import queue
 import subprocess
 
+# .env faylını ən əvvəl yüklə ki, bütün os.getenv çağırışları və Settings bundan faydalansın
+from dotenv import load_dotenv
+load_dotenv(override=True)
+
 # ——————————————————————————————————————————————
 # Logging konfiqurasiyası (ENV ilə idarə)
 # ——————————————————————————————————————————————
@@ -22,14 +26,12 @@ logger = logging.getLogger("nintel")
 # ——————————————————————————————————————————————
 if os.getenv("NINTEL_DIAG", "0") == "1":
     logger.debug(f"LD_LIBRARY_PATH = {os.environ.get('LD_LIBRARY_PATH')}")
-    # ldconfig -p siyahısı
     try:
         out = subprocess.check_output(["ldconfig", "-p"], stderr=subprocess.DEVNULL).decode("utf-8")
         logger.debug("ldconfig -p:\n" + out)
     except Exception as e:
         logger.warning("ldconfig -p xətası: %s", e)
 
-    # Torch diaqnostikası yalnız torch quraşdırılıbsa
     try:
         import importlib.util as _iu
         if _iu.find_spec("torch") is not None:
@@ -47,7 +49,6 @@ if os.getenv("NINTEL_DIAG", "0") == "1":
     except Exception as e:
         logger.debug("PyTorch diaqnostikası atlandı: %s", e)
 
-    # libcudnn kitabxanalarının yüklənmə testi
     try:
         import ctypes
         for lib in [
@@ -75,8 +76,8 @@ from app.metrics              import PROCESSED, ERRORS, QUEUE_LEN, ACTIVE_WORKER
 from app.config               import Settings
 from app.services.db          import DBClient
 from app.services.transcriber import Transcriber
-from app.services.archiver    import Archiver
-from app.services.cleanup     import cleanup_old_ts
+from app.services.archiver    import Archiver, _get_ts_root
+from app.services.cleanup     import cleanup_old_ts, cleanup_local_ts
 from app.scheduler_manager    import SchedulerManager
 
 
@@ -85,13 +86,12 @@ def init_worker():
     global transcriber_w, db_client_w
     s = Settings()
     transcriber_w = Transcriber(s)
-    db_client_w  = DBClient(s)
+    db_client_w   = DBClient(s)
 
 
 def worker_process_segment(args):
-    """Prosess daxilində iş görən funksiya."""
+    """Multiprocessing üçün nümunə worker (hazırda istifadə olunmur)."""
     ch_id, wav_path, start_ts = args
-    # QUEUE_LEN Gauge olaraq dispatcher-də set() olunur; burada dec etməyək
     ACTIVE_WORKERS.labels(channel=ch_id).inc()
     try:
         raw = transcriber_w.transcribe(wav_path, start_ts)
@@ -112,7 +112,6 @@ def worker_process_segment(args):
 
 def process_segment(ch_id, wav_path, start_ts, transcriber, db):
     """ThreadPoolExecutor içindən çağırılan funksiya."""
-    # QUEUE_LEN Gauge olaraq dispatcher-də set() olunur; burada dec etməyək
     ACTIVE_WORKERS.labels(channel=ch_id).inc()
     try:
         raw = transcriber.transcribe(wav_path, start_ts)
@@ -132,8 +131,7 @@ def process_segment(ch_id, wav_path, start_ts, transcriber, db):
 
 
 def get_free_gpu_memory():
-    """nvidia-smi-dən birinci GPU-nun boş yaddaşını MB ilə qaytarır.
-       NVIDIA yoxdur/xəta olarsa None qaytarır."""
+    """nvidia-smi-dən birinci GPU-nun boş yaddaşını MB ilə qaytarır; xəta olarsa None."""
     try:
         out = subprocess.check_output(
             ["nvidia-smi", "--query-gpu=memory.free", "--format=csv,nounits,noheader"],
@@ -149,14 +147,26 @@ def main():
     # 1) Settings
     settings = Settings()
 
-    # 2) Prometheus metrics server
+    # TS local cleanup konfiqurasiyasını diaqnostik logla
+    try:
+        ts_root = _get_ts_root(settings)
+    except Exception:
+        ts_root = "<unknown>"
+    logger.info(
+        "TS cleanup cfg: interval=%d min, max_age=%d min, ts_root=%s",
+        int(getattr(settings, "ts_local_clean_interval_min", int(os.getenv("TS_LOCAL_CLEAN_INTERVAL_MIN", "5")))),
+        int(getattr(settings, "ts_local_max_age_min", int(os.getenv("TS_LOCAL_MAX_AGE_MIN", "120")))),
+        ts_root,
+    )
+
+    # 2) Prometheus metrics
     start_http_server(8001)
     logger.info("Prometheus metrics server started on :8001")
 
-    # 3) APScheduler qurulumu
+    # 3) APScheduler
     scheduler = BackgroundScheduler(timezone=settings.timezone)
 
-    # 3a) daily .ts cleanup
+    # 3a) Günlük DB-əsaslı .ts cleanup (saxlanma gününə görə)
     scheduler.add_job(
         cleanup_old_ts,
         trigger="cron",
@@ -165,27 +175,38 @@ def main():
         id="cleanup_old_ts",
         replace_existing=True
     )
-    # 3b) APScheduler üçün dummy date-trigger
-    scheduler.add_job(lambda: None, trigger="date", run_date=None)
 
-    # 3c) hər dəqiqə 3 dəqiqədən köhnə .wav fayllarını silən job (hazırda qalır)
+    # 3b) Yetim TS-lərin lokal təmizliyi (DB-dən asılı deyil)
+    # Settings-də aliaslar varsa onlardan, yoxdursa .env-dən fallback et
+    clean_interval_min = int(getattr(settings, "ts_local_clean_interval_min", int(os.getenv("TS_LOCAL_CLEAN_INTERVAL_MIN", "5"))))
+    max_age_min        = int(getattr(settings, "ts_local_max_age_min",        int(os.getenv("TS_LOCAL_MAX_AGE_MIN", "120"))))
+
+    scheduler.add_job(
+        lambda: cleanup_local_ts(max_age_min),
+        trigger="interval",
+        minutes=clean_interval_min,
+        id="cleanup_local_ts",
+        replace_existing=True
+    )
+
+    # 3c) Hər dəqiqə >3 dəq köhnə WAV-ları sil
     def cleanup_old_wavs():
         now = time.time()
-        max_age = 3 * 60   # 3 dəqiqə
+        max_age = 3 * 60
         for ch in settings.channels:
-            wav_dir = os.path.join(settings.wav_base, ch.id)
+            wav_dir = os.path.join(settings.wav_base, ch.id)  # wav_base: 'wav_segments'
             if not os.path.isdir(wav_dir):
                 continue
             for fname in os.listdir(wav_dir):
                 if not fname.lower().endswith(".wav"):
                     continue
                 path = os.path.join(wav_dir, fname)
-                if now - os.path.getmtime(path) > max_age:
-                    try:
+                try:
+                    if now - os.path.getmtime(path) > max_age:
                         os.remove(path)
                         logger.debug("Removed old WAV %s/%s", ch.id, fname)
-                    except Exception as e:
-                        logger.warning("Could not remove old WAV %s/%s: %s", ch.id, fname, e)
+                except Exception as e:
+                    logger.warning("Could not remove WAV %s/%s: %s", ch.id, fname, e)
 
     scheduler.add_job(
         cleanup_old_wavs,
@@ -194,10 +215,16 @@ def main():
         id="cleanup_old_wavs",
         replace_existing=True
     )
-    logger.info("Scheduled cleanup_old_wavs(): every minute, deleting >3min old files")
+
     scheduler.start()
 
-    # 4) DB client & shared Transcriber
+    # Startup-da ilkin yetim TS təmizliyi (parametrli)
+    try:
+        cleanup_local_ts(max_age_min)
+    except Exception as e:
+        logger.warning("Initial cleanup_local_ts failed: %s", e)
+
+    # 4) DB client & Transcriber
     db_client   = DBClient(settings)
     transcriber = Transcriber(settings)
     try:
@@ -208,19 +235,16 @@ def main():
         logger.error("DB init failed: %s", e)
         sys.exit(1)
 
-    # 5) Dispatcher üçün bounded queue + ThreadPoolExecutor
+    # 5) Dispatcher: bounded queue + ThreadPoolExecutor
     wav_queue = queue.Queue(maxsize=settings.max_queue_size)
     executor  = ThreadPoolExecutor(max_workers=settings.gpu_max_jobs)
 
-    # 6) Archiver obyektləri yaradılır
-    archivers = [
-        Archiver(ch, settings, wav_queue)
-        for ch in settings.channels
-    ]
+    # 6) Archiver obyektləri
+    archivers = [Archiver(ch, settings, wav_queue) for ch in settings.channels]
     for arch in archivers:
         logger.info("Archiver for channel %s created", arch.channel.id)
 
-    # 7) SchedulerManager ilə interval-a görə enable/disable
+    # 7) Interval idarəsi (enable/disable)
     sched_mgr = SchedulerManager(scheduler, db_client, archivers)
     sched_mgr.load_and_schedule_intervals()
     scheduler.add_job(
@@ -232,30 +256,27 @@ def main():
     )
     logger.info("Scheduled reload_intervals every minute")
 
-    # 8) Hər Archiver üçün TS segmentation və watcher start et
-    #    (Artıq start edilmir; SchedulerManager interval başladıqda enable_all() ilə açacaq)
-
-    # 9) Dispatcher loop
+    # 8) Dispatcher loop
     def shutdown(sig, frame):
         logger.info("Shutdown signal (%s) received, stopping…", sig)
 
-        # 1) Archiver-ləri dayandır (yeni .ts gəlməsin)
+        # Archiver-ləri dayandır (yeni .ts gəlməsin)
         for arch in archivers:
             arch.stop()
 
-        # 2) Artıq yeni tapşırıq qəbul etmə və mövcudları bitməsini GÖZLƏ
+        # Mövcud tapşırıqlar bitsin
         try:
             executor.shutdown(wait=True, cancel_futures=False)
         except Exception as e:
             logger.warning("Executor shutdown warning: %s", e)
 
-        # 3) Scheduler-i dayandır (cron işləri dursun)
+        # Scheduler-i dayandır
         try:
             scheduler.shutdown(wait=False)
         except Exception as e:
             logger.warning("Scheduler shutdown warning: %s", e)
 
-        # 4) DB connection pool-u təmiz bağla
+        # DB pool bağla
         try:
             db_client.close()
         except Exception as e:
@@ -270,14 +291,12 @@ def main():
     try:
         while True:
             ch_id, wav_path, start_ts = wav_queue.get()
-            # Gauge: hazırkı növbə ölçüsünü yaz
             QUEUE_LEN.labels(channel=ch_id).set(wav_queue.qsize())
 
-            # Yalnız GPU rejimində və limit > 0 olduqda gating et
+            # GPU gating
             use_gpu = (getattr(settings, "device", "cpu").lower() != "cpu")
             if use_gpu and settings.min_free_gpu_mb > 0:
                 free_mb = get_free_gpu_memory()
-                # None -> nvidia-smi yoxdur; gating keçilir
                 while (free_mb is not None) and (free_mb < settings.min_free_gpu_mb):
                     logger.info(
                         "GPU boş yaddaş %d MB; tələb olunan %d MB. Gözləyirəm...",
@@ -286,7 +305,7 @@ def main():
                     time.sleep(1)
                     free_mb = get_free_gpu_memory()
 
-            # İş tapşırığını pool-a ötür
+            # Worker pool-a ötür
             executor.submit(
                 process_segment,
                 ch_id, wav_path, start_ts,
