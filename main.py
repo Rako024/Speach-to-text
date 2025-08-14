@@ -8,9 +8,21 @@ import queue
 import subprocess
 
 # .env faylını ən əvvəl yüklə ki, bütün os.getenv çağırışları və Settings bundan faydalansın
-from dotenv import load_dotenv
-load_dotenv(override=True)
+from prometheus_client import start_http_server
+from apscheduler.schedulers.background import BackgroundScheduler
+from concurrent.futures import ThreadPoolExecutor
 
+from app.metrics              import PROCESSED, ERRORS, QUEUE_LEN, ACTIVE_WORKERS
+from app.config               import Settings
+from app.services.db          import DBClient
+from app.services.transcriber import Transcriber
+from app.services.archiver    import Archiver, _get_ts_root
+from app.services.cleanup     import cleanup_old_ts, cleanup_local_ts
+from app.scheduler_manager    import SchedulerManager
+from dotenv import load_dotenv
+load_dotenv(override=False)
+executor = None
+wav_queue = None
 # ——————————————————————————————————————————————
 # Logging konfiqurasiyası (ENV ilə idarə)
 # ——————————————————————————————————————————————
@@ -68,17 +80,6 @@ if os.getenv("NINTEL_DIAG", "0") == "1":
 # Diaqnostika tamamlandı (yalnız NINTEL_DIAG=1)
 # ——————————————————————————————————————————————
 
-from prometheus_client import start_http_server
-from apscheduler.schedulers.background import BackgroundScheduler
-from concurrent.futures import ThreadPoolExecutor
-
-from app.metrics              import PROCESSED, ERRORS, QUEUE_LEN, ACTIVE_WORKERS
-from app.config               import Settings
-from app.services.db          import DBClient
-from app.services.transcriber import Transcriber
-from app.services.archiver    import Archiver, _get_ts_root
-from app.services.cleanup     import cleanup_old_ts, cleanup_local_ts
-from app.scheduler_manager    import SchedulerManager
 
 
 def init_worker():
@@ -144,18 +145,23 @@ def get_free_gpu_memory():
 
 
 def main():
+    global executor, wav_queue  # global dəyişənləri istifadə edirik
+
     # 1) Settings
     settings = Settings()
 
-    # TS local cleanup konfiqurasiyasını diaqnostik logla
     try:
         ts_root = _get_ts_root(settings)
-    except Exception:
+        os.makedirs(ts_root, exist_ok=True)
+        logger.info("TS root ensured at: %s", ts_root)
+    except Exception as e:
+        logger.warning("Could not ensure TS root: %s", e)
         ts_root = "<unknown>"
+
     logger.info(
         "TS cleanup cfg: interval=%d min, max_age=%d min, ts_root=%s",
-        int(getattr(settings, "ts_local_clean_interval_min", int(os.getenv("TS_LOCAL_CLEAN_INTERVAL_MIN", "5")))),
-        int(getattr(settings, "ts_local_max_age_min", int(os.getenv("TS_LOCAL_MAX_AGE_MIN", "120")))),
+        settings.ts_local_clean_interval_min,
+        settings.ts_local_max_age_min,
         ts_root,
     )
 
@@ -166,7 +172,6 @@ def main():
     # 3) APScheduler
     scheduler = BackgroundScheduler(timezone=settings.timezone)
 
-    # 3a) Günlük DB-əsaslı .ts cleanup (saxlanma gününə görə)
     scheduler.add_job(
         cleanup_old_ts,
         trigger="cron",
@@ -176,25 +181,19 @@ def main():
         replace_existing=True
     )
 
-    # 3b) Yetim TS-lərin lokal təmizliyi (DB-dən asılı deyil)
-    # Settings-də aliaslar varsa onlardan, yoxdursa .env-dən fallback et
-    clean_interval_min = int(getattr(settings, "ts_local_clean_interval_min", int(os.getenv("TS_LOCAL_CLEAN_INTERVAL_MIN", "5"))))
-    max_age_min        = int(getattr(settings, "ts_local_max_age_min",        int(os.getenv("TS_LOCAL_MAX_AGE_MIN", "120"))))
-
     scheduler.add_job(
-        lambda: cleanup_local_ts(max_age_min),
+        lambda: cleanup_local_ts(settings.ts_local_max_age_min),
         trigger="interval",
-        minutes=clean_interval_min,
+        minutes=settings.ts_local_clean_interval_min,
         id="cleanup_local_ts",
         replace_existing=True
     )
 
-    # 3c) Hər dəqiqə >3 dəq köhnə WAV-ları sil
     def cleanup_old_wavs():
         now = time.time()
         max_age = 3 * 60
         for ch in settings.channels:
-            wav_dir = os.path.join(settings.wav_base, ch.id)  # wav_base: 'wav_segments'
+            wav_dir = os.path.join(settings.wav_base, ch.id)
             if not os.path.isdir(wav_dir):
                 continue
             for fname in os.listdir(wav_dir):
@@ -218,14 +217,13 @@ def main():
 
     scheduler.start()
 
-    # Startup-da ilkin yetim TS təmizliyi (parametrli)
     try:
-        cleanup_local_ts(max_age_min)
+        cleanup_local_ts(settings.ts_local_max_age_min)
     except Exception as e:
         logger.warning("Initial cleanup_local_ts failed: %s", e)
 
     # 4) DB client & Transcriber
-    db_client   = DBClient(settings)
+    db_client = DBClient(settings)
     transcriber = Transcriber(settings)
     try:
         db_client.init_db()
@@ -235,16 +233,16 @@ def main():
         logger.error("DB init failed: %s", e)
         sys.exit(1)
 
-    # 5) Dispatcher: bounded queue + ThreadPoolExecutor
+    # 5) Dispatcher queue və executor
     wav_queue = queue.Queue(maxsize=settings.max_queue_size)
-    executor  = ThreadPoolExecutor(max_workers=settings.gpu_max_jobs)
+    executor = ThreadPoolExecutor(max_workers=settings.gpu_max_jobs)
 
-    # 6) Archiver obyektləri
+    # 6) Archiver-lər
     archivers = [Archiver(ch, settings, wav_queue) for ch in settings.channels]
     for arch in archivers:
         logger.info("Archiver for channel %s created", arch.channel.id)
 
-    # 7) Interval idarəsi (enable/disable)
+    # 7) Interval idarəçisi
     sched_mgr = SchedulerManager(scheduler, db_client, archivers)
     sched_mgr.load_and_schedule_intervals()
     scheduler.add_job(
@@ -256,27 +254,33 @@ def main():
     )
     logger.info("Scheduled reload_intervals every minute")
 
-    # 8) Dispatcher loop
+    # 8) Shutdown funksiyası
     def shutdown(sig, frame):
         logger.info("Shutdown signal (%s) received, stopping…", sig)
 
-        # Archiver-ləri dayandır (yeni .ts gəlməsin)
+        # 1) Bütün archiver-ləri dayandır (ffmpeg + watcher)
         for arch in archivers:
             arch.stop()
 
-        # Mövcud tapşırıqlar bitsin
+        # 2) Yalnız proqramdan çıxışda uploader-i bağla
+        for arch in archivers:
+            arch.close()   # uploader burada bağlanır
+
+        # 3) Transcribe üçün qlobal executor-u bağla
+        global executor
         try:
-            executor.shutdown(wait=True, cancel_futures=False)
+            if executor:
+                executor.shutdown(wait=True, cancel_futures=False)
         except Exception as e:
             logger.warning("Executor shutdown warning: %s", e)
 
-        # Scheduler-i dayandır
+        # 4) Scheduler-i bağla
         try:
             scheduler.shutdown(wait=False)
         except Exception as e:
             logger.warning("Scheduler shutdown warning: %s", e)
 
-        # DB pool bağla
+        # 5) DB pool bağla
         try:
             db_client.close()
         except Exception as e:
@@ -284,16 +288,17 @@ def main():
 
         sys.exit(0)
 
-    signal.signal(signal.SIGINT,  shutdown)
+
+    signal.signal(signal.SIGINT, shutdown)
     signal.signal(signal.SIGTERM, shutdown)
 
     logger.info("Dispatcher running; waiting on queue…")
+
     try:
         while True:
             ch_id, wav_path, start_ts = wav_queue.get()
             QUEUE_LEN.labels(channel=ch_id).set(wav_queue.qsize())
 
-            # GPU gating
             use_gpu = (getattr(settings, "device", "cpu").lower() != "cpu")
             if use_gpu and settings.min_free_gpu_mb > 0:
                 free_mb = get_free_gpu_memory()
@@ -305,7 +310,6 @@ def main():
                     time.sleep(1)
                     free_mb = get_free_gpu_memory()
 
-            # Worker pool-a ötür
             executor.submit(
                 process_segment,
                 ch_id, wav_path, start_ts,

@@ -19,6 +19,7 @@ logger = logging.getLogger(__name__)
 
 WORKSPACE_ROOT = os.getenv("WORKSPACE_ROOT", "/workspace")
 
+
 def _safe_remove(path: str, retries: int = 15, delay: float = 0.2) -> bool:
     """Faylı etibarlı sil (Windows kilid halları üçün retry-lə)."""
     for _ in range(retries):
@@ -35,6 +36,7 @@ def _safe_remove(path: str, retries: int = 15, delay: float = 0.2) -> bool:
                 break
     return False
 
+
 def _get_ts_root(settings) -> str:
     """
     TS staging directory seçimi:
@@ -45,6 +47,7 @@ def _get_ts_root(settings) -> str:
     if tsd and str(tsd).strip():
         return str(tsd).strip()
     return tempfile.gettempdir()
+
 
 def _resolve_under_workspace(path_like: Optional[str], default_subdir: str) -> str:
     """
@@ -59,22 +62,21 @@ def _resolve_under_workspace(path_like: Optional[str], default_subdir: str) -> s
         base = os.path.join(WORKSPACE_ROOT, default_subdir)
     return os.path.abspath(base)
 
+
 class Archiver:
     def __init__(self, channel, settings, wav_queue: queue.Queue):
-        self.channel  = channel
+        self.channel = channel
         self.settings = settings
 
-        # ❗ YENİ: TS staging logic razılaşmaya uyğun
         base_dir = _get_ts_root(settings)
 
-        # Yollar
         self.archive_dir = os.path.abspath(os.path.join(base_dir, channel.id))
-        self.wav_dir     = os.path.abspath(os.path.join(
-            _resolve_under_workspace(getattr(settings, "wav_base", "wav_segments"), "wav_segments"),
+        self.wav_dir = os.path.abspath(os.path.join(
+            _resolve_under_workspace(getattr(self.settings, "wav_base", "wav_segments"), "wav_segments"),
             channel.id
         ))
-        self.ts_seg_time = int(settings.ts_segment_time)
-        self.wav_queue   = wav_queue
+        self.ts_seg_time = int(self.settings.ts_segment_time)
+        self.wav_queue = wav_queue
 
         # daxili vəziyyət
         self._watcher: Optional[threading.Thread] = None
@@ -83,6 +85,9 @@ class Archiver:
         self._ts_proc: Optional[subprocess.Popen] = None
         self._monitor: Optional[threading.Thread] = None
         self._ffmpeg_log_path: Optional[str] = None
+
+        # >>> YENİ: ffmpeg prosesinin lifecycle-ı üçün lock
+        self._proc_lock = threading.Lock()
 
         # Wasabi
         self._storage: Optional[WasabiClient] = None
@@ -105,57 +110,128 @@ class Archiver:
     # ----------------------------- Public API -----------------------------
 
     def resume(self):
-        """SchedulerManager.enable_all → işə sal."""
+        """
+        Interval yenidən aktivləşəndə çağırılır.
+        Burada **ffmpeg başlamazdan əvvəl** köhnə .ts-ləri təmizləyirik ki,
+        rc=1 "WAV convert failed" seli olmasın.
+        Həmçinin uploader-in mövcudluğunu təmin edirik.
+        """
+        try:
+            purge_on_resume = bool(int(getattr(
+                self.settings, "ts_purge_on_resume",
+                int(os.getenv("TS_PURGE_ON_RESUME", "1"))
+            )))
+        except Exception:
+            purge_on_resume = True
+
+        if purge_on_resume:
+            self._purge_ts_dir()
+
+        # Uploader interval restartda hazır olsun
+        self._ensure_uploader()
+
         self.start_ts()
         self.start_watcher()
 
     def stop(self):
-        """Watcher-i və ffmpeg-i təmiz dayandır."""
+        """
+        Interval dayananda: recorder/watch proseslərini səliqə ilə dayandır.
+        Qeyd: Uploader-i burada **BAĞLAMIRIQ** ki, restartda submit üçün hazır qalsın.
+        """
         self._shutdown.set()
+
         if self._watcher and self._watcher.is_alive():
-            try: self._watcher.join(timeout=1)
-            except Exception: pass
+            try:
+                self._watcher.join(timeout=1)
+            except Exception:
+                pass
 
         if self._monitor and self._monitor.is_alive():
-            try: self._monitor.join(timeout=1)
-            except Exception: pass
-
-        if self._ts_proc is not None:
             try:
-                if self._ts_proc.poll() is None:
-                    logger.info("[%s] Stopping TS archiver (pid=%s)", self.channel.id, self._ts_proc.pid)
-                    self._ts_proc.terminate()
-                    try:
-                        self._ts_proc.wait(timeout=2)
-                    except Exception:
-                        self._ts_proc.kill()
-                        try: self._ts_proc.wait(timeout=2)
-                        except Exception: pass
-            finally:
-                self._ts_proc = None
+                self._monitor.join(timeout=1)
+            except Exception:
+                pass
 
+        # >>> YENİ: Prosesə atomik çıxış — snapshot + detach
+        with self._proc_lock:
+            proc = self._ts_proc
+            self._ts_proc = None
+
+        if proc is not None:
+            try:
+                if proc.poll() is None:
+                    logger.info("[%s] Stopping TS archiver (pid=%s)", self.channel.id, proc.pid)
+                    proc.terminate()
+                    try:
+                        proc.wait(timeout=2)
+                    except Exception:
+                        proc.kill()
+                        try:
+                            proc.wait(timeout=2)
+                        except Exception:
+                            pass
+            except Exception as e:
+                # Hər ehtimala qarşı, burada səhvi uduruq ki, scheduler job yıxılmasın
+                logger.debug("[%s] stop(): proc cleanup ignored error: %s", self.channel.id, e)
+
+        # DİQQƏT: uploader burada bağlanmır. Programdan çıxışda close() ilə bağlanacaq.
+
+    def close(self):
+        """Yalnız proqramdan ÇIXIŞDA çağır: uploader-i səliqə ilə bağla."""
         if self._uploader:
-            try: self._uploader.shutdown(wait=False)
-            except Exception: pass
+            try:
+                self._uploader.shutdown(wait=False)
+            except Exception:
+                pass
 
     # ----------------------------- Internals -----------------------------
 
+    def _ensure_uploader(self):
+        """
+        Wasabi aktivdirsə, uploader executoru mövcud olmalıdır.
+        (Stop zamanı bağlamadığımız üçün adətən var; ehtiyat üçün yoxlayırıq.)
+        """
+        if getattr(self.settings, "wasabi_upload_enabled", False) and self._storage:
+            if self._uploader is None:
+                self._uploader = ThreadPoolExecutor(max_workers=2)
+
+    def _purge_ts_dir(self):
+        """KANAL ÜZRƏ bütün .ts fayllarını sil (interval başlanğıcında)."""
+        try:
+            os.makedirs(self.archive_dir, exist_ok=True)
+            cnt = 0
+            for fn in os.listdir(self.archive_dir):
+                if not fn.endswith(".ts"):
+                    continue
+                fpath = os.path.join(self.archive_dir, fn)
+                try:
+                    if _safe_remove(fpath, retries=5, delay=0.05):
+                        cnt += 1
+                except Exception as e:
+                    logger.warning("[%s] Could not remove TS %s: %s", self.channel.id, fpath, e)
+            if cnt:
+                logger.info("[%s] Purged %d TS files at interval start", self.channel.id, cnt)
+            else:
+                logger.info("[%s] No TS to purge at interval start", self.channel.id)
+        except Exception as e:
+            logger.warning("[%s] TS purge failed: %s", self.channel.id, e)
+
     def start_ts(self):
-        """FFmpeg ilə HLS → .ts seqmentləri (segment muxer)."""
         os.makedirs(self.archive_dir, exist_ok=True)
 
-        # artıq işləyirsə, bir də açma
-        if self._ts_proc is not None and self._ts_proc.poll() is None:
-            logger.debug("[%s] TS archiver already running (pid=%s)", self.channel.id, self._ts_proc.pid)
-        else:
-            self._spawn_ts_proc()
+        with self._proc_lock:
+            running = self._ts_proc is not None and self._ts_proc.poll() is None
+            if not running:
+                self._spawn_ts_proc_locked()
 
-        # monitor thread: ffmpeg ölərsə, avtomatik yenidən başlat
         if (self._monitor is None) or (not self._monitor.is_alive()):
             self._monitor = threading.Thread(target=self._monitor_loop, daemon=True)
             self._monitor.start()
 
-    def _spawn_ts_proc(self):
+    def _spawn_ts_proc_locked(self):
+        """
+        DİQQƏT: Bu funksiya yalnız self._proc_lock altında çağırılsın!
+        """
         pattern = os.path.join(self.archive_dir, f"{self.channel.id}_%Y%m%dT%H%M%S.ts")
 
         cmd = [
@@ -163,7 +239,7 @@ class Archiver:
             "-hide_banner", "-loglevel", os.getenv("FFMPEG_LOGLEVEL", "info"),
             "-nostats",
             "-reconnect", "1", "-reconnect_streamed", "1", "-reconnect_delay_max", "10",
-            "-rw_timeout", "15000000",  # ~15s (mikrosaniyə)
+            "-rw_timeout", "15000000",
         ]
         cmd += self._header_args
         cmd += [
@@ -181,7 +257,7 @@ class Archiver:
         try:
             logf = open(self._ffmpeg_log_path, "a", buffering=1)
         except Exception:
-            logf = subprocess.DEVNULL  # son çarə
+            logf = subprocess.DEVNULL
 
         self._ts_proc = subprocess.Popen(
             cmd,
@@ -189,38 +265,63 @@ class Archiver:
             stderr=logf
         )
         logger.debug("[%s] TS cmd: %s", self.channel.id, " ".join(cmd))
-        logger.debug("[%s] ffmpeg started (pid=%s, log=%s)", self.channel.id, getattr(self._ts_proc, "pid", None), self._ffmpeg_log_path)
+        logger.debug(
+            "[%s] ffmpeg started (pid=%s, log=%s)",
+            self.channel.id,
+            getattr(self._ts_proc, "pid", None),
+            self._ffmpeg_log_path,
+        )
 
     def _monitor_loop(self):
-        """ffmpeg prosesini izləyir; qapanarsa backoff ilə yenidən açır."""
         backoff = 2
         while not self._shutdown.is_set():
-            if self._ts_proc is None or (self._ts_proc.poll() is not None):
-                rc = None if self._ts_proc is None else self._ts_proc.returncode
+            with self._proc_lock:
+                proc = self._ts_proc
+
+            if proc is None or (proc.poll() is not None):
+                rc = None if proc is None else proc.returncode
+                if self._shutdown.is_set():
+                    break
                 logger.warning("[%s] ffmpeg exited (rc=%s). Restarting in %ss…", self.channel.id, rc, backoff)
-                time.sleep(backoff)
+
+                # Backoff müddəti
+                sleep_left = backoff
+                while sleep_left > 0 and not self._shutdown.is_set():
+                    time.sleep(min(0.2, sleep_left))
+                    sleep_left -= 0.2
+
+                if self._shutdown.is_set():
+                    break
+
                 if backoff < 30:
                     backoff = min(30, backoff * 2)
-                self._spawn_ts_proc()
+
+                if not self._shutdown.is_set():
+                    with self._proc_lock:
+                        # stop() paralel işləyibsə, self._ts_proc None olacaq; yenisini açırıq
+                        self._spawn_ts_proc_locked()
             else:
                 backoff = 2
-                time.sleep(3)
+                # Kiçik yuxu, amma shutdown olduqda gecikmə minimal olsun
+                for _ in range(15):
+                    if self._shutdown.is_set():
+                        break
+                    time.sleep(0.2)
 
     def start_watcher(self):
-        """Yeni .ts faylları → .wav çevril, queue-ya at, .ts-i (varsa) Wasabi-yə yüklə."""
         self._shutdown.clear()
         if self._watcher and self._watcher.is_alive():
             return
 
         os.makedirs(self.wav_dir, exist_ok=True)
-
         # startup-da qalan wav-ları təmizlə (sadə)
         for f in os.listdir(self.wav_dir):
             if f.lower().endswith(".wav"):
-                try: os.remove(os.path.join(self.wav_dir, f))
-                except Exception: pass
+                try:
+                    os.remove(os.path.join(self.wav_dir, f))
+                except Exception:
+                    pass
 
-        # ❗ YENİ: mövcud .ts-ləri processed-ə ATMIRIQ — hamısını emal edəcəyik
         os.makedirs(self.archive_dir, exist_ok=True)
         self._processed = set()
 
@@ -230,7 +331,7 @@ class Archiver:
     def _watch_loop(self):
         del_retries = int(getattr(self.settings, "wasabi_delete_retries", 15))
         del_delay_s = float(getattr(self.settings, "wasabi_delete_delay_ms", 200)) / 1000.0
-        grace_s     = float(getattr(self.settings, "wasabi_post_upload_delete_grace_ms", 250)) / 1000.0
+        grace_s = float(getattr(self.settings, "wasabi_post_upload_delete_grace_ms", 250)) / 1000.0
 
         while not self._shutdown.is_set():
             try:
@@ -253,10 +354,25 @@ class Archiver:
                         prev = sz
                         time.sleep(0.05)
 
+                    # ffprobe ilə audio stream yoxla
+                    try:
+                        probe_cmd = [
+                            "ffprobe", "-v", "error", "-select_streams", "a",
+                            "-show_entries", "stream=codec_type", "-of", "csv=p=0", ts_path
+                        ]
+                        probe_out = subprocess.check_output(probe_cmd, stderr=subprocess.DEVNULL).decode().strip()
+                        if not probe_out:
+                            logger.warning("[%s] No audio stream, skipping: %s", self.channel.id, ts_path)
+                            self._processed.add(fname)
+                            continue
+                    except Exception as e:
+                        logger.error("[%s] ffprobe failed for %s: %s", self.channel.id, ts_path, e)
+                        self._processed.add(fname)
+                        continue
+
                     # WAV-a çevir
                     wav_name = fname[:-3] + ".wav"
                     wav_path = os.path.join(self.wav_dir, wav_name)
-
                     cmd = [
                         "ffmpeg", "-hide_banner", "-loglevel", "warning",
                         "-y", "-i", ts_path,
@@ -266,7 +382,6 @@ class Archiver:
                     rc = subprocess.call(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
                     if rc != 0:
                         logger.error("[%s] WAV convert failed (rc=%s): %s", self.channel.id, rc, ts_path)
-                        # bu TS-i işlənmiş kimi qeyd etməyək – növbəti iterasiyada yenə cəhd olunsun
                         time.sleep(0.1)
                         continue
 
@@ -276,16 +391,17 @@ class Archiver:
                         self.wav_queue.put_nowait((self.channel.id, wav_path, start_ts))
                     except queue.Full:
                         logger.warning("[%s] Queue dolu, seqment atlandı: %s", self.channel.id, wav_path)
-                        # ❗ YENİ: disk dolmasın deyə yaranmış WAV-ı dərhal sil
-                        try: os.remove(wav_path)
-                        except Exception: pass
-                        # processed-ə əlavə etmirik ki, növbəti dövrdə yenə cəhd etsin
+                        # disk dolmasın deyə yaranmış WAV-ı dərhal sil
+                        try:
+                            os.remove(wav_path)
+                        except Exception:
+                            pass
                     else:
                         logger.info("[%s] WAV queued (q=%d): %s", self.channel.id, self.wav_queue.qsize(), wav_path)
                         self._processed.add(fname)
 
                         # Wasabi-yə .ts upload (asinxron)
-                        if self._storage and self._uploader:
+                        if self._storage and getattr(self.settings, "wasabi_upload_enabled", False):
                             key = f"{self.channel.id}/{fname}"
 
                             def _do_upload(local_path: str, s3_key: str):
@@ -302,11 +418,20 @@ class Archiver:
                                     else:
                                         logger.warning("[%s] Could not remove TS after retries: %s", self.channel.id, local_path)
 
-                            self._uploader.submit(_do_upload, ts_path, key)
+                            # Uploader mövcudluğunu təmin et və submit et
+                            self._ensure_uploader()
+                            try:
+                                self._uploader.submit(_do_upload, ts_path, key)  # type: ignore[arg-type]
+                            except RuntimeError:
+                                # Yəqin ki, əvvəl shutdown olunub → yenidən qur və retry et
+                                logger.warning("[%s] Uploader was shutdown; recreating and retrying submit", self.channel.id)
+                                self._uploader = ThreadPoolExecutor(max_workers=2)
+                                self._uploader.submit(_do_upload, ts_path, key)
 
                 time.sleep(0.1)
 
             except Exception as e:
+                # Burada yalnız GÖZLƏNMƏYƏN xətaları tuturuq; submit RuntimeError artıq yuxarıda həll olunur
                 logger.error("[%s] Watcher error: %s", self.channel.id, e)
                 time.sleep(0.5)
 
